@@ -1,0 +1,20 @@
+server:
+  port: 8081 # 服务端口
+spring:
+  application:
+    name: smp-visualization-web # 服务名称
+  profiles:
+    active: dev # 激活的配置文件
+  config:
+    import: nacos:smp-visualization-web.yaml
+    enabled: true
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 192.168.1.222:8848 # Nacos 服务地址
+      config:
+        server-addr: 192.168.1.222:8848 # Nacos 配置中心地址
+        file-extension: yaml # 配置文件格式
+        namespace: zzj # 可选，Nacos 命名空间 ID
+        group: DEFAULT_GROUP # 可选，配置分组
+

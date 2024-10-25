@@ -1,0 +1,5 @@
+.idea/
+smp-visualization-gateway/target/
+smp-visualization-oauth/target/
+smp-visualization-system/target/
+smp-visualization-web/target/

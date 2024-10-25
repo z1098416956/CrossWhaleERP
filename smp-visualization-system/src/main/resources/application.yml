@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: smp-system-service
+  profiles:
+    active: dev
+  config:
+    import: optional:nacos:smp-system-dev.yaml
+    enabled: true
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 192.168.1.222:8848
+        namespace: zzj
+      config:
+        server-addr: 192.168.1.222:8848
+        file-extension: yaml
+        namespace: zzj
+        group: DEFAULT_GROUP
+
