@@ -6,10 +6,12 @@ import com.nimbusds.jose.jwk.source.ImmutableJWKSet;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
 import jakarta.annotation.Resource;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
@@ -37,10 +39,13 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.oauth2.server.authorization.config.annotation.web.configuration.OAuth2AuthorizationServerConfiguration;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
 
-import java.security.KeyPair;
-import java.security.KeyPairGenerator;
+import java.io.IOException;
+import java.io.InputStream;
+import java.security.*;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
+import java.security.spec.PKCS8EncodedKeySpec;
+import java.security.spec.X509EncodedKeySpec;
 import java.util.Arrays;
 import java.util.UUID;
 
@@ -51,6 +56,7 @@ import java.util.UUID;
  */
 @EnableWebSecurity
 @Configuration
+@Slf4j
 public class OAuth2JdbcConfiguration {
     @Autowired
     private MD5PasswordEncoder passwordEncoder;
@@ -153,7 +159,7 @@ public class OAuth2JdbcConfiguration {
     }
     @Bean
     public JWKSource<SecurityContext> jwkSource() {
-        KeyPair keyPair = generateRsaKey();
+        KeyPair keyPair = rsaKeyPair();
         RSAPublicKey publicKey = (RSAPublicKey) keyPair.getPublic();
         RSAPrivateKey privateKey = (RSAPrivateKey) keyPair.getPrivate();
         RSAKey rsaKey = new RSAKey.Builder(publicKey)
@@ -163,6 +169,48 @@ public class OAuth2JdbcConfiguration {
         JWKSet jwkSet = new JWKSet(rsaKey);
         return new ImmutableJWKSet<>(jwkSet);
     }
+
+    public KeyPair rsaKeyPair()  {
+        // 从文件中读取私钥
+        PrivateKey privateKey = loadPrivateKey("key/private.key");
+
+        // 从文件中读取公钥
+        PublicKey publicKey = loadPublicKey("key/public.key");
+
+        return new KeyPair(publicKey, privateKey);
+    }
+
+    private PrivateKey loadPrivateKey(String fileName) {
+        try {
+            byte[] keyBytes = loadKeyFromFile(fileName);
+            PKCS8EncodedKeySpec spec = new PKCS8EncodedKeySpec(keyBytes);
+            KeyFactory kf = KeyFactory.getInstance("RSA");
+            return kf.generatePrivate(spec);
+        }catch (Exception e){
+            log.error("获取私钥失败 ====================> :{}",e.getMessage());
+        }
+        return null;
+    }
+
+    private PublicKey loadPublicKey(String fileName) {
+        try {
+            byte[] keyBytes = loadKeyFromFile(fileName);
+            X509EncodedKeySpec spec = new X509EncodedKeySpec(keyBytes);
+            KeyFactory kf = KeyFactory.getInstance("RSA");
+            return kf.generatePublic(spec);
+        }catch (Exception e){
+            log.error("获取公钥失败===================> :{}",e.getMessage());
+        }
+        return null;
+    }
+
+    private byte[] loadKeyFromFile(String fileName) throws IOException {
+        org.springframework.core.io.Resource resource = new ClassPathResource(fileName);
+        try (InputStream inputStream = resource.getInputStream()) {
+            return inputStream.readAllBytes();
+        }
+    }
+
     // 升版之后，采用RSA的方式加密token，与之前的版本有些差异，之前是采用HMAC加密
     private static KeyPair generateRsaKey() {
         KeyPair keyPair;
