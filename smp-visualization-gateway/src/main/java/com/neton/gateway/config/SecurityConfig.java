@@ -11,8 +11,11 @@ import com.nimbusds.jose.proc.SecurityContext;
 import com.nimbusds.jwt.proc.ConfigurableJWTProcessor;
 import com.nimbusds.jwt.proc.DefaultJWTProcessor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
@@ -31,9 +34,7 @@ import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * @author TheSunshine
@@ -44,15 +45,19 @@ import java.util.UUID;
 @Slf4j
 public class SecurityConfig {
 
+    @Autowired
+    private SecurityProperties securityProperties;
+
     @Bean
     public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) {
-
+        List<String> ignoredPaths = securityProperties.getIgnoredPaths();
 
         http
                 .authorizeExchange(exchange -> exchange
-                        .pathMatchers("/public/**").permitAll()  // 公开路径
+                        .pathMatchers(ignoredPaths.toArray(new String[0])).permitAll()  // 公开路径
                         .anyExchange().authenticated()           // 其他路径需要认证
                 )
+                .csrf(csrf -> csrf.disable())
                 .oauth2ResourceServer(oauth2 -> oauth2
                         .jwt(jwt -> jwt
                                 .jwtDecoder(reactiveJwtDecoder())           // 使用自定义的 JwtDecoder
