@@ -89,7 +89,7 @@ public class CustomLoginService {
             // 4. 生成 refresh token
             OAuth2RefreshToken refreshToken = new OAuth2RefreshToken(
                     Base64.getEncoder().encodeToString(UUID.randomUUID().toString().getBytes()), Instant.now(),
-                    Instant.now().plus(Duration.ofDays(30)));
+                    Instant.now().plus(Duration.ofDays(14)));
             authorization = OAuth2Authorization.from(authorization)
                     .token(oauth2AccessToken)
                     .refreshToken(refreshToken)
@@ -146,7 +146,7 @@ public class CustomLoginService {
         // 生成新的 refresh token（可选）
         OAuth2RefreshToken newRefreshToken = new OAuth2RefreshToken(
                 Base64.getEncoder().encodeToString(UUID.randomUUID().toString().getBytes()), Instant.now(),
-                Instant.now().plus(Duration.ofDays(30)));
+                Instant.now().plus(Duration.ofDays(14)));
 
         // 更新授权信息
         authorization = OAuth2Authorization.from(authorization)
