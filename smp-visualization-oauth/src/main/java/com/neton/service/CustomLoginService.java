@@ -90,7 +90,6 @@ public class CustomLoginService {
             OAuth2RefreshToken refreshToken = new OAuth2RefreshToken(
                     Base64.getEncoder().encodeToString(UUID.randomUUID().toString().getBytes()), Instant.now(),
                     Instant.now().plus(Duration.ofDays(30)));
-            // TODO 没办法解决序列化问题 借助redis绕开序列化问题
             authorization = OAuth2Authorization.from(authorization)
                     .token(oauth2AccessToken)
                     .refreshToken(refreshToken)
