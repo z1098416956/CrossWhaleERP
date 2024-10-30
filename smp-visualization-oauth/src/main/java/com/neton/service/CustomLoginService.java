@@ -92,7 +92,7 @@ public class CustomLoginService {
                     Instant.now().plus(Duration.ofDays(30)));
             // TODO 没办法解决序列化问题 借助redis绕开序列化问题
             authorization = OAuth2Authorization.from(authorization)
-                    .token(oauth2AccessToken, metadata -> metadata.put(OAuth2Authorization.Token.CLAIMS_METADATA_NAME, List.of("client")))
+                    .token(oauth2AccessToken)
                     .refreshToken(refreshToken)
                     .build();
             authorizationService.save(authorization);
@@ -151,7 +151,7 @@ public class CustomLoginService {
 
         // 更新授权信息
         authorization = OAuth2Authorization.from(authorization)
-                .token(oauth2AccessToken, metadata -> metadata.put(OAuth2Authorization.Token.CLAIMS_METADATA_NAME, List.of("client")))
+                .token(oauth2AccessToken)
                 .refreshToken(newRefreshToken)
                 .build();
         authorizationService.save(authorization);
