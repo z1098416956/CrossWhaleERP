@@ -43,6 +43,7 @@ public final class JwtUtils {
         if (StringUtils.hasText(issuer)) {
             claimsBuilder.issuer(issuer);
         }
+
         claimsBuilder
                 .subject(subject)
                 .audience(Collections.singletonList(registeredClient.getClientId()))
@@ -51,7 +52,7 @@ public final class JwtUtils {
                 .notBefore(issuedAt);
         if (!CollectionUtils.isEmpty(authorizedScopes)) {
             claimsBuilder.claim(OAuth2ParameterNames.SCOPE, authorizedScopes);
-            claimsBuilder.claim("wangcl", "aaa");
+            //claimsBuilder.claim("wangcl", "aaa");
         }
         // @formatter:on
         return claimsBuilder;

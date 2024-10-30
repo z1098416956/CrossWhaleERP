@@ -121,7 +121,7 @@ public class OAuth2PasswordAuthenticationProvider implements AuthenticationProvi
                 .authorizationGrant(passwordAuthentication)
                 .build();
         // @formatter:on
-        this.jwtCustomizer.customize(context);
+        jwtCustomizer.customize(context);
         JwsHeader headers = context.getJwsHeader().build();
         JwtClaimsSet claims = context.getClaims().build();
         JwtEncoderParameters params = JwtEncoderParameters.from(headers, claims);
