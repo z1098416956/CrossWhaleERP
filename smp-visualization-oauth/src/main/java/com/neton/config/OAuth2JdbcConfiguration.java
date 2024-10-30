@@ -12,9 +12,12 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -39,6 +42,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.oauth2.server.authorization.config.annotation.web.configuration.OAuth2AuthorizationServerConfiguration;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
 
+import javax.sql.DataSource;
 import java.io.IOException;
 import java.io.InputStream;
 import java.security.*;
@@ -62,28 +66,39 @@ public class OAuth2JdbcConfiguration {
     private MD5PasswordEncoder passwordEncoder;
     @Resource
     private UserDetailsService userDetailService;
+
     @Autowired
-    private JdbcTemplate jdbcTemplate;
+    private DataSource dataSource;
+
     @Autowired
     private CustomTokenEnhancer customTokenEnhancer;
     private static final String loginUrl = "/loginpage.html";
 
     @Bean
     public RegisteredClientRepository registeredClientRepository() {
-        JdbcRegisteredClientRepository jdbcRegisteredClientRepository = new JdbcRegisteredClientRepository(jdbcTemplate);
+        JdbcRegisteredClientRepository jdbcRegisteredClientRepository = new JdbcRegisteredClientRepository(jdbcOperations());
 
         return jdbcRegisteredClientRepository;
 
     }
 
     @Bean
+    public JdbcOperations jdbcOperations() {
+        return new JdbcTemplate(dataSource);
+    }
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+        return authenticationConfiguration.getAuthenticationManager();
+    }
+    @Bean
     public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
+        log.info("Loading SecurityConfig...");
         http.authorizeHttpRequests((requests) -> requests
-                .requestMatchers( "/v1/oauth/create","/oauth/*","/*/*.css", "/*/*.ico", "/*/*.png", "/*/*.jpg", "/*/*.svg", "/login",
+                .requestMatchers( "/v1/oauth/refreshToken","/v1/oauth/login","/oauth/*","/*/*.css", "/*/*.ico", "/*/*.png", "/*/*.jpg", "/*/*.svg", "/login",
                         "/*/*.js", "/*/*.map",loginUrl, "/user/*","/base-grant.html").permitAll() // 允许所有用户访问这些路径
                 .anyRequest().authenticated()
         );
-        http.csrf(csrf -> csrf.ignoringRequestMatchers("/v1/oauth/create","/login", "/logout", "/unlock/apply")); // 禁用CSRF保护
+        http.csrf(csrf -> csrf.ignoringRequestMatchers("/v1/oauth/refreshToken","/v1/oauth/login","/login", "/logout", "/unlock/apply")); // 禁用CSRF保护
         // 表单登录
         http.formLogin(formlogin -> formlogin
                         .loginPage(loginUrl)

@@ -1,0 +1,23 @@
+package com.neton.commonality.common;
+
+/**
+ * @author TheSunshine
+ * @date 2024-10-29 11:39:20
+ */
+public interface SystemErrorCodeConstants {
+
+    // ========== OAUTH2 模块 ==========
+    ErrorCode OAUTH2_UNKNOWN = new ErrorCode(1001001000, "未知错误"); // 预留
+    // 预留 1001001001 ~ 1001001099 错误码，方便前端
+    ErrorCode OAUTH2_ACCESS_TOKEN_NOT_FOUND = new ErrorCode(1001001001, "访问令牌不存在");
+    ErrorCode OAUTH2_ACCESS_TOKEN_TOKEN_EXPIRED = new ErrorCode(1001001002, "访问令牌已过期");
+    ErrorCode OAUTH2_ACCESS_TOKEN_INVALID = new ErrorCode(1001001003, "访问令牌已失效");
+    ErrorCode OAUTH2_REFRESH_TOKEN_NOT_FOUND = new ErrorCode(1001001005, "刷新令牌不存在");
+    ErrorCode OAUTH2_REFRESH_TOKEN_EXPIRED = new ErrorCode(1001001006, "访问令牌已过期");
+    ErrorCode OAUTH2_REFRESH_TOKEN_INVALID = new ErrorCode(1001001007, "刷新令牌已失效");
+    ErrorCode OAUTH2_TOKEN_SMS_ERROR = new ErrorCode(1001001008,"验证码不匹配");
+    ErrorCode OAUTH2_TOKEN_PWD_ERROR = new ErrorCode(1001001009,"密码不匹配");
+    ErrorCode OAUTH2_TOKEN_ACCOUNT_ERROR = new ErrorCode(1001001010,"账户或密码不能为空");
+    ErrorCode OAUTH2_ACCESS_CLIENT_NOT_FOUND = new ErrorCode(1001001011,"client不存在");
+    ErrorCode OAUTH2_REFRESH_TOKEN_IS_NULL = new ErrorCode(1001001012,"刷新令牌不能为空");
+}

@@ -1,6 +1,8 @@
 package com.neton.controller;
 
+import com.neton.commonality.common.CommonResult;
 import com.neton.config.MD5PasswordEncoder;
+import com.neton.service.CustomLoginService;
 import com.nimbusds.oauth2.sdk.client.ClientRegistrationRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -10,10 +12,7 @@ import org.springframework.security.oauth2.server.authorization.client.Registere
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClientRepository;
 import org.springframework.security.oauth2.server.authorization.settings.ClientSettings;
 import org.springframework.security.oauth2.server.authorization.settings.TokenSettings;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.Duration;
 import java.util.Map;
@@ -29,6 +28,9 @@ public class OauthController {
 
     @Autowired
     private RegisteredClientRepository registeredClientRepository;
+
+    @Autowired
+    private CustomLoginService customLoginService;
 
     @Autowired
     private MD5PasswordEncoder passwordEncoder;
@@ -59,4 +61,15 @@ public class OauthController {
         return ResponseEntity.ok(registeredClient);
     }
 
+    @PostMapping("/login")
+    public CommonResult login(@RequestBody Map<String,String> params){
+
+        return customLoginService.getToken(params.get("userName"),params.get("password"));
+    }
+
+    @PostMapping("/refreshToken")
+    public CommonResult refreshToken(@RequestParam String refreshToken){
+
+        return customLoginService.refreshToken(refreshToken);
+    }
 }

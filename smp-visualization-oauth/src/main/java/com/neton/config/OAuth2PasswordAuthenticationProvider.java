@@ -10,10 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.keygen.Base64StringKeyGenerator;
 import org.springframework.security.crypto.keygen.StringKeyGenerator;
-import org.springframework.security.oauth2.core.AuthorizationGrantType;
-import org.springframework.security.oauth2.core.OAuth2AccessToken;
-import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
-import org.springframework.security.oauth2.core.OAuth2ErrorCodes;
+import org.springframework.security.oauth2.core.*;
 import org.springframework.security.oauth2.jwt.JwsHeader;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.oauth2.jwt.JwtClaimsSet;
@@ -30,6 +27,8 @@ import org.springframework.security.oauth2.server.authorization.token.OAuth2Toke
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 import java.security.Principal;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.Base64;
 import java.util.Set;
 import java.util.function.Supplier;
@@ -118,6 +117,7 @@ public class OAuth2PasswordAuthenticationProvider implements AuthenticationProvi
                 .authorizedScopes(authorizedScopes)
                 .tokenType(OAuth2TokenType.ACCESS_TOKEN)
                 .authorizationGrantType(AuthorizationGrantType.PASSWORD)
+                .authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
                 .authorizationGrant(passwordAuthentication)
                 .build();
         // @formatter:on
@@ -132,8 +132,11 @@ public class OAuth2PasswordAuthenticationProvider implements AuthenticationProvi
         OAuth2AccessToken accessToken = new OAuth2AccessToken(OAuth2AccessToken.TokenType.BEARER,
                 jwtAccessToken.getTokenValue(), jwtAccessToken.getIssuedAt(),
                 jwtAccessToken.getExpiresAt(), authorizedScopes);
+
+        OAuth2RefreshToken refreshToken = new OAuth2RefreshToken(
+                refreshTokenGenerator.get(), Instant.now(), Instant.now().plus(30, ChronoUnit.DAYS));
         return new OAuth2AccessTokenAuthenticationToken(
-                registeredClient, clientPrincipal, accessToken);
+                registeredClient, clientPrincipal, accessToken,refreshToken);
     }
     @Override
     public boolean supports(Class<?> authentication) {

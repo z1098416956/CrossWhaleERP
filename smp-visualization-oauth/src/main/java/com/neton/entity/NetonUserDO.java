@@ -9,11 +9,20 @@ import lombok.Data;
 @Data
 public class NetonUserDO {
 
+    public NetonUserDO(String userName, String password, boolean enabled, String role) {
+        this.userName = userName;
+        this.password = password;
+        this.enabled = enabled;
+        this.role = role;
+    }
+
+    public NetonUserDO(){}
+
     private String userName;
 
     private String password;
 
-    private Integer isActive;
+    private boolean enabled;
 
     private String role;
 }
