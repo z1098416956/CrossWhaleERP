@@ -13,7 +13,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>smp-visualization-common-commonality</module>
-        <module>smp-visualization-common-config</module>
+        <module>smp-visualization-common-mybatis</module>
     </modules>
 
     <properties>

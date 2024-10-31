@@ -10,7 +10,7 @@
 
     </parent>
 
-    <artifactId>smp-visualization-common-config</artifactId>
+    <artifactId>smp-visualization-common-mybatis</artifactId>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
