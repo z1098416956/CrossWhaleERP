@@ -2,6 +2,7 @@ package com.neton.service;
 
 import com.neton.commonality.common.CommonResult;
 import com.neton.commonality.common.SystemErrorCodeConstants;
+import com.neton.entity.AccAccountDO;
 import com.neton.util.JwtUtils;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import lombok.extern.slf4j.Slf4j;
@@ -9,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.OAuth2AccessToken;
@@ -49,11 +52,28 @@ public class CustomLoginService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Autowired
+    private UserDetailsService userDetailsService;
+
     public CommonResult<Map<String, Object>> getToken(String userName, String password) {
         if (StringUtils.isEmpty(password) || StringUtils.isEmpty(userName)) {
-            return CommonResult.error(SystemErrorCodeConstants.OAUTH2_TOKEN_ACCOUNT_ERROR);
+            return CommonResult.error(SystemErrorCodeConstants.OAUTH2_TOKEN_ACCOUNT_ISNULL);
         }
         try {
+
+            AccAccountDO userDetails = (AccAccountDO)userDetailsService.loadUserByUsername(userName);
+            if (userDetails.getEnabled() ==  false){
+                return CommonResult.error(SystemErrorCodeConstants.OAUTH2_ACCOUNT_IS_ENABLE);
+            }
+            if (StringUtils.isEmpty(userDetails.getPassword())){
+                return CommonResult.error(SystemErrorCodeConstants.OAUTH2_TOKEN_PWD_ERROR);
+            }
+            if (!userDetails.getPassword().equals(passwordEncoder.encode(password))){
+                return CommonResult.error(SystemErrorCodeConstants.OAUTH2_TOKEN_ACCOUNT_ERROR);
+            }
+            Map<String,Object> map = new HashMap<>();
+            map.put("userName",userDetails.getUsername());
+            map.put("account",userDetails.getAccountNo());
             // 1. 进行用户认证
             UsernamePasswordAuthenticationToken authRequest = new UsernamePasswordAuthenticationToken(userName, password);
             Authentication authResult = authenticationManager.authenticate(authRequest);
@@ -73,7 +93,7 @@ public class CustomLoginService {
 
             JwsHeader headers = JwtUtils.headers().build();
             JwtClaimsSet claims = JwtUtils.accessTokenClaims(
-                    registeredClient, null, authorization.getPrincipalName(), registeredClient.getScopes()).build();
+                    registeredClient, null, authorization.getPrincipalName(), registeredClient.getScopes(),map).build();
             JwtEncoderParameters jwtEncoderParameters = JwtEncoderParameters.from(headers, claims);
             NimbusJwtEncoder jwtEncoder = new NimbusJwtEncoder(jwkSource);
             Jwt jwtAccessToken = jwtEncoder.encode(jwtEncoderParameters);
@@ -120,7 +140,11 @@ public class CustomLoginService {
         if (authorization == null) {
             return CommonResult.error(SystemErrorCodeConstants.OAUTH2_REFRESH_TOKEN_NOT_FOUND);
         }
-
+        UsernamePasswordAuthenticationToken o = (UsernamePasswordAuthenticationToken)authorization.getAttributes().get("java.security.Principal");
+        AccAccountDO principal = (AccAccountDO)o.getPrincipal();
+        Map<String, Object> map = new HashMap<>();
+        map.put("userName",principal.getUsername());
+        map.put("account",principal.getAccountNo());
         // 获取客户端和认证用户信息
         RegisteredClient registeredClient = registeredClientRepository.findByClientId("client");
         if (registeredClient == null) {
@@ -136,7 +160,7 @@ public class CustomLoginService {
         // 创建新的 access token
         JwsHeader headers = JwtUtils.headers().build();
         JwtClaimsSet claims = JwtUtils.accessTokenClaims(
-                registeredClient, null, authorization.getPrincipalName(), registeredClient.getScopes()).build();
+                registeredClient, null, authorization.getPrincipalName(), registeredClient.getScopes(),map).build();
         JwtEncoderParameters jwtEncoderParameters = JwtEncoderParameters.from(headers, claims);
         NimbusJwtEncoder jwtEncoder = new NimbusJwtEncoder(jwkSource);
         Jwt jwtAccessToken = jwtEncoder.encode(jwtEncoderParameters);

@@ -17,7 +17,9 @@ public interface SystemErrorCodeConstants {
     ErrorCode OAUTH2_REFRESH_TOKEN_INVALID = new ErrorCode(1001001007, "刷新令牌已失效");
     ErrorCode OAUTH2_TOKEN_SMS_ERROR = new ErrorCode(1001001008,"验证码不匹配");
     ErrorCode OAUTH2_TOKEN_PWD_ERROR = new ErrorCode(1001001009,"密码不匹配");
-    ErrorCode OAUTH2_TOKEN_ACCOUNT_ERROR = new ErrorCode(1001001010,"账户或密码不能为空");
+    ErrorCode OAUTH2_TOKEN_ACCOUNT_ISNULL = new ErrorCode(1001001010,"账户或密码不能为空");
     ErrorCode OAUTH2_ACCESS_CLIENT_NOT_FOUND = new ErrorCode(1001001011,"client不存在");
     ErrorCode OAUTH2_REFRESH_TOKEN_IS_NULL = new ErrorCode(1001001012,"刷新令牌不能为空");
+    ErrorCode OAUTH2_ACCOUNT_IS_ENABLE = new ErrorCode(1001001013,"账号已被禁用");
+    ErrorCode OAUTH2_TOKEN_ACCOUNT_ERROR = new ErrorCode(1001001014,"账户或密码不匹配");
 }

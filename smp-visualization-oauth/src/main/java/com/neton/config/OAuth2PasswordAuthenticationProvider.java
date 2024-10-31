@@ -108,7 +108,7 @@ public class OAuth2PasswordAuthenticationProvider implements AuthenticationProvi
         JwsHeader.Builder headersBuilder = JwtUtils.headers();
         headersBuilder.header("client-id", registeredClient.getClientId());
         headersBuilder.header("authorization-grant-type", passwordAuthentication.getGrantType().getValue());
-        JwtClaimsSet.Builder claimsBuilder = JwtUtils.accessTokenClaims(registeredClient, issuer, authorization.getPrincipalName(), authorizedScopes);
+        JwtClaimsSet.Builder claimsBuilder = JwtUtils.accessTokenClaims(registeredClient, issuer, authorization.getPrincipalName(), authorizedScopes,null);
         // @formatter:off
         JwtEncodingContext context = JwtEncodingContext.with(headersBuilder, claimsBuilder)
                 .registeredClient(registeredClient)

@@ -10,6 +10,7 @@ import org.springframework.util.StringUtils;
 
 import java.time.Instant;
 import java.util.Collections;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -25,7 +26,8 @@ public final class JwtUtils {
     }
     public static JwtClaimsSet.Builder accessTokenClaims(RegisteredClient registeredClient,
                                                          String issuer, String subject,
-                                                         Set<String> authorizedScopes) {
+                                                         Set<String> authorizedScopes,
+                                                         Map<String,Object> params) {
         Instant issuedAt = Instant.now();
         Instant expiresAt = issuedAt
                 .plus(registeredClient.getTokenSettings().getAccessTokenTimeToLive());
@@ -53,6 +55,12 @@ public final class JwtUtils {
         if (!CollectionUtils.isEmpty(authorizedScopes)) {
             claimsBuilder.claim(OAuth2ParameterNames.SCOPE, authorizedScopes);
             //claimsBuilder.claim("wangcl", "aaa");
+        }
+        if (!params.isEmpty()){
+            for (String obj : params.keySet()){
+                Object o = params.get(obj);
+                claimsBuilder.claim(obj,o);
+            }
         }
         // @formatter:on
         return claimsBuilder;
