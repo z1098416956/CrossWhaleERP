@@ -14,6 +14,8 @@
         <module>smp-visualization-analysis</module>
         <module>smp-visualization-oauth</module>
         <module>smp-visualization-web</module>
+        <module>smp-visualization-common/smp-visualization-common-commonality</module>
+        <module>smp-visualization-common/smp-visualization-common-config</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>

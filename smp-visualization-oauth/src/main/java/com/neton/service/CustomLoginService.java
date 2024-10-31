@@ -1,7 +1,7 @@
 package com.neton.service;
 
-import com.neton.commonality.common.CommonResult;
-import com.neton.commonality.common.SystemErrorCodeConstants;
+import com.neton.common.CommonResult;
+import com.neton.common.SystemErrorCodeConstants;
 import com.neton.entity.AccAccountDO;
 import com.neton.util.JwtUtils;
 import com.nimbusds.jose.jwk.source.JWKSource;

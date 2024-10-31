@@ -1,4 +1,4 @@
-package com.neton.commonality.mybatis.query;
+package com.neton.mybatis.query;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.ArrayUtils;

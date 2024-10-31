@@ -3,7 +3,7 @@ package com.neton.entity;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.neton.commonality.mybatis.base.BaseDO;
+import com.neton.mybatis.base.BaseDO;
 import com.neton.deserializer.AccountDeserializer;
 import lombok.AllArgsConstructor;
 import lombok.Data;

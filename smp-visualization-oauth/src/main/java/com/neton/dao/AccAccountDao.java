@@ -1,8 +1,8 @@
 package com.neton.dao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.neton.commonality.mybatis.query.LambdaQueryWrapperX;
 import com.neton.entity.AccAccountDO;
+import com.neton.mybatis.query.LambdaQueryWrapperX;
 
 import java.util.List;
 

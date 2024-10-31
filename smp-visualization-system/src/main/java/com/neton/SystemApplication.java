@@ -14,7 +14,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 @EnableDiscoveryClient
 @EnableFeignClients
 @MapperScan({"com.neton.dao"})
-@SpringBootApplication(scanBasePackages = {"com.neton.commonality","com.neton"})
+@SpringBootApplication(scanBasePackages = {"com.neton.config","com.neton"})
 public class SystemApplication {
     public static void main(String[] args) {
         SpringApplication.run(SystemApplication.class,args);

@@ -1,9 +1,9 @@
 package com.neton.service.impl.system;
 
-import com.neton.commonality.common.CommonResult;
-import com.neton.commonality.req.QueryAccAccountVO;
-import com.neton.commonality.res.AccAccountVO;
+import com.neton.common.CommonResult;
 import com.neton.feign.system.SystemServiceClient;
+import com.neton.req.QueryAccAccountVO;
+import com.neton.res.AccAccountVO;
 import com.neton.service.system.WebAccAccountService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

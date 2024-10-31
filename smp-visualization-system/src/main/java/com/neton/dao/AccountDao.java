@@ -1,10 +1,10 @@
 package com.neton.dao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.neton.commonality.mybatis.query.LambdaQueryWrapperX;
-import com.neton.commonality.req.QueryAccAccountVO;
-import com.neton.commonality.res.AccAccountVO;
 import com.neton.entity.AccAccountDO;
+import com.neton.mybatis.query.LambdaQueryWrapperX;
+import com.neton.req.QueryAccAccountVO;
+import com.neton.res.AccAccountVO;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

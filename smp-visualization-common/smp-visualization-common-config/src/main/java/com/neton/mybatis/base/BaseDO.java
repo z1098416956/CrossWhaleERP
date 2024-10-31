@@ -1,4 +1,4 @@
-package com.neton.commonality.mybatis.base;
+package com.neton.mybatis.base;
 
 import com.baomidou.mybatisplus.annotation.*;
 import com.baomidou.mybatisplus.extension.activerecord.Model;

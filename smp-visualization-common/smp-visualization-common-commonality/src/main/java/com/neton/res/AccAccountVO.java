@@ -1,4 +1,4 @@
-package com.neton.commonality.res;
+package com.neton.res;
 
 import lombok.Data;
 

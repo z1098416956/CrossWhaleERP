@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.neton.dao.AccountDao">
 
-    <select id="queryAccountInfoList" resultType="com.neton.commonality.res.AccAccountVO">
+    <select id="queryAccountInfoList" resultType="com.neton.res.AccAccountVO">
         select * from acc_account
         where 1=1
         <if test="params.id != null">

@@ -1,4 +1,4 @@
-package com.neton.commonality.common;
+package com.neton.common;
 
 /**
  * @author TheSunshine

@@ -1,9 +1,9 @@
 package com.neton.service.impl;
 
-import com.neton.commonality.common.CommonResult;
-import com.neton.commonality.req.QueryAccAccountVO;
-import com.neton.commonality.res.AccAccountVO;
+import com.neton.common.CommonResult;
 import com.neton.dao.AccountDao;
+import com.neton.req.QueryAccAccountVO;
+import com.neton.res.AccAccountVO;
 import com.neton.service.AccAccountService;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;

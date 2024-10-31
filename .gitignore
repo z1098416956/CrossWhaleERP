@@ -5,3 +5,5 @@ smp-visualization-system/target/
 smp-visualization-web/target/
 smp-visualization-common/target/
 smp-visualization-analysis/target/
+smp-visualization-common/smp-visualization-common-commonality/target/
+smp-visualization-common/smp-visualization-common-config/target/

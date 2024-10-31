@@ -1,8 +1,8 @@
 package com.neton.feign.system;
 
-import com.neton.commonality.common.CommonResult;
-import com.neton.commonality.req.QueryAccAccountVO;
-import com.neton.commonality.res.AccAccountVO;
+import com.neton.common.CommonResult;
+import com.neton.req.QueryAccAccountVO;
+import com.neton.res.AccAccountVO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

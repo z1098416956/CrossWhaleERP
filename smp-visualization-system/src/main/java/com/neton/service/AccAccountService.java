@@ -1,8 +1,9 @@
 package com.neton.service;
 
-import com.neton.commonality.common.CommonResult;
-import com.neton.commonality.req.QueryAccAccountVO;
-import com.neton.commonality.res.AccAccountVO;
+
+import com.neton.common.CommonResult;
+import com.neton.req.QueryAccAccountVO;
+import com.neton.res.AccAccountVO;
 
 import java.util.List;
 

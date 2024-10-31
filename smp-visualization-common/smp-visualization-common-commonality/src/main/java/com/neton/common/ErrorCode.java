@@ -1,4 +1,4 @@
-package com.neton.commonality.common;
+package com.neton.common;
 
 /**
  * @param code    错误码

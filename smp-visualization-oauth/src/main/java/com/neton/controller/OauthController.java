@@ -1,6 +1,6 @@
 package com.neton.controller;
 
-import com.neton.commonality.common.CommonResult;
+import com.neton.common.CommonResult;
 import com.neton.config.MD5PasswordEncoder;
 import com.neton.service.CustomLoginService;
 import com.nimbusds.oauth2.sdk.client.ClientRegistrationRequest;

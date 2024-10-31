@@ -10,7 +10,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
  * @date ${YEAR}-${MONTH}-${DAY} ${HOUR}:${MINUTE}:${SECOND}
  */
 @MapperScan({"com.neton.dao"})
-@SpringBootApplication(scanBasePackages = {"com.neton.commonality","com.neton"})
+@SpringBootApplication(scanBasePackages = {"com.neton.config","com.neton"})
 @EnableDiscoveryClient
 public class OauthApplication {
     public static void main(String[] args) {
