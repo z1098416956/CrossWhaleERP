@@ -98,7 +98,9 @@ public class OAuth2JdbcConfiguration {
                         "/*/*.js", "/*/*.map",loginUrl, "/user/*","/base-grant.html").permitAll() // 允许所有用户访问这些路径
                 .anyRequest().authenticated()
         );
-        http.csrf(csrf -> csrf.ignoringRequestMatchers("/v1/oauth/refreshToken","/v1/oauth/login","/login", "/logout", "/unlock/apply")); // 禁用CSRF保护
+        //csrf.ignoringRequestMatchers("/v1/oauth/refreshToken","/v1/oauth/login","/login", "/logout", "/unlock/apply")
+        http.cors(cosr -> cosr.disable())
+                .csrf(csrf -> csrf.disable()); // 禁用CSRF保护
         // 表单登录
         http.formLogin(formlogin -> formlogin
                         .loginPage(loginUrl)
