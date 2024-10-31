@@ -6,7 +6,7 @@ spring:
   profiles:
     active: dev # 激活的配置文件
   config:
-    import: nacos:smp-visualization-web.yaml
+    import: nacos:smp-visualization-web-dev.yaml
     enabled: true
   cloud:
     nacos:

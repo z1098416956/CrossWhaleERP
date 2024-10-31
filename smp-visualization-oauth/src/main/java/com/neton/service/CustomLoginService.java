@@ -55,6 +55,12 @@ public class CustomLoginService {
     @Autowired
     private UserDetailsService userDetailsService;
 
+    /**
+     * 账户密码登录
+     * @param userName
+     * @param password
+     * @return
+     */
     public CommonResult<Map<String, Object>> getToken(String userName, String password) {
         if (StringUtils.isEmpty(password) || StringUtils.isEmpty(userName)) {
             return CommonResult.error(SystemErrorCodeConstants.OAUTH2_TOKEN_ACCOUNT_ISNULL);
@@ -131,6 +137,11 @@ public class CustomLoginService {
         }
     }
 
+    /**
+     * 刷新token
+     * @param refreshToken
+     * @return
+     */
     public CommonResult<Map<String, Object>> refreshToken(String refreshToken) {
         if (StringUtils.isEmpty(refreshToken)) {
             return CommonResult.error(SystemErrorCodeConstants.OAUTH2_REFRESH_TOKEN_IS_NULL);

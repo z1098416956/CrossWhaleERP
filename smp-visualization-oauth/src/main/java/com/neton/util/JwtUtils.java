@@ -54,9 +54,8 @@ public final class JwtUtils {
                 .notBefore(issuedAt);
         if (!CollectionUtils.isEmpty(authorizedScopes)) {
             claimsBuilder.claim(OAuth2ParameterNames.SCOPE, authorizedScopes);
-            //claimsBuilder.claim("wangcl", "aaa");
         }
-        if (!params.isEmpty()){
+        if (params != null && !params.isEmpty()){
             for (String obj : params.keySet()){
                 Object o = params.get(obj);
                 claimsBuilder.claim(obj,o);
