@@ -10,6 +10,11 @@
     </parent>
 
     <artifactId>smp-visualization-common</artifactId>
+    <packaging>pom</packaging>
+    <modules>
+        <module>smp-visualization-common-commonality</module>
+        <module>smp-visualization-common-config</module>
+    </modules>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
