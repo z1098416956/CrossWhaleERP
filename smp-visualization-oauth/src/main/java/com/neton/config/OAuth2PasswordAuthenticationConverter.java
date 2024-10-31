@@ -1,7 +1,6 @@
 package com.neton.config;
 
 import com.neton.util.OAuth2EndpointUtils;
-import javax.servlet.ServletRequest;
 
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.security.core.Authentication;

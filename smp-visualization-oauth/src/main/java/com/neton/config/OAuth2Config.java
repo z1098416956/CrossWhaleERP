@@ -8,6 +8,9 @@ import org.springframework.jdbc.support.lob.DefaultLobHandler;
 import org.springframework.jdbc.support.lob.LobHandler;
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClientRepository;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
 
 /**
  * @author TheSunshine
@@ -16,7 +19,17 @@ import org.springframework.security.oauth2.server.authorization.client.Registere
 @Configuration
 public class OAuth2Config {
 
+    @Bean
+    public CorsFilter corsFilter() {
+        CorsConfiguration config = new CorsConfiguration();
+        config.addAllowedOrigin("*"); // 设置前端的域
+        config.addAllowedMethod("*"); // 允许所有方法
+        config.addAllowedHeader("*"); // 允许所有头部
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", config);
 
+        return new CorsFilter(source);
+    }
     @Bean
     public LobHandler lobHandler() {
         return new DefaultLobHandler();
