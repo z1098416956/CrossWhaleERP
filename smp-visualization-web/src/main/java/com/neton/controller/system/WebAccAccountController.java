@@ -3,12 +3,10 @@ package com.neton.controller.system;
 import com.neton.common.CommonResult;
 import com.neton.req.QueryAccAccountVO;
 import com.neton.res.AccAccountVO;
+import com.neton.res.UserInfoVO;
 import com.neton.service.system.WebAccAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -32,5 +30,11 @@ public class WebAccAccountController {
     public CommonResult<List<AccAccountVO>> queryAccountInfoList(@RequestBody QueryAccAccountVO queryAccAccountVO){
 
         return webAccAccountService.queryAccountInfoList(queryAccAccountVO);
+    }
+
+    @GetMapping("/getUserInfo")
+    public CommonResult<UserInfoVO> getUserInfo(){
+
+        return webAccAccountService.getUserInfo();
     }
 }
