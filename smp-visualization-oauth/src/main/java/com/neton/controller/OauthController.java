@@ -2,6 +2,7 @@ package com.neton.controller;
 
 import com.neton.common.CommonResult;
 import com.neton.config.MD5PasswordEncoder;
+import com.neton.req.QueryAccAccountVO;
 import com.neton.service.CustomLoginService;
 import com.nimbusds.oauth2.sdk.client.ClientRegistrationRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,9 +63,9 @@ public class OauthController {
     }
 
     @PostMapping("/login")
-    public CommonResult login(@RequestBody Map<String,String> params){
+    public CommonResult login(@RequestBody QueryAccAccountVO params){
 
-        return customLoginService.getToken(params.get("userName"),params.get("password"));
+        return customLoginService.getToken(params.getUsername(),params.getPassword());
     }
 
     @PostMapping("/refreshToken")

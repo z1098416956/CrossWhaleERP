@@ -20,10 +20,10 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * @date 2024-10-29 13:37:28
  */
 @Configuration
-public class OAuth2Config implements WebMvcConfigurer {
+public class OAuth2Config {
 
     //解决跨域
-    @Override
+    /*@Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")	// 允许跨域访问的路径
                 .allowedOrigins("*")	// 允许跨域访问的源
@@ -31,7 +31,7 @@ public class OAuth2Config implements WebMvcConfigurer {
                 .maxAge(168000)	// 预检间隔时间
                 .allowedHeaders("*")  // 允许头部设置
                 .allowCredentials(true);	// 是否发送cookie
-    }
+    }*/
 
 
     @Bean

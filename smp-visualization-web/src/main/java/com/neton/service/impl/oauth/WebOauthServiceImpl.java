@@ -2,6 +2,7 @@ package com.neton.service.impl.oauth;
 
 import com.neton.common.CommonResult;
 import com.neton.feign.oauth.OauthServiceClient;
+import com.neton.req.QueryAccAccountVO;
 import com.neton.service.oauth.WebOauthService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,7 @@ public class WebOauthServiceImpl implements WebOauthService {
     @Autowired
     private OauthServiceClient oauthServiceClient;
     @Override
-    public CommonResult login(Map<String, String> params) {
+    public CommonResult login(QueryAccAccountVO params) {
 
         return oauthServiceClient.login(params);
     }
