@@ -83,6 +83,12 @@
         </dependency>
         <dependency>
             <groupId>com.neton</groupId>
+            <artifactId>smp-visualization-common-interceptor</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.neton</groupId>
             <artifactId>smp-visualization-common-mybatis</artifactId>
             <version>1.0-SNAPSHOT</version>
             <scope>compile</scope>

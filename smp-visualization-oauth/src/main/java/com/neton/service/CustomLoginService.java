@@ -78,8 +78,9 @@ public class CustomLoginService {
                 return CommonResult.error(SystemErrorCodeConstants.OAUTH2_TOKEN_ACCOUNT_ERROR);
             }
             Map<String,Object> map = new HashMap<>();
-            map.put("userName",userDetails.getUsername());
+            map.put("username",userDetails.getUsername());
             map.put("account",userDetails.getAccountNo());
+            map.put("id",userDetails.getId());
             // 1. 进行用户认证
             UsernamePasswordAuthenticationToken authRequest = new UsernamePasswordAuthenticationToken(userName, password);
             Authentication authResult = authenticationManager.authenticate(authRequest);
@@ -156,6 +157,7 @@ public class CustomLoginService {
         Map<String, Object> map = new HashMap<>();
         map.put("userName",principal.getUsername());
         map.put("account",principal.getAccountNo());
+        map.put("id",principal.getId());
         // 获取客户端和认证用户信息
         RegisteredClient registeredClient = registeredClientRepository.findByClientId("client");
         if (registeredClient == null) {

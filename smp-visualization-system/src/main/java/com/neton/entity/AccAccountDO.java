@@ -41,4 +41,10 @@ public class AccAccountDO extends BaseDO<AccAccountDO> {
     @TableField(value = "enabled")
     private Boolean enabled;
 
+    /**
+     * 头像
+     */
+    @TableField(value = "avatar")
+    private String avatar;
+
 }

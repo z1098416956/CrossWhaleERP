@@ -9,7 +9,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
  * @author TheSunshine
  * @date ${YEAR}-${MONTH}-${DAY} ${HOUR}:${MINUTE}:${SECOND}
  */
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = {"com.neton"})
 @EnableDiscoveryClient
 @EnableFeignClients
 public class WebApplication {

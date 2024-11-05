@@ -23,4 +23,8 @@ public class UserInfoVO {
      * 头像
      */
     private String avatar;
+
+    private Long id;
+
+    private String accountNo;
 }

@@ -4,6 +4,7 @@ package com.neton.service;
 import com.neton.common.CommonResult;
 import com.neton.req.QueryAccAccountVO;
 import com.neton.res.AccAccountVO;
+import com.neton.res.UserInfoVO;
 
 import java.util.List;
 
@@ -19,4 +20,11 @@ public interface AccAccountService {
      * @return
      */
     public CommonResult<List<AccAccountVO>> queryAccountInfoList(QueryAccAccountVO queryAccAccountVO);
+
+
+    /**
+     * 获取用户信息
+     * @return
+     */
+    public CommonResult<UserInfoVO> getUserInfo();
 }

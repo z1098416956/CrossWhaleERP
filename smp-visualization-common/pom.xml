@@ -14,6 +14,7 @@
     <modules>
         <module>smp-visualization-common-commonality</module>
         <module>smp-visualization-common-mybatis</module>
+        <module>smp-visualization-common-interceptor</module>
     </modules>
 
     <properties>
