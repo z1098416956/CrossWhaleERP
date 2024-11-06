@@ -3,6 +3,7 @@ package com.neton.feign.system;
 import com.neton.common.CommonResult;
 import com.neton.common.PageUtil;
 import com.neton.feign.FeignConfig;
+import com.neton.req.CreateAccAccountVO;
 import com.neton.req.QueryAccAccountVO;
 import com.neton.res.AccAccountVO;
 import com.neton.res.UserInfoVO;
@@ -33,4 +34,7 @@ public interface SystemServiceClient {
 
     @PostMapping("/v1/account/queryUserInfoPage")
     public CommonResult<PageUtil<UserInfoVO>> queryUserInfoPage(@RequestBody QueryAccAccountVO queryAccAccountVO);
+
+    @PostMapping("/v1/account/createUserInfo")
+    public CommonResult createUserInfo(@RequestBody CreateAccAccountVO createAccAccountVO);
 }

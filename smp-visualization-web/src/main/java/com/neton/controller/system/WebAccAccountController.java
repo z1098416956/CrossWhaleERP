@@ -2,6 +2,7 @@ package com.neton.controller.system;
 
 import com.neton.common.CommonResult;
 import com.neton.common.PageUtil;
+import com.neton.req.CreateAccAccountVO;
 import com.neton.req.QueryAccAccountVO;
 import com.neton.res.AccAccountVO;
 import com.neton.res.UserInfoVO;
@@ -43,5 +44,11 @@ public class WebAccAccountController {
     public CommonResult<PageUtil<UserInfoVO>> queryUserInfoPage(@RequestBody QueryAccAccountVO queryAccAccountVO){
 
         return webAccAccountService.queryUserInfoPage(queryAccAccountVO);
+    }
+
+    @PostMapping("/createUserInfo")
+    public CommonResult createUserInfo(@RequestBody CreateAccAccountVO createAccAccountVO){
+
+        return webAccAccountService.createUserInfo(createAccAccountVO);
     }
 }

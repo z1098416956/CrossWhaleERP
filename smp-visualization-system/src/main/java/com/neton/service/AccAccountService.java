@@ -3,6 +3,7 @@ package com.neton.service;
 
 import com.neton.common.CommonResult;
 import com.neton.common.PageUtil;
+import com.neton.req.CreateAccAccountVO;
 import com.neton.req.QueryAccAccountVO;
 import com.neton.res.AccAccountVO;
 import com.neton.res.UserInfoVO;
@@ -30,4 +31,11 @@ public interface AccAccountService {
     public CommonResult<UserInfoVO> getUserInfo();
 
     public CommonResult<PageUtil<UserInfoVO>> queryUserInfoPage(QueryAccAccountVO queryAccAccountVO);
+
+    /**
+     * 创建用户
+     * @param createAccAccountVO
+     * @return
+     */
+    public CommonResult createUserInfo(CreateAccAccountVO createAccAccountVO);
 }

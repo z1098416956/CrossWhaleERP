@@ -9,5 +9,5 @@ public class PageUtil <T>{
 
     public Long total;
 
-    private List<T> pateList;
+    private List<T> pageList;
 }

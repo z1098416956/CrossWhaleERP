@@ -22,4 +22,9 @@ public interface SystemErrorCodeConstants {
     ErrorCode OAUTH2_REFRESH_TOKEN_IS_NULL = new ErrorCode(1001001012,"刷新令牌不能为空");
     ErrorCode OAUTH2_ACCOUNT_IS_ENABLE = new ErrorCode(1001001013,"账号已被禁用");
     ErrorCode OAUTH2_TOKEN_ACCOUNT_ERROR = new ErrorCode(1001001014,"账户或密码不匹配");
+    //================系统模块===================1001002001
+    ErrorCode SYSTEM_ACCOUNT_NO_ERR = new ErrorCode(1001002001,"账号不能为空");
+    ErrorCode SYSTEM_USERNAME_ERR = new ErrorCode(1001002002,"用户名称不能为空");
+    ErrorCode SYSTEM_ACCOUNT_NO_REPEAT = new ErrorCode(1001002003,"账号重复");
+    ErrorCode SYSTEM_USERNAME_REPEAT = new ErrorCode(1001002004,"用户名称重复");
 }

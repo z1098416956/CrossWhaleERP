@@ -1,5 +1,6 @@
 package com.neton.config;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.neton.serializer.LongToStringSerializer;
@@ -14,6 +15,7 @@ public class JacksonConfig {
         SimpleModule module = new SimpleModule();
         module.addSerializer(Long.class, new LongToStringSerializer());
         module.addSerializer(Long.TYPE, new LongToStringSerializer());
+        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         objectMapper.registerModule(module);
         return objectMapper;
     }

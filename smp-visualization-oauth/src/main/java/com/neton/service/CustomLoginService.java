@@ -4,6 +4,7 @@ import com.neton.common.CommonResult;
 import com.neton.common.SystemErrorCodeConstants;
 import com.neton.entity.AccAccountDO;
 import com.neton.util.JwtUtils;
+import com.neton.utils.BCryptUtils;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,7 +75,7 @@ public class CustomLoginService {
             if (StringUtils.isEmpty(userDetails.getPassword())){
                 return CommonResult.error(SystemErrorCodeConstants.OAUTH2_TOKEN_PWD_ERROR);
             }
-            if (!userDetails.getPassword().equals(passwordEncoder.encode(password))){
+            if (!BCryptUtils.matchesPassword(password,userDetails.getPassword())){
                 return CommonResult.error(SystemErrorCodeConstants.OAUTH2_TOKEN_ACCOUNT_ERROR);
             }
             Map<String,Object> map = new HashMap<>();

@@ -3,6 +3,7 @@ package com.neton.service.impl.system;
 import com.neton.common.CommonResult;
 import com.neton.common.PageUtil;
 import com.neton.feign.system.SystemServiceClient;
+import com.neton.req.CreateAccAccountVO;
 import com.neton.req.QueryAccAccountVO;
 import com.neton.res.AccAccountVO;
 import com.neton.res.UserInfoVO;
@@ -44,5 +45,11 @@ public class WebAccAccountServiceImpl implements WebAccAccountService {
     @Override
     public CommonResult<PageUtil<UserInfoVO>> queryUserInfoPage(QueryAccAccountVO queryAccAccountVO) {
         return systemServiceClient.queryUserInfoPage(queryAccAccountVO);
+    }
+
+    @Override
+    public CommonResult createUserInfo(CreateAccAccountVO createAccAccountVO) {
+
+        return systemServiceClient.createUserInfo(createAccAccountVO);
     }
 }

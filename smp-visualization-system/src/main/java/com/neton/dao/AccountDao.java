@@ -7,6 +7,7 @@ import com.neton.mybatis.query.LambdaQueryWrapperX;
 import com.neton.req.QueryAccAccountVO;
 import com.neton.res.AccAccountVO;
 import com.neton.res.UserInfoVO;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -20,6 +21,12 @@ public interface AccountDao extends BaseMapper<AccAccountDO> {
     default List<AccAccountDO> queryAccountInfo(String accountNo){
         LambdaQueryWrapperX<AccAccountDO> queryWrapperX = new LambdaQueryWrapperX<>();
         queryWrapperX.eq(AccAccountDO::getAccountNo,accountNo);
+        return selectList(queryWrapperX);
+    }
+    default List<AccAccountDO> queryAccountInfoByParams(String accountNo,String userName){
+        LambdaQueryWrapperX<AccAccountDO> queryWrapperX = new LambdaQueryWrapperX<>();
+        queryWrapperX.eq(StringUtils.isNotBlank(accountNo),AccAccountDO::getAccountNo,accountNo);
+        queryWrapperX.eq(StringUtils.isNotBlank(userName),AccAccountDO::getAccountName,userName);
         return selectList(queryWrapperX);
     }
 

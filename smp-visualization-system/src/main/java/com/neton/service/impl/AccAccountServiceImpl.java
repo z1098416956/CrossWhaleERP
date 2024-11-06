@@ -4,17 +4,22 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.neton.common.CommonResult;
 import com.neton.common.PageUtil;
+import com.neton.common.SystemErrorCodeConstants;
 import com.neton.dao.AccountDao;
 import com.neton.entity.AccAccountDO;
+import com.neton.req.CreateAccAccountVO;
 import com.neton.req.QueryAccAccountVO;
 import com.neton.res.AccAccountVO;
 import com.neton.res.UserInfoVO;
 import com.neton.service.AccAccountService;
+import com.neton.utils.BCryptUtils;
 import com.neton.utils.SecurityUtils;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,8 +66,41 @@ public class AccAccountServiceImpl implements AccAccountService {
         page.setSize(queryAccAccountVO.getSize());
         IPage<UserInfoVO> iPage = accountDao.queryUserInfoPage(page, queryAccAccountVO);
         PageUtil<UserInfoVO> pageUtil = new PageUtil<>();
-        pageUtil.setPateList(iPage.getRecords());
+        pageUtil.setPageList(iPage.getRecords());
         pageUtil.setTotal(iPage.getTotal());
         return CommonResult.success(pageUtil);
+    }
+
+    /**
+     * 创建用户
+     *
+     * @param createAccAccountVO
+     * @return
+     */
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public CommonResult createUserInfo(CreateAccAccountVO createAccAccountVO) {
+        if (StringUtils.isBlank(createAccAccountVO.getAccountNo())){
+            return CommonResult.error(SystemErrorCodeConstants.SYSTEM_ACCOUNT_NO_ERR);
+        }
+        if (StringUtils.isBlank(createAccAccountVO.getUsername())){
+            return CommonResult.error(SystemErrorCodeConstants.SYSTEM_USERNAME_ERR);
+        }
+        List<AccAccountDO> accAccountDOS = accountDao.queryAccountInfoByParams(createAccAccountVO.getAccountNo(), null);
+        if (!accAccountDOS.isEmpty()){
+            return CommonResult.error(SystemErrorCodeConstants.SYSTEM_USERNAME_ERR);
+        }
+        List<AccAccountDO> accAccountDOS1 = accountDao.queryAccountInfoByParams(null, createAccAccountVO.getUsername());
+        if (!accAccountDOS1.isEmpty()){
+            return CommonResult.error(SystemErrorCodeConstants.SYSTEM_USERNAME_REPEAT);
+        }
+        AccAccountDO accAccountDO = new AccAccountDO();
+        accAccountDO.setAccountNo(createAccAccountVO.getAccountNo());
+        accAccountDO.setAccountName(createAccAccountVO.getUsername());
+        accAccountDO.setEnabled(true);
+        accAccountDO.setIsDeleted(0);
+        accAccountDO.setAccountPassword(BCryptUtils.getPWDStr("123456"));
+        accountDao.insert(accAccountDO);
+        return CommonResult.success();
     }
 }
