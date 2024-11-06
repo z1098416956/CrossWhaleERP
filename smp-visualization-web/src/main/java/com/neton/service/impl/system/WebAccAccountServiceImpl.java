@@ -1,17 +1,16 @@
 package com.neton.service.impl.system;
 
 import com.neton.common.CommonResult;
+import com.neton.common.PageUtil;
 import com.neton.feign.system.SystemServiceClient;
 import com.neton.req.QueryAccAccountVO;
 import com.neton.res.AccAccountVO;
 import com.neton.res.UserInfoVO;
 import com.neton.service.system.WebAccAccountService;
-import com.neton.utils.SecurityUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -40,5 +39,10 @@ public class WebAccAccountServiceImpl implements WebAccAccountService {
     public CommonResult<UserInfoVO> getUserInfo() {
         CommonResult<UserInfoVO> userInfo = systemServiceClient.getUserInfo();
         return userInfo;
+    }
+
+    @Override
+    public CommonResult<PageUtil<UserInfoVO>> queryUserInfoPage(QueryAccAccountVO queryAccAccountVO) {
+        return systemServiceClient.queryUserInfoPage(queryAccAccountVO);
     }
 }

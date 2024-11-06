@@ -9,3 +9,4 @@ smp-visualization-common/smp-visualization-common-commonality/target/
 smp-visualization-common/smp-visualization-common-config/target/
 smp-visualization-common/smp-visualization-common-interceptor/target/
 logs/
+smp-visualization-common/smp-visualization-common-serializer/target/

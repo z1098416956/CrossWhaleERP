@@ -1,6 +1,7 @@
 package com.neton.feign.system;
 
 import com.neton.common.CommonResult;
+import com.neton.common.PageUtil;
 import com.neton.feign.FeignConfig;
 import com.neton.req.QueryAccAccountVO;
 import com.neton.res.AccAccountVO;
@@ -29,4 +30,7 @@ public interface SystemServiceClient {
 
     @GetMapping("/v1/account/getUserInfo")
     public CommonResult<UserInfoVO> getUserInfo();
+
+    @PostMapping("/v1/account/queryUserInfoPage")
+    public CommonResult<PageUtil<UserInfoVO>> queryUserInfoPage(@RequestBody QueryAccAccountVO queryAccAccountVO);
 }

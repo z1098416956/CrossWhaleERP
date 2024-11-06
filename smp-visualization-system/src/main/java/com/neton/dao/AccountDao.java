@@ -1,10 +1,12 @@
 package com.neton.dao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.neton.entity.AccAccountDO;
 import com.neton.mybatis.query.LambdaQueryWrapperX;
 import com.neton.req.QueryAccAccountVO;
 import com.neton.res.AccAccountVO;
+import com.neton.res.UserInfoVO;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -22,4 +24,7 @@ public interface AccountDao extends BaseMapper<AccAccountDO> {
     }
 
     List<AccAccountVO> queryAccountInfoList(@Param("params") QueryAccAccountVO queryAccAccountVO);
+
+    IPage<UserInfoVO> queryUserInfoPage(IPage<UserInfoVO> page,
+                                        @Param("params") QueryAccAccountVO queryAccAccountVO);
 }

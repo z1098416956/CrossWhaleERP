@@ -1,6 +1,7 @@
 package com.neton.controller;
 
 import com.neton.common.CommonResult;
+import com.neton.common.PageUtil;
 import com.neton.req.QueryAccAccountVO;
 import com.neton.res.AccAccountVO;
 import com.neton.res.UserInfoVO;
@@ -36,5 +37,11 @@ public class AccAccountController {
     public CommonResult<UserInfoVO> getUserInfo(){
 
         return accAccountService.getUserInfo();
+    }
+
+    @PostMapping("/queryUserInfoPage")
+    public CommonResult<PageUtil<UserInfoVO>> queryUserInfoPage(@RequestBody QueryAccAccountVO queryAccAccountVO){
+
+        return accAccountService.queryUserInfoPage(queryAccAccountVO);
     }
 }
