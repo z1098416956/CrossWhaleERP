@@ -51,4 +51,21 @@ public class AccAccountController {
 
         return accAccountService.createUserInfo(createAccAccountVO);
     }
+
+    /**
+     * 删除用户
+     * @param id
+     * @return
+     */
+    @GetMapping("/deleteUserById")
+    public CommonResult deleteUserById(@RequestParam Long id){
+
+        return accAccountService.deleteUserById(id);
+    }
+
+    @GetMapping("/getUserInfoById")
+    public CommonResult<UserInfoVO> getUserInfoById(@RequestParam Long id){
+
+        return accAccountService.getUserInfoById(id);
+    }
 }

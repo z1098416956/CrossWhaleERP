@@ -38,4 +38,17 @@ public interface AccAccountService {
      * @return
      */
     public CommonResult createUserInfo(CreateAccAccountVO createAccAccountVO);
+
+    /**
+     * 删除用户
+     * @param id
+     * @return
+     */
+    public CommonResult deleteUserById(Long id);
+
+    /**
+     * 获取用户信息
+     * @return
+     */
+    public CommonResult<UserInfoVO> getUserInfoById(Long id);
 }

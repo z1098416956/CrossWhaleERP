@@ -55,7 +55,7 @@ public class AccAccountServiceImpl implements AccAccountService {
         List<String> str = new ArrayList<>();
         str.add("admin");
         userInfoVO.setRoles(str);
-        userInfoVO.setName(accAccountDO.getAccountNo());
+        userInfoVO.setAccountNo(accAccountDO.getAccountNo());
         return CommonResult.success(userInfoVO);
     }
 
@@ -102,5 +102,37 @@ public class AccAccountServiceImpl implements AccAccountService {
         accAccountDO.setAccountPassword(BCryptUtils.getPWDStr("123456"));
         accountDao.insert(accAccountDO);
         return CommonResult.success();
+    }
+
+    /**
+     * 删除用户
+     *
+     * @param id
+     * @return
+     */
+    @Override
+    public CommonResult deleteUserById(Long id) {
+        if (id == null){
+            return CommonResult.error(SystemErrorCodeConstants.SYSTEM_USER_ID_IS_NULL);
+        }
+        int i = accountDao.deleteById(id);
+        return i == 0 ? CommonResult.error(SystemErrorCodeConstants.SYSTEM_USER_ID_IS_ERR) : CommonResult.success();
+    }
+
+    /**
+     * 获取用户信息
+     *
+     * @param id
+     * @return
+     */
+    @Override
+    public CommonResult<UserInfoVO> getUserInfoById(Long id) {
+        AccAccountDO accAccountDO = accountDao.selectById(id);
+        UserInfoVO userInfoVO = new UserInfoVO();
+        userInfoVO.setAvatar(accAccountDO.getAvatar());
+        userInfoVO.setName(accAccountDO.getAccountName());
+        userInfoVO.setId(accAccountDO.getId());
+        userInfoVO.setAccountNo(accAccountDO.getAccountNo());
+        return CommonResult.success(userInfoVO);
     }
 }

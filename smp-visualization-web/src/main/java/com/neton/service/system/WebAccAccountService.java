@@ -29,4 +29,8 @@ public interface WebAccAccountService {
     public CommonResult<PageUtil<UserInfoVO>> queryUserInfoPage(QueryAccAccountVO queryAccAccountVO);
 
     public CommonResult createUserInfo(CreateAccAccountVO createAccAccountVO);
+
+    public CommonResult deleteUserById(Long id);
+
+    public CommonResult<UserInfoVO> getUserInfoById(Long id);
 }

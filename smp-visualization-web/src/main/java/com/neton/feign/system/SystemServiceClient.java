@@ -11,6 +11,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -37,4 +38,15 @@ public interface SystemServiceClient {
 
     @PostMapping("/v1/account/createUserInfo")
     public CommonResult createUserInfo(@RequestBody CreateAccAccountVO createAccAccountVO);
+
+    /**
+     * 删除用户
+     * @param id
+     * @return
+     */
+    @GetMapping("/v1/account/deleteUserById")
+    public CommonResult deleteUserById(@RequestParam Long id);
+
+    @GetMapping("/v1/account/getUserInfoById")
+    public CommonResult<UserInfoVO> getUserInfoById(@RequestParam Long id);
 }

@@ -51,4 +51,16 @@ public class WebAccAccountController {
 
         return webAccAccountService.createUserInfo(createAccAccountVO);
     }
+
+    @GetMapping("/deleteUserById")
+    public CommonResult deleteUserById(@RequestParam Long id){
+
+        return webAccAccountService.deleteUserById(id);
+    }
+
+    @GetMapping("/getUserInfoById")
+    public CommonResult<UserInfoVO> getUserInfoById(@RequestParam Long id){
+
+        return webAccAccountService.getUserInfoById(id);
+    }
 }

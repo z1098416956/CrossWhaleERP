@@ -52,4 +52,14 @@ public class WebAccAccountServiceImpl implements WebAccAccountService {
 
         return systemServiceClient.createUserInfo(createAccAccountVO);
     }
+
+    @Override
+    public CommonResult deleteUserById(Long id) {
+        return systemServiceClient.deleteUserById(id);
+    }
+
+    @Override
+    public CommonResult<UserInfoVO> getUserInfoById(Long id) {
+        return systemServiceClient.getUserInfoById(id);
+    }
 }
