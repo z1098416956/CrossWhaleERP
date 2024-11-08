@@ -5,6 +5,7 @@ import com.neton.common.PageUtil;
 import com.neton.feign.system.SystemServiceClient;
 import com.neton.req.CreateAccAccountVO;
 import com.neton.req.QueryAccAccountVO;
+import com.neton.req.UpdateAccAccountVO;
 import com.neton.res.AccAccountVO;
 import com.neton.res.UserInfoVO;
 import com.neton.service.system.WebAccAccountService;
@@ -61,5 +62,16 @@ public class WebAccAccountServiceImpl implements WebAccAccountService {
     @Override
     public CommonResult<UserInfoVO> getUserInfoById(Long id) {
         return systemServiceClient.getUserInfoById(id);
+    }
+
+    /**
+     * 更新用户信息
+     *
+     * @param updateAccAccountVO
+     * @return
+     */
+    @Override
+    public CommonResult updateUserInfo(UpdateAccAccountVO updateAccAccountVO) {
+        return systemServiceClient.updateUserInfo(updateAccAccountVO);
     }
 }

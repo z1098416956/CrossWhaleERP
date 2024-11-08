@@ -9,6 +9,7 @@ import com.neton.dao.AccountDao;
 import com.neton.entity.AccAccountDO;
 import com.neton.req.CreateAccAccountVO;
 import com.neton.req.QueryAccAccountVO;
+import com.neton.req.UpdateAccAccountVO;
 import com.neton.res.AccAccountVO;
 import com.neton.res.UserInfoVO;
 import com.neton.service.AccAccountService;
@@ -21,6 +22,8 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -134,5 +137,36 @@ public class AccAccountServiceImpl implements AccAccountService {
         userInfoVO.setId(accAccountDO.getId());
         userInfoVO.setAccountNo(accAccountDO.getAccountNo());
         return CommonResult.success(userInfoVO);
+    }
+
+    /**
+     * 更新用户信息
+     *
+     * @param updateAccAccountVO
+     * @return
+     */
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public CommonResult updateUserInfo(UpdateAccAccountVO updateAccAccountVO) {
+        if (StringUtils.isBlank(updateAccAccountVO.getAccountNo())){
+            return CommonResult.error(SystemErrorCodeConstants.SYSTEM_ACCOUNT_NO_ERR);
+        }
+        if (updateAccAccountVO.getId() == null){
+            return CommonResult.error(SystemErrorCodeConstants.SYSTEM_USER_ID_IS_NULL);
+        }
+        if (StringUtils.isBlank(updateAccAccountVO.getName())){
+            return CommonResult.error(SystemErrorCodeConstants.SYSTEM_USERNAME_ERR);
+        }
+        AccAccountDO accAccountDO = accountDao.selectById(updateAccAccountVO.getId());
+        if (accAccountDO == null){
+            return CommonResult.error(SystemErrorCodeConstants.SYSTEM_USER_ID_IS_ERR);
+        }
+        BeanUtils.copyProperties(updateAccAccountVO,accAccountDO);
+        accAccountDO.setAccountName(updateAccAccountVO.getName());
+        accAccountDO.setCreateByName(SecurityUtils.getUsername());
+        accAccountDO.setGmtCreate(LocalDateTime.now());
+        accAccountDO.setCreateBy(SecurityUtils.getUserId());
+        accountDao.updateById(accAccountDO);
+        return CommonResult.success();
     }
 }

@@ -5,6 +5,7 @@ import com.neton.common.CommonResult;
 import com.neton.common.PageUtil;
 import com.neton.req.CreateAccAccountVO;
 import com.neton.req.QueryAccAccountVO;
+import com.neton.req.UpdateAccAccountVO;
 import com.neton.res.AccAccountVO;
 import com.neton.res.UserInfoVO;
 
@@ -33,4 +34,11 @@ public interface WebAccAccountService {
     public CommonResult deleteUserById(Long id);
 
     public CommonResult<UserInfoVO> getUserInfoById(Long id);
+
+    /**
+     * 更新用户信息
+     * @param updateAccAccountVO
+     * @return
+     */
+    public CommonResult updateUserInfo(UpdateAccAccountVO updateAccAccountVO);
 }

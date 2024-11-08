@@ -5,6 +5,7 @@ import com.neton.common.PageUtil;
 import com.neton.feign.FeignConfig;
 import com.neton.req.CreateAccAccountVO;
 import com.neton.req.QueryAccAccountVO;
+import com.neton.req.UpdateAccAccountVO;
 import com.neton.res.AccAccountVO;
 import com.neton.res.UserInfoVO;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -49,4 +50,12 @@ public interface SystemServiceClient {
 
     @GetMapping("/v1/account/getUserInfoById")
     public CommonResult<UserInfoVO> getUserInfoById(@RequestParam Long id);
+
+    /**
+     * 更新用户信息
+     * @param updateAccAccountVO
+     * @return
+     */
+    @PostMapping("/v1/account/updateUserInfo")
+    public CommonResult updateUserInfo(@RequestBody UpdateAccAccountVO updateAccAccountVO);
 }

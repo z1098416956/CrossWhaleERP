@@ -29,4 +29,5 @@ public interface SystemErrorCodeConstants {
     ErrorCode SYSTEM_USERNAME_REPEAT = new ErrorCode(1001002004,"用户名称重复");
     ErrorCode SYSTEM_USER_ID_IS_NULL = new ErrorCode(1001002005,"ID不能为空");
     ErrorCode SYSTEM_USER_ID_IS_ERR = new ErrorCode(1001002006,"用户不存在");
+
 }
