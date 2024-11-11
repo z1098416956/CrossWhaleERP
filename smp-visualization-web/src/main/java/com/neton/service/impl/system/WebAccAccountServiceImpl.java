@@ -50,7 +50,7 @@ public class WebAccAccountServiceImpl implements WebAccAccountService {
 
     @Override
     public CommonResult createUserInfo(CreateAccAccountVO createAccAccountVO) {
-
+        createAccAccountVO.setUsername(createAccAccountVO.getName());
         return systemServiceClient.createUserInfo(createAccAccountVO);
     }
 

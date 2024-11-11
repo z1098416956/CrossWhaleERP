@@ -8,6 +8,9 @@ public class CreateAccAccountVO {
      * 用户名
      */
     private String username;
+
+    private String name;
+
     /**
      * 账号
      */

@@ -100,6 +100,7 @@ public class AccAccountServiceImpl implements AccAccountService {
         AccAccountDO accAccountDO = new AccAccountDO();
         accAccountDO.setAccountNo(createAccAccountVO.getAccountNo());
         accAccountDO.setAccountName(createAccAccountVO.getUsername());
+        accAccountDO.setAvatar(createAccAccountVO.getAvatar());
         accAccountDO.setEnabled(true);
         accAccountDO.setIsDeleted(0);
         accAccountDO.setAccountPassword(BCryptUtils.getPWDStr("123456"));

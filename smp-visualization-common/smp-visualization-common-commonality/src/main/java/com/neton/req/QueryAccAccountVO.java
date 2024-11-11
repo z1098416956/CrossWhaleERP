@@ -17,6 +17,9 @@ public class QueryAccAccountVO implements Serializable {
 
     private String username;
 
+    private String name;
+
+    private String accountNo;
     private String password;
 
     private Long page;
