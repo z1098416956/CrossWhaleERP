@@ -94,7 +94,7 @@ public class OAuth2JdbcConfiguration {
     public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
         log.info("Loading SecurityConfig...");
         http.authorizeHttpRequests((requests) -> requests
-                .requestMatchers( "/v1/oauth/refreshToken","/v1/oauth/login","/oauth/*","/*/*.css", "/*/*.ico", "/*/*.png", "/*/*.jpg", "/*/*.svg", "/login",
+                .requestMatchers( "v1/oauth/logout","/v1/oauth/refreshToken","/v1/oauth/login","/oauth/*","/*/*.css", "/*/*.ico", "/*/*.png", "/*/*.jpg", "/*/*.svg", "/login",
                         "/*/*.js", "/*/*.map",loginUrl, "/user/*","/base-grant.html").permitAll() // 允许所有用户访问这些路径
                 .anyRequest().authenticated()
         );

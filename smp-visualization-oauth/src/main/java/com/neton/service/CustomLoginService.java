@@ -6,6 +6,7 @@ import com.neton.entity.AccAccountDO;
 import com.neton.util.JwtUtils;
 import com.neton.utils.BCryptUtils;
 import com.nimbusds.jose.jwk.source.JWKSource;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -25,6 +26,8 @@ import org.springframework.security.oauth2.server.authorization.client.Registere
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClientRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import java.security.Principal;
 import java.time.Duration;
@@ -201,5 +204,21 @@ public class CustomLoginService {
         tokens.put("refresh_expires_in", newRefreshToken.getExpiresAt().getEpochSecond() - Instant.now().getEpochSecond());
 
         return CommonResult.success(tokens);
+    }
+
+    public CommonResult logout(){
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        String authorization = request.getHeader("Authorization");
+        if (org.apache.commons.lang3.StringUtils.isBlank(authorization)){
+            return CommonResult.success();
+        }
+        OAuth2TokenType bearerType = OAuth2TokenType.ACCESS_TOKEN;
+        String bearer = authorization.replaceAll("Bearer ", "");
+        OAuth2Authorization byToken = authorizationService.findByToken(bearer, bearerType);
+        if (byToken == null){
+            return CommonResult.success();
+        }
+        authorizationService.remove(byToken);
+        return CommonResult.success();
     }
 }

@@ -20,4 +20,10 @@ public class WebOauthController {
 
         return webOauthService.login(accAccountVO);
     }
+
+    @GetMapping("/logout")
+    public CommonResult logout(){
+
+        return webOauthService.logout();
+    }
 }

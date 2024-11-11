@@ -73,4 +73,10 @@ public class OauthController {
 
         return customLoginService.refreshToken(refreshToken);
     }
+
+    @GetMapping("/logout")
+    public CommonResult logout(){
+
+        return customLoginService.logout();
+    }
 }

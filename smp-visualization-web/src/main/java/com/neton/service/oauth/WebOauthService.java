@@ -8,4 +8,6 @@ import java.util.Map;
 public interface WebOauthService {
 
     public CommonResult login(QueryAccAccountVO params);
+
+    public CommonResult logout();
 }

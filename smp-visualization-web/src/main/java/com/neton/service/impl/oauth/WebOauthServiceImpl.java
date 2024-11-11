@@ -21,4 +21,9 @@ public class WebOauthServiceImpl implements WebOauthService {
 
         return oauthServiceClient.login(params);
     }
+
+    @Override
+    public CommonResult logout() {
+        return oauthServiceClient.logout();
+    }
 }
