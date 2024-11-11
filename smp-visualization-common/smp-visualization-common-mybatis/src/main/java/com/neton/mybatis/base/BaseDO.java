@@ -41,26 +41,26 @@ public class BaseDO<T extends Model<T>> extends Model<T> implements Serializable
     /**
      * 创建时间
      */
-    @TableField(value = "gmt_create", fill = FieldFill.INSERT)
-    private LocalDateTime gmtCreate;
+    @TableField(value = "create_time", fill = FieldFill.INSERT)
+    private LocalDateTime createTime;
 
     /**
      * 修改人id
      */
-    @TableField(value = "modify_by", fill = FieldFill.INSERT_UPDATE)
-    private Long modifyBy;
+    @TableField(value = "update_by", fill = FieldFill.INSERT_UPDATE)
+    private Long updateBy;
 
     /**
      * 修改人
      */
-    @TableField(value = "modify_by_name", fill = FieldFill.INSERT_UPDATE)
-    private String modifyByName;
+    @TableField(value = "update_by_name", fill = FieldFill.INSERT_UPDATE)
+    private String updateByName;
 
     /**
      * 修改时间
      */
-    @TableField(value = "gmt_modify", fill = FieldFill.INSERT_UPDATE)
-    private LocalDateTime gmtModify;
+    @TableField(value = "update_time", fill = FieldFill.INSERT_UPDATE)
+    private LocalDateTime updateTime;
 
     /**
      * 是否已删除 1-已删除 0-未删除

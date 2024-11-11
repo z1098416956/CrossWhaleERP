@@ -1,0 +1,10 @@
+package com.neton.service.impl;
+
+import com.neton.service.SystemMenuService;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+
+@Service
+@Slf4j
+public class SystemMenuServiceImpl implements SystemMenuService {
+}

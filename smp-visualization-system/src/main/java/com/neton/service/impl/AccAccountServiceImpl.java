@@ -101,6 +101,9 @@ public class AccAccountServiceImpl implements AccAccountService {
         accAccountDO.setAccountNo(createAccAccountVO.getAccountNo());
         accAccountDO.setAccountName(createAccAccountVO.getUsername());
         accAccountDO.setAvatar(createAccAccountVO.getAvatar());
+        accAccountDO.setCreateByName(SecurityUtils.getUsername());
+        accAccountDO.setCreateTime(LocalDateTime.now());
+        accAccountDO.setCreateBy(SecurityUtils.getUserId());
         accAccountDO.setEnabled(true);
         accAccountDO.setIsDeleted(0);
         accAccountDO.setAccountPassword(BCryptUtils.getPWDStr("123456"));
@@ -164,9 +167,9 @@ public class AccAccountServiceImpl implements AccAccountService {
         }
         BeanUtils.copyProperties(updateAccAccountVO,accAccountDO);
         accAccountDO.setAccountName(updateAccAccountVO.getName());
-        accAccountDO.setCreateByName(SecurityUtils.getUsername());
-        accAccountDO.setGmtCreate(LocalDateTime.now());
-        accAccountDO.setCreateBy(SecurityUtils.getUserId());
+        accAccountDO.setUpdateBy(SecurityUtils.getUserId());
+        accAccountDO.setUpdateByName(SecurityUtils.getUsername());
+        accAccountDO.setUpdateTime(LocalDateTime.now());
         accountDao.updateById(accAccountDO);
         return CommonResult.success();
     }
