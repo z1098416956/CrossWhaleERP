@@ -4,10 +4,7 @@ import com.neton.common.CommonResult;
 import com.neton.common.PageUtil;
 import com.neton.feign.FeignConfig;
 import com.neton.req.*;
-import com.neton.res.AccAccountVO;
-import com.neton.res.SystemDeptDetailsVO;
-import com.neton.res.SystemDeptTree;
-import com.neton.res.UserInfoVO;
+import com.neton.res.*;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,6 +19,7 @@ public interface SystemServiceClient {
 
     /**
      * 查询用户列表
+     *
      * @param queryAccAccountVO
      * @return
      */
@@ -39,6 +37,7 @@ public interface SystemServiceClient {
 
     /**
      * 删除用户
+     *
      * @param id
      * @return
      */
@@ -50,6 +49,7 @@ public interface SystemServiceClient {
 
     /**
      * 更新用户信息
+     *
      * @param updateAccAccountVO
      * @return
      */
@@ -58,21 +58,25 @@ public interface SystemServiceClient {
 
     /**
      * 创建系统部门
+     *
      * @param createSystemDeptVO
      * @return
      */
-    @RequestMapping(value = "/v1/system/dept/createSystemDeptInfo",method = RequestMethod.POST)
+    @RequestMapping(value = "/v1/system/dept/createSystemDeptInfo", method = RequestMethod.POST)
     public CommonResult createSystemDeptInfo(@RequestBody CreateSystemDeptVO createSystemDeptVO);
+
     /**
      * 更新系统部门
+     *
      * @param updateSystemDeptVO
      * @return
      */
-    @RequestMapping(value = "/v1/system/dept/updateSystemDeptInfo",method = RequestMethod.POST)
+    @RequestMapping(value = "/v1/system/dept/updateSystemDeptInfo", method = RequestMethod.POST)
     public CommonResult updateSystemDeptInfo(@RequestBody UpdateSystemDeptVO updateSystemDeptVO);
 
     /**
      * 系统部门详情
+     *
      * @param id
      * @return
      */
@@ -81,13 +85,16 @@ public interface SystemServiceClient {
 
     /**
      * 根据id获取当前这个id的tree
+     *
      * @param id
      * @return
      */
     @GetMapping("/v1/system/dept/getSystemDeptTree")
     public CommonResult<List<SystemDeptTree>> getSystemDeptTreeById(@RequestParam Long id);
+
     /**
      * 查询部门信息分页
+     *
      * @param querySystemDeptVO
      * @return
      */
@@ -96,9 +103,56 @@ public interface SystemServiceClient {
 
     /**
      * 删除部门信息
+     *
      * @param id
      * @return
      */
     @GetMapping("/v1/system/dept/deleteSystemDeptInfo")
     public CommonResult deleteSystemDeptInfo(@RequestParam Long id);
+
+    /**
+     * 创建菜单
+     *
+     * @param createSystemMenuVO
+     * @return
+     */
+    @PostMapping("/v1/system/menu/createSystemMenu")
+    public CommonResult createSystemMenu(@RequestBody CreateSystemMenuVO createSystemMenuVO);
+
+    /**
+     * 更新菜单
+     *
+     * @param updateSystemMenuVO
+     * @return
+     */
+    @PostMapping("/v1/system/menu/updateSystemMenu")
+    public CommonResult updateSystemMenu(@RequestBody UpdateSystemMenuVO updateSystemMenuVO);
+
+    /**
+     * 菜单详情
+     *
+     * @param id
+     * @return
+     */
+    @GetMapping("/v1/system/menu/getSystemMenuDetail")
+    public CommonResult<SystemMenuDetailsVO> getSystemMenuDetail(@RequestParam Long id);
+
+    /**
+     * 菜单列表
+     *
+     * @param querySystemMenuVO
+     * @return
+     */
+    @PostMapping("/v1/system/menu/getSystemMenuList")
+    public CommonResult<List<SystemMenuDetailsVO>> getSystemMenuList(@RequestBody QuerySystemMenuVO querySystemMenuVO);
+
+    /**
+     * 删除菜单
+     *
+     * @param id
+     * @return
+     */
+    @GetMapping("/v1/system/menu/deletedSystemMenuInfo")
+    public CommonResult deletedSystemMenuInfo(@RequestParam Long id);
+
 }

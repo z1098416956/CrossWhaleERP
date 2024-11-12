@@ -33,6 +33,8 @@ public interface SystemErrorCodeConstants {
     ErrorCode SYSTEM_P_ID_IS_ERR = new ErrorCode(1001002008,"父id不存在");
     ErrorCode SYSTEM_DEPT_NAME_IS_NULL = new ErrorCode(1001002009,"部门名称不能为空");
     ErrorCode SYSTEM_DEPT_IS_NULL = new ErrorCode(1001002010,"部门不存在");
+    ErrorCode SYSTEM_MENU_ID_IS_NULL = new ErrorCode(1001002011,"菜单id不能为空");
+    ErrorCode SYSTEM_MENU_IS_NULL = new ErrorCode(1001002012,"菜单不存在");
     //================文件模块===============1003001000
     ErrorCode FILE_IS_NULL = new ErrorCode(1003001000, "文件不存在或上传的文件内容为空");
 

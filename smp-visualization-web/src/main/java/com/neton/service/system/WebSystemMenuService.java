@@ -1,4 +1,4 @@
-package com.neton.service;
+package com.neton.service.system;
 
 import com.neton.common.CommonResult;
 import com.neton.req.CreateSystemMenuVO;
@@ -8,7 +8,11 @@ import com.neton.res.SystemMenuDetailsVO;
 
 import java.util.List;
 
-public interface SystemMenuService {
+/**
+ * @author: TheSunshine
+ * @create: 2024-11-12 15:59
+ **/
+public interface WebSystemMenuService {
 
     /**
      * 创建菜单

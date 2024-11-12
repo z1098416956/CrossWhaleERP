@@ -1,12 +1,18 @@
-package com.neton.entity;
+package com.neton.res;
 
-import com.baomidou.mybatisplus.annotation.TableName;
-import com.neton.mybatis.base.BaseDO;
 import lombok.Data;
 
+import java.io.Serializable;
+
+/**
+ * @author: TheSunshine
+ * @create: 2024-11-12 15:28
+ **/
 @Data
-@TableName("system_menu")
-public class SystemMenuDO extends BaseDO<SystemMenuDO> {
+public class SystemMenuDetailsVO implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
     /**
      *  父ID
      */
@@ -24,4 +30,6 @@ public class SystemMenuDO extends BaseDO<SystemMenuDO> {
      * 菜单图标
      */
     private String menuIcon;
+
+    private Long id;
 }
