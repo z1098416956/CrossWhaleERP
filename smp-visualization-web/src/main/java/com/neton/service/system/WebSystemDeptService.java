@@ -1,4 +1,4 @@
-package com.neton.service;
+package com.neton.service.system;
 
 import com.neton.common.CommonResult;
 import com.neton.common.PageUtil;
@@ -10,7 +10,11 @@ import com.neton.res.SystemDeptTree;
 
 import java.util.List;
 
-public interface SystemDeptService {
+/**
+ * @author: TheSunshine
+ * @create: 2024-11-12 14:05
+ **/
+public interface WebSystemDeptService {
 
     /**
      * 创建系统部门
