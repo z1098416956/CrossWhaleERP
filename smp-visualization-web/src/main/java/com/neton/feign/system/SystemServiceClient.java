@@ -14,7 +14,7 @@ import java.util.List;
  * @author TheSunshine
  * @date 2024-10-31 14:30:04
  */
-@FeignClient(name = "smp-system-service" ,configuration = FeignConfig.class)
+@FeignClient(name = "smp-system-service" ,configuration = FeignConfig.class,contextId = "system")
 public interface SystemServiceClient {
 
     /**
@@ -155,4 +155,44 @@ public interface SystemServiceClient {
     @GetMapping("/v1/system/menu/deletedSystemMenuInfo")
     public CommonResult deletedSystemMenuInfo(@RequestParam Long id);
 
+
+    /**
+     * 绑定角色与菜单
+     * @param createRoleMenuVO
+     * @return
+     */
+    @PostMapping("/v1/system/roleMenu/createSystemRoleMenuInfo")
+    public CommonResult createSystemRoleMenuInfo(@RequestBody CreateRoleMenuVO createRoleMenuVO);
+
+    /**
+     * 修改角色与菜单
+     * @param createRoleMenuVO
+     * @return
+     */
+    @PostMapping("/v1/system/roleMenu/updateSystemRoleMenuInfo")
+    public CommonResult updateSystemRoleMenuInfo(@RequestBody CreateRoleMenuVO createRoleMenuVO);
+
+    /**
+     * 删除角色菜单
+     * @param roleId
+     * @return
+     */
+    @GetMapping("/v1/system/roleMenu/deleteSystemRoleMenuInfo")
+    public CommonResult deleteSystemRoleMenuInfo(@RequestParam Long roleId);
+
+    /**
+     *
+     * @param id
+     * @return
+     */
+    @GetMapping("/v1/system/roleMenu/deleteSystemRoleMenuInfoById")
+    public CommonResult deleteSystemRoleMenuInfoById(Long id);
+
+    /**
+     * 获取角色菜单
+     * @param roleId
+     * @return
+     */
+    @GetMapping("/v1/system/roleMenu/getSystemRoleMenuInfo")
+    public CommonResult<SystemRoleMenuVO> getSystemRoleMenuInfo(@RequestParam Long roleId);
 }

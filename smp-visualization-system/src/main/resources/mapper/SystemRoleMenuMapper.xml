@@ -3,4 +3,13 @@
 <mapper namespace="com.neton.dao.SystemRoleMenuDao">
 
 
+    <delete id="deleteByRoleId">
+        delete from system_role_menu where role_id = #{roleId}
+    </delete>
+    <delete id="deleteById">
+        delete from system_role_menu where id = #{id}
+    </delete>
+    <select id="querySystemRoleMenuInfo" resultType="java.lang.Long">
+        select menu_id from system_role_menu where role_id = #{roleId}
+    </select>
 </mapper>

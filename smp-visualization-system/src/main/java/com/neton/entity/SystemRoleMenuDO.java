@@ -10,9 +10,9 @@ public class SystemRoleMenuDO extends BaseDO<SystemRoleMenuDO> {
     /**
      *  角色id
      */
-    private Long role_id;
+    private Long roleId;
     /**
      * 菜单ID
      */
-    private Long menu_id;
+    private Long menuId;
 }

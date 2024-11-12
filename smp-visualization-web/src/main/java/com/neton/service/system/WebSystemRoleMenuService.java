@@ -1,13 +1,14 @@
-package com.neton.service;
+package com.neton.service.system;
 
 import com.neton.common.CommonResult;
 import com.neton.req.CreateRoleMenuVO;
 import com.neton.res.SystemRoleMenuVO;
 
-import java.util.List;
-
-public interface SystemRoleMenuService {
-
+/**
+ * @author: TheSunshine
+ * @create: 2024-11-12 18:05
+ **/
+public interface WebSystemRoleMenuService {
     /**
      * 绑定角色与菜单
      * @param createRoleMenuVO
