@@ -195,4 +195,45 @@ public interface SystemServiceClient {
      */
     @GetMapping("/v1/system/roleMenu/getSystemRoleMenuInfo")
     public CommonResult<SystemRoleMenuVO> getSystemRoleMenuInfo(@RequestParam Long roleId);
+
+
+    /**
+     * 创建系统角色
+     * @param createRoleVO
+     * @return
+     */
+    @RequestMapping(value = "/v1/system/role/createSystemRole",method = RequestMethod.POST)
+    public CommonResult createSystemRole(@RequestBody CreateRoleVO createRoleVO);
+
+    /**
+     * 更新系统角色
+     * @param updateRoleVO
+     * @return
+     */
+    @PostMapping("/v1/system/role/updateSystemRole")
+    public CommonResult updateSystemRole(@RequestBody UpdateRoleVO updateRoleVO);
+
+    /**
+     * 删除系统角色
+     * @param id
+     * @return
+     */
+    @GetMapping("/v1/system/role/deleteSystemRole")
+    public CommonResult deleteSystemRole(@RequestParam Long id);
+
+
+    /**
+     * 系统角色详情
+     * @param id
+     * @return
+     */
+    @GetMapping("/v1/system/role/getSystemRoleDetails")
+    public CommonResult<SystemRuleVO> getSystemRoleDetails(@RequestParam Long id);
+
+    /**
+     * 系统角色列表
+     * @return
+     */
+    @PostMapping("/v1/system/role/getSystemRoleList")
+    public CommonResult<List<SystemRuleVO>> getSystemRoleList(@RequestBody QueryRoleVO queryRoleVO);
 }

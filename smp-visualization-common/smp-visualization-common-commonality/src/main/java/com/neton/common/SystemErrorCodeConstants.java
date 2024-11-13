@@ -37,6 +37,10 @@ public interface SystemErrorCodeConstants {
     ErrorCode SYSTEM_MENU_IS_NULL = new ErrorCode(1001002012,"菜单不存在");
     ErrorCode SYSTEM_ROLE_ID_IS_NULL = new ErrorCode(1001002013,"角色ID不能为空");
     ErrorCode SYSTEM_ID_IS_NULL = new ErrorCode(1001002014,"ID不能为空");
+    ErrorCode SYSTEM_ROLE_NAME_IS_NULL = new ErrorCode(1001002015,"角色名称不能为空");
+    ErrorCode SYSTEM_ROLE_IS_NULL = new ErrorCode(1001002016,"角色不存在");
+    ErrorCode SYSTEM_ROLE_CODE_IS_NULL = new ErrorCode(1001002017,"角色编码不能为空");
+    ErrorCode SYSTEM_ROLE_CODE_IS_EXIST = new ErrorCode(1001002018,"角色编码已存在");
     //================文件模块===============1003001000
     ErrorCode FILE_IS_NULL = new ErrorCode(1003001000, "文件不存在或上传的文件内容为空");
 

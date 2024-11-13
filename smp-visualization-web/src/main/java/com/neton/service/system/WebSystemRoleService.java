@@ -1,4 +1,4 @@
-package com.neton.service;
+package com.neton.service.system;
 
 import com.neton.common.CommonResult;
 import com.neton.req.CreateRoleVO;
@@ -8,7 +8,11 @@ import com.neton.res.SystemRuleVO;
 
 import java.util.List;
 
-public interface SystemRoleService {
+/**
+ * @author: TheSunshine
+ * @create: 2024-11-13 11:03
+ **/
+public interface WebSystemRoleService {
 
     /**
      * 创建系统角色
