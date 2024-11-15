@@ -10,6 +10,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 @Configuration
 public class FeignConfig {
+    //aaa
     @Bean
     public RequestInterceptor requestTokenBearerInterceptor() {
         return new RequestInterceptor() {
