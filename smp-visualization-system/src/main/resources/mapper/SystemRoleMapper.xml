@@ -12,4 +12,14 @@
             and role_code like concat ('%',#{params.roleCode},'%')
         </if>
     </select>
+    <select id="querySystemRolePage" resultType="com.neton.res.SystemRuleVO">
+        select * from system_role where is_deleted = 0
+        <if test="params.roleName != null and params.roleName != ''">
+            and role_name like concat ('%',#{params.roleName},'%')
+        </if>
+        <if test="params.roleCode != null and params.roleCode != ''">
+            and role_code like concat ('%',#{params.roleCode},'%')
+        </if>
+        order by create_time desc
+    </select>
 </mapper>

@@ -1,11 +1,13 @@
 package com.neton.controller;
 
 import com.neton.common.CommonResult;
+import com.neton.common.PageUtil;
 import com.neton.req.CreateRoleVO;
 import com.neton.req.QueryRoleVO;
 import com.neton.req.UpdateRoleVO;
 import com.neton.res.SystemRuleVO;
 import com.neton.service.SystemRoleService;
+import com.neton.service.SystemUserRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,6 +23,8 @@ public class SystemRoleController {
 
     @Autowired
     private SystemRoleService systemRoleService;
+    @Autowired
+    private SystemUserRoleService systemUserRoleService;
 
     /**
      * 创建系统角色
@@ -75,5 +79,23 @@ public class SystemRoleController {
     public CommonResult<List<SystemRuleVO>> getSystemRoleList(@RequestBody QueryRoleVO queryRoleVO){
 
         return systemRoleService.getSystemRoleList(queryRoleVO);
+    }
+
+
+    @GetMapping("/getUserRoleInfo")
+    public CommonResult<List<SystemRuleVO>> getUserRoleInfo(@RequestParam Long id){
+
+        return systemUserRoleService.getUserRoleInfo(id);
+    }
+
+    /**
+     * 系统角色分页
+     * @param queryRoleVO
+     * @return
+     */
+    @PostMapping("/querySystemRolePage")
+    public CommonResult<PageUtil<SystemRuleVO>> querySystemRolePage(@RequestBody QueryRoleVO queryRoleVO){
+
+        return systemRoleService.querySystemRolePage(queryRoleVO);
     }
 }

@@ -14,5 +14,5 @@ public class SystemUserRoleDO extends BaseDO<SystemUserRoleDO> {
     /**
      * 角色ID
      */
-    private String roleId;
+    private Long roleId;
 }

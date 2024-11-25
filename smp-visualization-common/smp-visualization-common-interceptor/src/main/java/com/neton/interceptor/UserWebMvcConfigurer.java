@@ -11,6 +11,6 @@ public class UserWebMvcConfigurer implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new UserSecurityInterceptor())
                 .addPathPatterns("/**") // 拦截所有路径
-                .excludePathPatterns("/v1/oauth/login", "/logout"); // 排除某些路径
+                .excludePathPatterns("/v1/oauth/login","/logout", "/v1/oauth/logout"); // 排除某些路径
     }
 }

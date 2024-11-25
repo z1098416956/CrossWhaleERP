@@ -19,4 +19,6 @@ public class SystemRuleVO implements Serializable {
      */
     private String roleName;
     private String roleCode;
+
+   // private boolean disabled = false;
 }

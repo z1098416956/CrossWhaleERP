@@ -236,4 +236,10 @@ public interface SystemServiceClient {
      */
     @PostMapping("/v1/system/role/getSystemRoleList")
     public CommonResult<List<SystemRuleVO>> getSystemRoleList(@RequestBody QueryRoleVO queryRoleVO);
+
+    @PostMapping("/v1/system/role/querySystemRolePage")
+    public CommonResult<PageUtil<SystemRuleVO>> querySystemRolePage(@RequestBody QueryRoleVO queryRoleVO);
+
+    @GetMapping("/v1/system/role/getUserRoleInfo")
+    public CommonResult<List<SystemRuleVO>> getUserRoleInfo(@RequestParam Long id);
 }

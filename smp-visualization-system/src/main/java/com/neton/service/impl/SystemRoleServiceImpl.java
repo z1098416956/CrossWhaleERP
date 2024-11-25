@@ -1,6 +1,9 @@
 package com.neton.service.impl;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.neton.common.CommonResult;
+import com.neton.common.PageUtil;
 import com.neton.common.SystemErrorCodeConstants;
 import com.neton.dao.SystemRoleDao;
 import com.neton.entity.SystemRoleDO;
@@ -145,5 +148,23 @@ public class SystemRoleServiceImpl implements SystemRoleService {
     public CommonResult<List<SystemRuleVO>> getSystemRoleList(QueryRoleVO queryRoleVO) {
         List<SystemRuleVO> systemRoleList = systemRoleDao.getSystemRoleList(queryRoleVO);
         return CommonResult.success(systemRoleList);
+    }
+
+    /**
+     * 系统角色分页
+     *
+     * @param queryRoleVO
+     * @return
+     */
+    @Override
+    public CommonResult<PageUtil<SystemRuleVO>> querySystemRolePage(QueryRoleVO queryRoleVO) {
+        IPage<SystemRuleVO> iPage = new Page<>();
+        iPage.setCurrent(queryRoleVO.getPage());
+        iPage.setSize(queryRoleVO.getSize());
+        IPage<SystemRuleVO> page = systemRoleDao.querySystemRolePage(iPage,queryRoleVO);
+        PageUtil<SystemRuleVO> pageUtil = new PageUtil<>();
+        pageUtil.setPageList(page.getRecords());
+        pageUtil.setTotal(page.getTotal());
+        return CommonResult.success(pageUtil);
     }
 }

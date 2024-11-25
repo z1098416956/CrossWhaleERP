@@ -1,6 +1,7 @@
 package com.neton.service.impl.system;
 
 import com.neton.common.CommonResult;
+import com.neton.common.PageUtil;
 import com.neton.feign.system.SystemServiceClient;
 import com.neton.req.CreateRoleVO;
 import com.neton.req.QueryRoleVO;
@@ -77,5 +78,26 @@ public class WebSystemRoleServiceImpl implements WebSystemRoleService {
     @Override
     public CommonResult<List<SystemRuleVO>> getSystemRoleList(QueryRoleVO queryRoleVO) {
         return systemServiceClient.getSystemRoleList(queryRoleVO);
+    }
+
+    /**
+     * 系统角色分页
+     *
+     * @param queryRoleVO
+     * @return
+     */
+    @Override
+    public CommonResult<PageUtil<SystemRuleVO>> querySystemRolePage(QueryRoleVO queryRoleVO) {
+        return systemServiceClient.querySystemRolePage(queryRoleVO);
+    }
+
+    /**
+     * 获取用户角色
+     *
+     * @return
+     */
+    @Override
+    public CommonResult<List<SystemRuleVO>> getUserRoleInfo(Long id) {
+        return systemServiceClient.getUserRoleInfo(id);
     }
 }

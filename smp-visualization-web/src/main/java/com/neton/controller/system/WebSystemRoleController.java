@@ -1,6 +1,7 @@
 package com.neton.controller.system;
 
 import com.neton.common.CommonResult;
+import com.neton.common.PageUtil;
 import com.neton.req.CreateRoleVO;
 import com.neton.req.QueryRoleVO;
 import com.neton.req.UpdateRoleVO;
@@ -76,4 +77,22 @@ public class WebSystemRoleController {
 
         return systemRoleService.getSystemRoleList(queryRoleVO);
     }
+
+    /**
+     * 系统角色分页
+     * @param queryRoleVO
+     * @return
+     */
+    @PostMapping("/querySystemRolePage")
+    public CommonResult<PageUtil<SystemRuleVO>> querySystemRolePage(@RequestBody QueryRoleVO queryRoleVO){
+
+        return systemRoleService.querySystemRolePage(queryRoleVO);
+    }
+
+    @GetMapping("/getUserRoleInfo")
+    public CommonResult<List<SystemRuleVO>> getUserRoleInfo(@RequestParam Long id){
+
+        return systemRoleService.getUserRoleInfo(id);
+    }
+
 }

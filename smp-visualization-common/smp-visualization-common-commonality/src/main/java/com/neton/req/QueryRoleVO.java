@@ -16,4 +16,8 @@ public class QueryRoleVO implements Serializable {
     private String roleName;
 
     private String roleCode;
+
+    private Long page;
+
+    private Long size;
 }
