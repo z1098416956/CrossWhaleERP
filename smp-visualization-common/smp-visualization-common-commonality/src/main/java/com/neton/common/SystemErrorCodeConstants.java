@@ -41,6 +41,8 @@ public interface SystemErrorCodeConstants {
     ErrorCode SYSTEM_ROLE_IS_NULL = new ErrorCode(1001002016,"角色不存在");
     ErrorCode SYSTEM_ROLE_CODE_IS_NULL = new ErrorCode(1001002017,"角色编码不能为空");
     ErrorCode SYSTEM_ROLE_CODE_IS_EXIST = new ErrorCode(1001002018,"角色编码已存在");
+    ErrorCode SYSTEM_USER_ROLE_IS_NULL = new ErrorCode(1001002019,"用户权限不能为空");
+    ErrorCode SYSTEM_ROLE_IS_BEEN_USED = new ErrorCode(1001002020,"角色已被分配,不可删除");
     //================文件模块===============1003001000
     ErrorCode FILE_IS_NULL = new ErrorCode(1003001000, "文件不存在或上传的文件内容为空");
 

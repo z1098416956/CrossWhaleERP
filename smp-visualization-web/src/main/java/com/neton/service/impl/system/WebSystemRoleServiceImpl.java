@@ -4,6 +4,7 @@ import com.neton.common.CommonResult;
 import com.neton.common.PageUtil;
 import com.neton.feign.system.SystemServiceClient;
 import com.neton.req.CreateRoleVO;
+import com.neton.req.CreateUserRoleVO;
 import com.neton.req.QueryRoleVO;
 import com.neton.req.UpdateRoleVO;
 import com.neton.res.SystemRuleVO;
@@ -99,5 +100,16 @@ public class WebSystemRoleServiceImpl implements WebSystemRoleService {
     @Override
     public CommonResult<List<SystemRuleVO>> getUserRoleInfo(Long id) {
         return systemServiceClient.getUserRoleInfo(id);
+    }
+
+    /**
+     * 创建用户权限
+     *
+     * @param createUserRoleVO
+     * @return
+     */
+    @Override
+    public CommonResult createUserRoleInfo(CreateUserRoleVO createUserRoleVO) {
+        return systemServiceClient.createUserRoleInfo(createUserRoleVO);
     }
 }

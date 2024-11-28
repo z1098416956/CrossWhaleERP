@@ -242,4 +242,12 @@ public interface SystemServiceClient {
 
     @GetMapping("/v1/system/role/getUserRoleInfo")
     public CommonResult<List<SystemRuleVO>> getUserRoleInfo(@RequestParam Long id);
+
+    /**
+     * 分配用户角色
+     * @param createUserRoleVO
+     * @return
+     */
+    @PostMapping("/v1/system/role/createUserRoleInfo")
+    public CommonResult createUserRoleInfo(@RequestBody CreateUserRoleVO createUserRoleVO);
 }

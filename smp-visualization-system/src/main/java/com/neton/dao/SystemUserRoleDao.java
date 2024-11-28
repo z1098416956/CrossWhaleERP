@@ -12,10 +12,18 @@ public interface SystemUserRoleDao extends BaseMapper<SystemUserRoleDO> {
 
     List<SystemRuleVO> getUserRoleInfo(@Param("userId") Long userId);
 
+    void deleteByUserId(@Param("userId") Long userId);
+
     default List<SystemUserRoleDO> querySystemUserRoleByUserId(Long userId){
         LambdaQueryWrapper<SystemUserRoleDO> lambdaQueryWrapper = new LambdaQueryWrapper<>();
         lambdaQueryWrapper.eq(SystemUserRoleDO::getUserId,userId);
         lambdaQueryWrapper.eq(SystemUserRoleDO::getIsDeleted,0);
         return selectList(lambdaQueryWrapper);
+    }
+
+    default Long querySystemRoleCountByRole(Long roleId){
+        LambdaQueryWrapper<SystemUserRoleDO> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        lambdaQueryWrapper.eq(SystemUserRoleDO::getRoleId,roleId);
+        return selectCount(lambdaQueryWrapper);
     }
 }

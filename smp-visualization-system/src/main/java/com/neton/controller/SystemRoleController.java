@@ -3,6 +3,7 @@ package com.neton.controller;
 import com.neton.common.CommonResult;
 import com.neton.common.PageUtil;
 import com.neton.req.CreateRoleVO;
+import com.neton.req.CreateUserRoleVO;
 import com.neton.req.QueryRoleVO;
 import com.neton.req.UpdateRoleVO;
 import com.neton.res.SystemRuleVO;
@@ -97,5 +98,16 @@ public class SystemRoleController {
     public CommonResult<PageUtil<SystemRuleVO>> querySystemRolePage(@RequestBody QueryRoleVO queryRoleVO){
 
         return systemRoleService.querySystemRolePage(queryRoleVO);
+    }
+
+    /**
+     * 分配用户角色
+     * @param createUserRoleVO
+     * @return
+     */
+    @PostMapping("/createUserRoleInfo")
+    public CommonResult createUserRoleInfo(@RequestBody CreateUserRoleVO createUserRoleVO){
+
+        return systemUserRoleService.createUserRoleInfo(createUserRoleVO);
     }
 }

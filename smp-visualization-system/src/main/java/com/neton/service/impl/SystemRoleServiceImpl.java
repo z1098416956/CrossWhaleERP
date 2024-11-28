@@ -6,6 +6,7 @@ import com.neton.common.CommonResult;
 import com.neton.common.PageUtil;
 import com.neton.common.SystemErrorCodeConstants;
 import com.neton.dao.SystemRoleDao;
+import com.neton.dao.SystemUserRoleDao;
 import com.neton.entity.SystemRoleDO;
 import com.neton.req.CreateRoleVO;
 import com.neton.req.QueryRoleVO;
@@ -28,6 +29,9 @@ public class SystemRoleServiceImpl implements SystemRoleService {
 
     @Resource
     private SystemRoleDao systemRoleDao;
+
+    @Resource
+    private SystemUserRoleDao systemUserRoleDao;
 
     /**
      * 创建系统角色
@@ -112,6 +116,10 @@ public class SystemRoleServiceImpl implements SystemRoleService {
         SystemRoleDO systemRoleDO = systemRoleDao.selectById(id);
         if (systemRoleDO == null){
             return CommonResult.error(SystemErrorCodeConstants.SYSTEM_ROLE_IS_NULL);
+        }
+        Long aLong = systemUserRoleDao.querySystemRoleCountByRole(id);
+        if (aLong.compareTo(0L) > 0){
+            return CommonResult.error(SystemErrorCodeConstants.SYSTEM_ROLE_IS_BEEN_USED);
         }
         systemRoleDao.deleteById(systemRoleDO);
         return CommonResult.success();

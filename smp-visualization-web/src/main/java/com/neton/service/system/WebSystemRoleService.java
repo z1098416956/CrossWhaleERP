@@ -3,6 +3,7 @@ package com.neton.service.system;
 import com.neton.common.CommonResult;
 import com.neton.common.PageUtil;
 import com.neton.req.CreateRoleVO;
+import com.neton.req.CreateUserRoleVO;
 import com.neton.req.QueryRoleVO;
 import com.neton.req.UpdateRoleVO;
 import com.neton.res.SystemRuleVO;
@@ -62,4 +63,11 @@ public interface WebSystemRoleService {
      * @return
      */
     public CommonResult<List<SystemRuleVO>> getUserRoleInfo(Long id);
+
+    /**
+     * 创建用户权限
+     * @param createUserRoleVO
+     * @return
+     */
+    public CommonResult createUserRoleInfo(CreateUserRoleVO createUserRoleVO);
 }

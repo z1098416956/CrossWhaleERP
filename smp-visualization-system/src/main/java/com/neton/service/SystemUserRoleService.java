@@ -1,6 +1,7 @@
 package com.neton.service;
 
 import com.neton.common.CommonResult;
+import com.neton.req.CreateUserRoleVO;
 import com.neton.res.SystemRuleVO;
 
 import java.util.List;
@@ -15,4 +16,12 @@ public interface SystemUserRoleService {
      * @return
      */
     public CommonResult<List<SystemRuleVO>> getUserRoleInfo(Long id);
+
+
+    /**
+     * 创建用户权限
+     * @param createUserRoleVO
+     * @return
+     */
+    public CommonResult createUserRoleInfo(CreateUserRoleVO createUserRoleVO);
 }
