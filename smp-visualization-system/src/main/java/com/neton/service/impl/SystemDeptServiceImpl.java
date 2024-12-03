@@ -94,6 +94,7 @@ public class SystemDeptServiceImpl implements SystemDeptService {
         }
         BeanUtils.copyProperties(updateSystemDeptVO,deptDO);
         deptDO.setUpdateBy(SecurityUtils.getUserId());
+        deptDO.setPId(updateSystemDeptVO.getPid());
         deptDO.setUpdateTime(LocalDateTime.now());
         deptDO.setUpdateByName(SecurityUtils.getUsername());
         systemDeptDao.updateById(deptDO);
@@ -117,6 +118,7 @@ public class SystemDeptServiceImpl implements SystemDeptService {
         }
         SystemDeptDetailsVO systemDeptDetailsVO = new SystemDeptDetailsVO();
         BeanUtils.copyProperties(deptDO,systemDeptDetailsVO);
+        systemDeptDetailsVO.setPid(deptDO.getPId());
         return CommonResult.success(systemDeptDetailsVO);
     }
 

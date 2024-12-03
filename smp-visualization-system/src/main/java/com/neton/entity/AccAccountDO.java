@@ -46,5 +46,7 @@ public class AccAccountDO extends BaseDO<AccAccountDO> {
      */
     @TableField(value = "avatar")
     private String avatar;
+    @TableField(value = "dept_id")
+    private Long deptId;
 
 }

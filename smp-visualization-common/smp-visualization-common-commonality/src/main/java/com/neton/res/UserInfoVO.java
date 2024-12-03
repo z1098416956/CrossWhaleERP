@@ -27,4 +27,8 @@ public class UserInfoVO {
     private Long id;
 
     private String accountNo;
+    /**
+     * 部门id
+     */
+    private Long deptId;
 }

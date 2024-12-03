@@ -7,7 +7,7 @@ public class CreateAccAccountVO {
     /**
      * 用户名
      */
-    private String username;
+    private String userName;
 
     private String name;
 
@@ -19,4 +19,8 @@ public class CreateAccAccountVO {
      * 头像
      */
     private String avatar;
+    /**
+     * 部门id
+     */
+    private Long deptId;
 }

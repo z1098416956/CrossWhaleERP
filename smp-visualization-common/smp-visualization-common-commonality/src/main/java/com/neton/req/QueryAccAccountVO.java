@@ -3,6 +3,7 @@ package com.neton.req;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * @author TheSunshine
@@ -25,4 +26,8 @@ public class QueryAccAccountVO implements Serializable {
     private Long page;
 
     private Long size;
+
+    private Long deptId;
+
+    private List<Long> deptIds;
 }

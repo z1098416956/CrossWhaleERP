@@ -22,4 +22,6 @@ public class UpdateAccAccountVO implements Serializable {
     private String introduction;
 
     private Long id;
+
+    private Long deptId;
 }

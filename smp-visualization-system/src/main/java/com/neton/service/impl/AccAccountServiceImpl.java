@@ -11,14 +11,18 @@ import com.neton.req.CreateAccAccountVO;
 import com.neton.req.QueryAccAccountVO;
 import com.neton.req.UpdateAccAccountVO;
 import com.neton.res.AccAccountVO;
+import com.neton.res.SystemDeptTree;
 import com.neton.res.UserInfoVO;
 import com.neton.service.AccAccountService;
+import com.neton.service.SystemDeptService;
 import com.neton.utils.BCryptUtils;
 import com.neton.utils.SecurityUtils;
+import com.neton.utils.tree.TreeUtils;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,6 +30,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author TheSunshine
@@ -37,8 +42,30 @@ public class AccAccountServiceImpl implements AccAccountService {
 
     @Resource
     private AccountDao accountDao;
+
+    @Autowired
+    private SystemDeptService systemDeptService;
     @Override
     public CommonResult<List<AccAccountVO>> queryAccountInfoList(QueryAccAccountVO queryAccAccountVO) {
+        if (queryAccAccountVO.getDeptId() != null){
+            CommonResult<List<SystemDeptTree>> tree = systemDeptService.getSystemDeptTreeById(queryAccAccountVO.getDeptId());
+            if (tree.getCode() != 0){
+                return CommonResult.error(tree.getCode(),tree.getMessage());
+            }
+            List<SystemDeptTree> data = tree.getData();
+            if (data == null || data.isEmpty()){
+                return CommonResult.success(new ArrayList<AccAccountVO>());
+            }
+            List<SystemDeptTree> trees = TreeUtils.buildTree(data, queryAccAccountVO.getDeptId());
+            if (trees == null || trees.isEmpty()){
+                return CommonResult.success(new ArrayList<AccAccountVO>());
+            }
+            List<Long> longs = TreeUtils.treeToList(trees).stream()
+                    .map(SystemDeptTree::getId)
+                    .collect(Collectors.toCollection(ArrayList::new));
+            longs.add(queryAccAccountVO.getDeptId());
+            queryAccAccountVO.setDeptIds(longs);
+        }
         List<AccAccountVO> accAccountVOS = accountDao.queryAccountInfoList(queryAccAccountVO);
         return CommonResult.success(accAccountVOS);
     }
@@ -55,6 +82,7 @@ public class AccAccountServiceImpl implements AccAccountService {
         userInfoVO.setAvatar(accAccountDO.getAvatar());
         userInfoVO.setName(accAccountDO.getAccountName());
         userInfoVO.setId(accAccountDO.getId());
+        userInfoVO.setDeptId(accAccountDO.getDeptId());
         List<String> str = new ArrayList<>();
         str.add("admin");
         userInfoVO.setRoles(str);
@@ -64,6 +92,25 @@ public class AccAccountServiceImpl implements AccAccountService {
 
     @Override
     public CommonResult<PageUtil<UserInfoVO>> queryUserInfoPage(QueryAccAccountVO queryAccAccountVO) {
+        if (queryAccAccountVO.getDeptId() != null && queryAccAccountVO.getDeptId().compareTo(0L) > 0){
+            CommonResult<List<SystemDeptTree>> tree = systemDeptService.getSystemDeptTreeById(queryAccAccountVO.getDeptId());
+            if (tree.getCode() != 0){
+                return CommonResult.error(tree.getCode(),tree.getMessage());
+            }
+            List<SystemDeptTree> data = tree.getData();
+            if (data == null || data.isEmpty()){
+                return CommonResult.success(new PageUtil<>());
+            }
+            List<SystemDeptTree> trees = TreeUtils.buildTree(data, queryAccAccountVO.getDeptId());
+            if (trees == null || trees.isEmpty()){
+                return CommonResult.success(new PageUtil<>());
+            }
+            List<Long> longs = TreeUtils.treeToList(trees).stream()
+                    .map(SystemDeptTree::getId)
+                    .collect(Collectors.toCollection(ArrayList::new));
+            longs.add(queryAccAccountVO.getDeptId());
+            queryAccAccountVO.setDeptIds(longs);
+        }
         IPage<UserInfoVO> page = new Page<>();
         page.setCurrent(queryAccAccountVO.getPage());
         page.setSize(queryAccAccountVO.getSize());
@@ -86,20 +133,21 @@ public class AccAccountServiceImpl implements AccAccountService {
         if (StringUtils.isBlank(createAccAccountVO.getAccountNo())){
             return CommonResult.error(SystemErrorCodeConstants.SYSTEM_ACCOUNT_NO_ERR);
         }
-        if (StringUtils.isBlank(createAccAccountVO.getUsername())){
+        if (StringUtils.isBlank(createAccAccountVO.getUserName())){
             return CommonResult.error(SystemErrorCodeConstants.SYSTEM_USERNAME_ERR);
         }
         List<AccAccountDO> accAccountDOS = accountDao.queryAccountInfoByParams(createAccAccountVO.getAccountNo(), null);
         if (!accAccountDOS.isEmpty()){
             return CommonResult.error(SystemErrorCodeConstants.SYSTEM_USERNAME_ERR);
         }
-        List<AccAccountDO> accAccountDOS1 = accountDao.queryAccountInfoByParams(null, createAccAccountVO.getUsername());
+        List<AccAccountDO> accAccountDOS1 = accountDao.queryAccountInfoByParams(null, createAccAccountVO.getUserName());
         if (!accAccountDOS1.isEmpty()){
             return CommonResult.error(SystemErrorCodeConstants.SYSTEM_USERNAME_REPEAT);
         }
         AccAccountDO accAccountDO = new AccAccountDO();
         accAccountDO.setAccountNo(createAccAccountVO.getAccountNo());
-        accAccountDO.setAccountName(createAccAccountVO.getUsername());
+        accAccountDO.setAccountName(createAccAccountVO.getUserName());
+        accAccountDO.setDeptId(createAccAccountVO.getDeptId());
         accAccountDO.setAvatar(createAccAccountVO.getAvatar());
         accAccountDO.setCreateByName(SecurityUtils.getUsername());
         accAccountDO.setCreateTime(LocalDateTime.now());
@@ -137,6 +185,7 @@ public class AccAccountServiceImpl implements AccAccountService {
         AccAccountDO accAccountDO = accountDao.selectById(id);
         UserInfoVO userInfoVO = new UserInfoVO();
         userInfoVO.setAvatar(accAccountDO.getAvatar());
+        userInfoVO.setDeptId(accAccountDO.getDeptId());
         userInfoVO.setName(accAccountDO.getAccountName());
         userInfoVO.setId(accAccountDO.getId());
         userInfoVO.setAccountNo(accAccountDO.getAccountNo());
@@ -167,6 +216,7 @@ public class AccAccountServiceImpl implements AccAccountService {
         }
         BeanUtils.copyProperties(updateAccAccountVO,accAccountDO);
         accAccountDO.setAccountName(updateAccAccountVO.getName());
+        accAccountDO.setDeptId(updateAccAccountVO.getDeptId());
         accAccountDO.setUpdateBy(SecurityUtils.getUserId());
         accAccountDO.setUpdateByName(SecurityUtils.getUsername());
         accAccountDO.setUpdateTime(LocalDateTime.now());
