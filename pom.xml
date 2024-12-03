@@ -11,9 +11,9 @@
     <modules>
         <module>smp-visualization-common</module>
         <module>smp-visualization-system</module>
-        <module>smp-visualization-analysis</module>
         <module>smp-visualization-oauth</module>
         <module>smp-visualization-web</module>
+        <module>smp-visualization-inventory</module>
 
     </modules>
     <parent>

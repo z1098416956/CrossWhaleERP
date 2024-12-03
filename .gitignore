@@ -11,3 +11,5 @@ smp-visualization-common/smp-visualization-common-interceptor/target/
 logs/
 smp-visualization-common/smp-visualization-common-serializer/target/
 smp-visualization-common/smp-visualization-common-minio/target/
+smp-visualization-inventory/target/
+smp-visualization-common/smp-visualization-common-mybatis/target/
