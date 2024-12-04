@@ -45,5 +45,9 @@ public interface SystemErrorCodeConstants {
     ErrorCode SYSTEM_ROLE_IS_BEEN_USED = new ErrorCode(1001002020,"角色已被分配,不可删除");
     //================文件模块===============1003001000
     ErrorCode FILE_IS_NULL = new ErrorCode(1003001000, "文件不存在或上传的文件内容为空");
-
+    //================仓库模块===============1003003000
+    ErrorCode PROVINCES_IS_NULL = new ErrorCode(1003003000, "城市代码为空");
+    ErrorCode PRODUCT_TYPE_PID_IS_NULL = new ErrorCode(1003003001, "分类父id不能为空");
+    ErrorCode PRODUCT_TYPE_PID_IS_ERR = new ErrorCode(1003003002, "分类父id不存在");
+    ErrorCode PRODUCT_TYPE_ID_IS_NULL = new ErrorCode(1003003003, "分类id不能为空");
 }

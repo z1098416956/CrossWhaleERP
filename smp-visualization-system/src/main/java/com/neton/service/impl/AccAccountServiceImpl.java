@@ -102,14 +102,15 @@ public class AccAccountServiceImpl implements AccAccountService {
                 return CommonResult.success(new PageUtil<>());
             }
             List<SystemDeptTree> trees = TreeUtils.buildTree(data, queryAccAccountVO.getDeptId());
-            if (trees == null || trees.isEmpty()){
-                return CommonResult.success(new PageUtil<>());
+            List<Long> deptIds = new ArrayList<>();
+            if (trees != null && !trees.isEmpty()){
+                List<Long> longs = TreeUtils.treeToList(trees).stream()
+                        .map(SystemDeptTree::getId)
+                        .collect(Collectors.toCollection(ArrayList::new));
+                deptIds.addAll(longs);
             }
-            List<Long> longs = TreeUtils.treeToList(trees).stream()
-                    .map(SystemDeptTree::getId)
-                    .collect(Collectors.toCollection(ArrayList::new));
-            longs.add(queryAccAccountVO.getDeptId());
-            queryAccAccountVO.setDeptIds(longs);
+            deptIds.add(queryAccAccountVO.getDeptId());
+            queryAccAccountVO.setDeptIds(deptIds);
         }
         IPage<UserInfoVO> page = new Page<>();
         page.setCurrent(queryAccAccountVO.getPage());

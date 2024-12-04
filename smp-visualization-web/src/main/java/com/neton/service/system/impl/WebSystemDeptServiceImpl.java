@@ -1,4 +1,4 @@
-package com.neton.service.impl.system;
+package com.neton.service.system.impl;
 
 import com.neton.common.CommonResult;
 import com.neton.common.PageUtil;

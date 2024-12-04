@@ -1,4 +1,4 @@
-package com.neton.service.impl.file;
+package com.neton.service.file.impl;
 
 import com.neton.common.CommonResult;
 import com.neton.minio.config.MinioConfig;

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.neton.dao.ProductTypeDao">
+
+
+    <select id="getProductTypeList" resultType="com.neton.res.TreeNodeVO">
+        select
+            t1.id id,
+            t1.type_name name,
+            t1.p_id pId
+        from
+            product_type t1
+    </select>
+</mapper>

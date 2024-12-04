@@ -1,4 +1,4 @@
-package com.neton.service.impl.oauth;
+package com.neton.service.oauth.impl;
 
 import com.neton.common.CommonResult;
 import com.neton.feign.oauth.OauthServiceClient;

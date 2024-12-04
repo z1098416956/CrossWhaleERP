@@ -1,0 +1,136 @@
+package com.neton.service.impl;
+
+import com.neton.common.CommonResult;
+import com.neton.common.SystemErrorCodeConstants;
+import com.neton.dao.ProductTypeDao;
+import com.neton.entity.ProductTypeDO;
+import com.neton.req.CreateProductTypeVO;
+import com.neton.req.UpdateProductTypeVO;
+import com.neton.res.ProductTypeDetailsVO;
+import com.neton.res.TreeNodeVO;
+import com.neton.service.ProductTypeService;
+import com.neton.utils.SecurityUtils;
+import jakarta.annotation.Resource;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDateTime;
+import java.util.List;
+
+@Service
+@Slf4j
+public class ProductTypeServiceImpl implements ProductTypeService {
+
+    @Resource
+    private ProductTypeDao productTypeDao;
+
+    /**
+     * 创建产品类型
+     *
+     * @param createProductTypeVO
+     * @return
+     */
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public CommonResult createProductTypeInfo(CreateProductTypeVO createProductTypeVO) {
+        if (createProductTypeVO.getPid() == null){
+            return CommonResult.error(SystemErrorCodeConstants.PRODUCT_TYPE_PID_IS_NULL);
+        }
+        if (createProductTypeVO.getPid() != null && createProductTypeVO.getPid().compareTo(0L) != 0){
+            ProductTypeDO productTypeDO = productTypeDao.selectById(createProductTypeVO.getPid());
+            if (productTypeDO == null){
+                return CommonResult.error(SystemErrorCodeConstants.PRODUCT_TYPE_PID_IS_ERR);
+            }
+        }
+        ProductTypeDO productTypeDO = new ProductTypeDO();
+        productTypeDO.setTypeName(createProductTypeVO.getTypeName());
+        productTypeDO.setPId(createProductTypeVO.getPid());
+        productTypeDO.setCreateBy(SecurityUtils.getUserId());
+        productTypeDO.setIsDeleted(0);
+        productTypeDO.setCreateByName(SecurityUtils.getUsername());
+        productTypeDO.setCreateTime(LocalDateTime.now());
+        productTypeDao.insert(productTypeDO);
+        return CommonResult.success();
+    }
+
+    /**
+     * 更新产品类型
+     *
+     * @param updateProductTypeVO
+     * @return
+     */
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public CommonResult updateProductTypeInfo(UpdateProductTypeVO updateProductTypeVO) {
+        if (updateProductTypeVO.getId() == null){
+            return CommonResult.error(SystemErrorCodeConstants.PRODUCT_TYPE_ID_IS_NULL);
+        }
+        if (updateProductTypeVO.getPId() != null && updateProductTypeVO.getPId().compareTo(0L) > 0){
+            ProductTypeDO productTypeDO = productTypeDao.selectById(updateProductTypeVO.getPId());
+            if (productTypeDO == null){
+                return CommonResult.error(SystemErrorCodeConstants.PRODUCT_TYPE_PID_IS_ERR);
+            }
+        }
+        ProductTypeDO productTypeDO = new ProductTypeDO();
+        productTypeDO.setId(updateProductTypeVO.getId());
+        productTypeDO.setPId(updateProductTypeVO.getPId());
+        productTypeDO.setTypeName(updateProductTypeVO.getTypeName());
+        productTypeDO.setUpdateBy(SecurityUtils.getUserId());
+        productTypeDO.setUpdateByName(SecurityUtils.getUsername());
+        productTypeDO.setUpdateTime(LocalDateTime.now());
+        productTypeDao.updateById(productTypeDO);
+        return CommonResult.success();
+    }
+
+    /**
+     * 获取分类详情
+     *
+     * @param id
+     * @return
+     */
+    @Override
+    public CommonResult<ProductTypeDetailsVO> getProductTypeDetails(Long id) {
+        if (id == null){
+            return CommonResult.error(SystemErrorCodeConstants.PRODUCT_TYPE_ID_IS_NULL);
+        }
+        ProductTypeDO productTypeDO = productTypeDao.selectById(id);
+        if (productTypeDO == null){
+            return CommonResult.error(SystemErrorCodeConstants.PRODUCT_TYPE_PID_IS_ERR);
+        }
+        ProductTypeDetailsVO productTypeDetailsVO = new ProductTypeDetailsVO();
+        productTypeDetailsVO.setTypeName(productTypeDO.getTypeName());
+        productTypeDetailsVO.setPId(productTypeDO.getPId());
+        productTypeDetailsVO.setId(productTypeDO.getId());
+        return CommonResult.success(productTypeDetailsVO);
+    }
+
+    /**
+     * 删除分类详情
+     *
+     * @param id
+     * @return
+     */
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public CommonResult deleteProductTypeInfo(Long id) {
+        if (id == null){
+            return CommonResult.error(SystemErrorCodeConstants.PRODUCT_TYPE_ID_IS_NULL);
+        }
+        ProductTypeDO productTypeDO = productTypeDao.selectById(id);
+        if (productTypeDO == null){
+            return CommonResult.error(SystemErrorCodeConstants.PRODUCT_TYPE_PID_IS_ERR);
+        }
+        productTypeDao.deleteById(id);
+        return CommonResult.success();
+    }
+
+    /**
+     * @return
+     */
+    @Override
+    public CommonResult<List<TreeNodeVO>> getProductTypeList() {
+        List<TreeNodeVO> list = productTypeDao.getProductTypeList();
+        return CommonResult.success(list);
+    }
+}
