@@ -1,8 +1,10 @@
 package com.neton.feign.inventory;
 
 import com.neton.common.CommonResult;
+import com.neton.common.PageUtil;
 import com.neton.feign.FeignConfig;
 import com.neton.req.CreateProductTypeVO;
+import com.neton.req.QueryProductTypeVO;
 import com.neton.req.UpdateProductTypeVO;
 import com.neton.res.ProductTypeDetailsVO;
 import com.neton.res.TreeNodeVO;
@@ -58,4 +60,12 @@ public interface InventoryClient {
      */
     @GetMapping("/v1/product/type/getProductTypeList")
     public CommonResult<List<TreeNodeVO>> getProductTypeList();
+
+    /**
+     * 分类列表
+     * @param queryProductTypeVO
+     * @return
+     */
+    @PostMapping("/v1/product/type/queryProductTypePage")
+    public CommonResult<PageUtil<TreeNodeVO>> queryProductTypePage(@RequestBody QueryProductTypeVO queryProductTypeVO);
 }

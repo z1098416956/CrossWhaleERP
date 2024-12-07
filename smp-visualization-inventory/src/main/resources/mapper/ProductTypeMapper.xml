@@ -10,5 +10,24 @@
             t1.p_id pId
         from
             product_type t1
+        where is_deleted = 0
+    </select>
+    <select id="queryProductTypePage" resultType="com.neton.res.TreeNodeVO">
+        select
+            t1.id id,
+            t1.type_name name,
+            t1.p_id pId
+        from
+            product_type t1
+        where t1.is_deleted = 0
+        <if test="params.typeName != null and params.typeName != ''">
+            and t1.type_name like concat('%',#{params.typeName},'%')
+        </if>
+        <if test="params.ids != null">
+            and id in
+            <foreach collection="params.id" item="id" open="(" separator="," close=")">
+                #{id}
+            </foreach>
+        </if>
     </select>
 </mapper>

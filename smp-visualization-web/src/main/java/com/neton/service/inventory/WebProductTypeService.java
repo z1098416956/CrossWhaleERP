@@ -1,7 +1,9 @@
 package com.neton.service.inventory;
 
 import com.neton.common.CommonResult;
+import com.neton.common.PageUtil;
 import com.neton.req.CreateProductTypeVO;
+import com.neton.req.QueryProductTypeVO;
 import com.neton.req.UpdateProductTypeVO;
 import com.neton.res.ProductTypeDetailsVO;
 import com.neton.res.TreeNodeVO;
@@ -45,4 +47,11 @@ public interface WebProductTypeService {
      * @return
      */
     public CommonResult<List<TreeNodeVO>> getProductTypeList();
+
+    /**
+     * 分类列表
+     * @param queryProductTypeVO
+     * @return
+     */
+    public CommonResult<PageUtil<TreeNodeVO>> queryProductTypePage(QueryProductTypeVO queryProductTypeVO);
 }

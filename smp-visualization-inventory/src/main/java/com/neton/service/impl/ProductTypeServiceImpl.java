@@ -1,10 +1,14 @@
 package com.neton.service.impl;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.neton.common.CommonResult;
+import com.neton.common.PageUtil;
 import com.neton.common.SystemErrorCodeConstants;
 import com.neton.dao.ProductTypeDao;
 import com.neton.entity.ProductTypeDO;
 import com.neton.req.CreateProductTypeVO;
+import com.neton.req.QueryProductTypeVO;
 import com.neton.req.UpdateProductTypeVO;
 import com.neton.res.ProductTypeDetailsVO;
 import com.neton.res.TreeNodeVO;
@@ -132,5 +136,23 @@ public class ProductTypeServiceImpl implements ProductTypeService {
     public CommonResult<List<TreeNodeVO>> getProductTypeList() {
         List<TreeNodeVO> list = productTypeDao.getProductTypeList();
         return CommonResult.success(list);
+    }
+
+    /**
+     * 分类列表
+     *
+     * @param queryProductTypeVO
+     * @return
+     */
+    @Override
+    public CommonResult<PageUtil<TreeNodeVO>> queryProductTypePage(QueryProductTypeVO queryProductTypeVO) {
+        IPage<TreeNodeVO> page = new Page<>();
+        page.setCurrent(queryProductTypeVO.getPage());
+        page.setSize(queryProductTypeVO.getSize());
+        IPage<TreeNodeVO> iPage = productTypeDao.queryProductTypePage(queryProductTypeVO, page);
+        PageUtil<TreeNodeVO> pageUtil = new PageUtil<>();
+        pageUtil.setPageList(page.getRecords());
+        pageUtil.setTotal(page.getTotal());
+        return CommonResult.success(pageUtil);
     }
 }
