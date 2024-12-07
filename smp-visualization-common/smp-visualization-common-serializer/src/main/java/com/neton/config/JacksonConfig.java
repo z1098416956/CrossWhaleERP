@@ -2,6 +2,7 @@ package com.neton.config;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.neton.serializer.LongToStringSerializer;
 import org.springframework.context.annotation.Bean;
@@ -17,6 +18,7 @@ public class JacksonConfig {
         module.addSerializer(Long.TYPE, new LongToStringSerializer());
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         objectMapper.registerModule(module);
+        objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
         return objectMapper;
     }
 }

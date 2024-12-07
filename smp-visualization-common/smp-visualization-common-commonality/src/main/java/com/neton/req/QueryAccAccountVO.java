@@ -30,4 +30,6 @@ public class QueryAccAccountVO implements Serializable {
     private Long deptId;
 
     private List<Long> deptIds;
+
+    private List<Long> ids;
 }

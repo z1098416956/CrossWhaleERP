@@ -3,4 +3,7 @@
 <mapper namespace="com.neton.dao.CitiesDao">
 
 
+    <select id="queryCitiesById" resultType="com.neton.entity.CitiesDO">
+        SELECT * FROM cities WHERE (city_id = #{id} OR province_id = #{id}) and is_deleted = 0
+    </select>
 </mapper>

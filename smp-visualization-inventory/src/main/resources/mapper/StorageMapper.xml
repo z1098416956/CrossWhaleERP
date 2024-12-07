@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.neton.dao.StorageDao">
+
+
+    <select id="queryStoragePage" resultType="com.neton.res.StorageVO">
+        select
+            *
+        from storage
+        where is_deleted = 0
+        <if test="params.storageName != null">
+            and storage_name like concat('%',#{params.storageName},'%')
+        </if>
+        <if test="params.cityIds != null and params.cityIds.size > 0">
+            and city_id in
+            <foreach collection=" params.cityIds" item="cityId" open="(" separator="," close=")">
+                #{cityId}
+            </foreach>
+        </if>
+    </select>
+</mapper>

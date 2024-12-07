@@ -50,4 +50,9 @@ public interface SystemErrorCodeConstants {
     ErrorCode PRODUCT_TYPE_PID_IS_NULL = new ErrorCode(1003003001, "分类父id不能为空");
     ErrorCode PRODUCT_TYPE_PID_IS_ERR = new ErrorCode(1003003002, "分类父id不存在");
     ErrorCode PRODUCT_TYPE_ID_IS_NULL = new ErrorCode(1003003003, "分类id不能为空");
+    ErrorCode STORAGE_NAME_IS_NULL = new ErrorCode(1003003004, "仓库名称不能为空");
+    ErrorCode STORAGE_NAME_ADMIN_IS_NULL = new ErrorCode(1003003005, "管理员id不能为空");
+    ErrorCode STORAGE_CITY_ID_IS_NULL = new ErrorCode(1003003006, "城市id不能为空");
+    ErrorCode STORAGE_ID_IS_NULL = new ErrorCode(1003003007, "id不能为空");
+    ErrorCode STORAGE_ID_IS_ERR = new ErrorCode(1003003008, "id错误");
 }

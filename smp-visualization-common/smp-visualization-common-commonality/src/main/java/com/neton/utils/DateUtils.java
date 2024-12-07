@@ -717,4 +717,16 @@ public class DateUtils {
         calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
         return calendar.getTime();
     }
+
+    /**
+     * LocalDateTime转换成字符串
+     * @param time LocalDateTime类型的时间
+     * @param format 格式化类型
+     * @return
+     */
+    public static String localDateTimeToString(LocalDateTime time,String format){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(format);
+        String formattedDate = time.format(formatter);
+        return formattedDate;
+    }
 }
