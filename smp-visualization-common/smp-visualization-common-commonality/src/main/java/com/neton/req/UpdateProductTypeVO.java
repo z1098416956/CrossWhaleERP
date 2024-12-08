@@ -15,7 +15,9 @@ public class UpdateProductTypeVO implements Serializable {
     /**
      *父级id
      */
-    private Long pId;
+    private Long pid;
 
     private Long id;
+
+    private String remark;
 }

@@ -16,4 +16,6 @@ public class CreateProductTypeVO implements Serializable {
      *父级id
      */
     private Long pid;
+
+    private String remark;
 }

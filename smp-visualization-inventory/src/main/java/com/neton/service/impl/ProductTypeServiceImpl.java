@@ -51,6 +51,7 @@ public class ProductTypeServiceImpl implements ProductTypeService {
         productTypeDO.setTypeName(createProductTypeVO.getTypeName());
         productTypeDO.setPId(createProductTypeVO.getPid());
         productTypeDO.setCreateBy(SecurityUtils.getUserId());
+        productTypeDO.setRemark(createProductTypeVO.getRemark());
         productTypeDO.setIsDeleted(0);
         productTypeDO.setCreateByName(SecurityUtils.getUsername());
         productTypeDO.setCreateTime(LocalDateTime.now());
@@ -70,15 +71,16 @@ public class ProductTypeServiceImpl implements ProductTypeService {
         if (updateProductTypeVO.getId() == null){
             return CommonResult.error(SystemErrorCodeConstants.PRODUCT_TYPE_ID_IS_NULL);
         }
-        if (updateProductTypeVO.getPId() != null && updateProductTypeVO.getPId().compareTo(0L) > 0){
-            ProductTypeDO productTypeDO = productTypeDao.selectById(updateProductTypeVO.getPId());
+        if (updateProductTypeVO.getPid() != null && updateProductTypeVO.getPid().compareTo(0L) > 0){
+            ProductTypeDO productTypeDO = productTypeDao.selectById(updateProductTypeVO.getPid());
             if (productTypeDO == null){
                 return CommonResult.error(SystemErrorCodeConstants.PRODUCT_TYPE_PID_IS_ERR);
             }
         }
         ProductTypeDO productTypeDO = new ProductTypeDO();
         productTypeDO.setId(updateProductTypeVO.getId());
-        productTypeDO.setPId(updateProductTypeVO.getPId());
+        productTypeDO.setRemark(updateProductTypeVO.getRemark());
+        productTypeDO.setPId(updateProductTypeVO.getPid());
         productTypeDO.setTypeName(updateProductTypeVO.getTypeName());
         productTypeDO.setUpdateBy(SecurityUtils.getUserId());
         productTypeDO.setUpdateByName(SecurityUtils.getUsername());
@@ -105,6 +107,7 @@ public class ProductTypeServiceImpl implements ProductTypeService {
         ProductTypeDetailsVO productTypeDetailsVO = new ProductTypeDetailsVO();
         productTypeDetailsVO.setTypeName(productTypeDO.getTypeName());
         productTypeDetailsVO.setPId(productTypeDO.getPId());
+        productTypeDetailsVO.setRemark(productTypeDO.getRemark());
         productTypeDetailsVO.setId(productTypeDO.getId());
         return CommonResult.success(productTypeDetailsVO);
     }

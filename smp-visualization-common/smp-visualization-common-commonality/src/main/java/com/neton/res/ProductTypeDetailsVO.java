@@ -18,4 +18,5 @@ public class ProductTypeDetailsVO implements Serializable {
     private Long pId;
 
     private Long id;
+    private String remark;
 }

@@ -20,4 +20,5 @@ public class ProductTypeDO extends BaseDO<ProductTypeDO> {
      *父级id
      */
     private Long pId;
+    private String remark;
 }
