@@ -8,6 +8,7 @@ import com.neton.common.SystemErrorCodeConstants;
 import com.neton.dao.ProductTypeDao;
 import com.neton.entity.ProductTypeDO;
 import com.neton.req.CreateProductTypeVO;
+import com.neton.req.DeleteProductTypeVO;
 import com.neton.req.QueryProductTypeVO;
 import com.neton.req.UpdateProductTypeVO;
 import com.neton.res.ProductTypeDetailsVO;
@@ -157,5 +158,21 @@ public class ProductTypeServiceImpl implements ProductTypeService {
         pageUtil.setPageList(page.getRecords());
         pageUtil.setTotal(page.getTotal());
         return CommonResult.success(pageUtil);
+    }
+
+    /**
+     * 删除分类
+     *
+     * @param deleteProductTypeVO
+     * @return
+     */
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public CommonResult deleteProductTypeIds(DeleteProductTypeVO deleteProductTypeVO) {
+        if (deleteProductTypeVO.getIds() == null || deleteProductTypeVO.getIds().isEmpty()){
+            return CommonResult.error(SystemErrorCodeConstants.PRODUCT_TYPE_ID_IS_NULL);
+        }
+        productTypeDao.deleteByIds(deleteProductTypeVO.getIds());
+        return CommonResult.success();
     }
 }

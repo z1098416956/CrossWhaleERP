@@ -3,4 +3,13 @@
 <mapper namespace="com.neton.dao.BrandTypeDao">
 
 
+    <select id="queryBrandTypeTree" resultType="com.neton.res.TreeNodeVO">
+        select
+            id,
+            brand_name name,
+            p_id pId
+        FROM
+            brand_type
+        where is_deleted = 0
+    </select>
 </mapper>

@@ -20,4 +20,9 @@ public class BrandTypeDO extends BaseDO<BrandTypeDO> {
      *父级id
      */
     private Long pId;
+
+    /**
+     * 备注
+     */
+    private String remark;
 }

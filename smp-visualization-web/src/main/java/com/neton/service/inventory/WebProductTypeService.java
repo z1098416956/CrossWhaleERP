@@ -3,6 +3,7 @@ package com.neton.service.inventory;
 import com.neton.common.CommonResult;
 import com.neton.common.PageUtil;
 import com.neton.req.CreateProductTypeVO;
+import com.neton.req.DeleteProductTypeVO;
 import com.neton.req.QueryProductTypeVO;
 import com.neton.req.UpdateProductTypeVO;
 import com.neton.res.ProductTypeDetailsVO;
@@ -54,4 +55,11 @@ public interface WebProductTypeService {
      * @return
      */
     public CommonResult<PageUtil<TreeNodeVO>> queryProductTypePage(QueryProductTypeVO queryProductTypeVO);
+
+    /**
+     * 删除分类
+     * @param deleteProductTypeVO
+     * @return
+     */
+    public CommonResult deleteProductTypeIds(DeleteProductTypeVO deleteProductTypeVO);
 }

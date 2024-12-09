@@ -4,6 +4,7 @@ import com.neton.common.CommonResult;
 import com.neton.common.PageUtil;
 import com.neton.feign.FeignConfig;
 import com.neton.req.CreateProductTypeVO;
+import com.neton.req.DeleteProductTypeVO;
 import com.neton.req.QueryProductTypeVO;
 import com.neton.req.UpdateProductTypeVO;
 import com.neton.res.ProductTypeDetailsVO;
@@ -68,4 +69,12 @@ public interface InventoryClient {
      */
     @PostMapping("/v1/product/type/queryProductTypePage")
     public CommonResult<PageUtil<TreeNodeVO>> queryProductTypePage(@RequestBody QueryProductTypeVO queryProductTypeVO);
+
+    /**
+     * 删除分类
+     * @param deleteProductTypeVO
+     * @return
+     */
+    @PostMapping("/v1/product/type/deleteProductTypeIds")
+    public CommonResult deleteProductTypeIds(@RequestBody DeleteProductTypeVO deleteProductTypeVO);
 }

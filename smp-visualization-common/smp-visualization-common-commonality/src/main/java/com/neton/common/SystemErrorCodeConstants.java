@@ -55,4 +55,8 @@ public interface SystemErrorCodeConstants {
     ErrorCode STORAGE_CITY_ID_IS_NULL = new ErrorCode(1003003006, "城市id不能为空");
     ErrorCode STORAGE_ID_IS_NULL = new ErrorCode(1003003007, "id不能为空");
     ErrorCode STORAGE_ID_IS_ERR = new ErrorCode(1003003008, "id错误");
+    ErrorCode BRAND_NAME_IS_NULL = new ErrorCode(1003003009, "品牌名称不能为空");
+    ErrorCode BRAND_IPD_IS_NULL = new ErrorCode(1003003010, "分类父id不能为空");
+    ErrorCode BRAND_IPD_IS_ERR = new ErrorCode(1003003011, "分类父id不存在");
+    ErrorCode BRAND_ID_IS_ERR = new ErrorCode(1003003012, "id不能为空");
 }
