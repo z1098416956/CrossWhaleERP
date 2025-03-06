@@ -155,8 +155,8 @@ public class ProductTypeServiceImpl implements ProductTypeService {
         page.setSize(queryProductTypeVO.getSize());
         IPage<TreeNodeVO> iPage = productTypeDao.queryProductTypePage(queryProductTypeVO, page);
         PageUtil<TreeNodeVO> pageUtil = new PageUtil<>();
-        pageUtil.setPageList(page.getRecords());
-        pageUtil.setTotal(page.getTotal());
+        pageUtil.setPageList(iPage.getRecords());
+        pageUtil.setTotal(iPage.getTotal());
         return CommonResult.success(pageUtil);
     }
 
