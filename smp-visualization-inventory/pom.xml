@@ -92,12 +92,7 @@
         <version>1.0-SNAPSHOT</version>
         <scope>compile</scope>
     </dependency>
-    <dependency>
-        <groupId>com.neton</groupId>
-        <artifactId>smp-visualization-common-es</artifactId>
-        <version>1.0-SNAPSHOT</version>
-        <scope>compile</scope>
-    </dependency>
+
     <dependency>
         <groupId>org.apache.commons</groupId>
         <artifactId>commons-lang3</artifactId>

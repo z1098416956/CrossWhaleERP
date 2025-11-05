@@ -17,7 +17,6 @@
         <module>smp-visualization-common-interceptor</module>
         <module>smp-visualization-common-serializer</module>
         <module>smp-visualization-common-minio</module>
-        <module>smp-visualization-common-es</module>
     </modules>
 
     <properties>
