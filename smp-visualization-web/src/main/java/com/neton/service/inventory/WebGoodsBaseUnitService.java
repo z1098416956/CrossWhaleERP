@@ -1,5 +1,4 @@
-package com.neton.service;
-
+package com.neton.service.inventory;
 
 import com.neton.common.CommonResult;
 import com.neton.common.PageUtil;
@@ -8,8 +7,7 @@ import com.neton.req.QueryUnitReqVO;
 import com.neton.req.UpdateUnitReqVO;
 import com.neton.res.UnitResVO;
 
-public interface GoodsBaseUnitService {
-
+public interface WebGoodsBaseUnitService {
     /**
      * 创建基本单位副单位
      * @param createUnitVO

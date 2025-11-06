@@ -12,9 +12,12 @@ public class UnitExtendResVO implements Serializable {
     /**
      *单位名称如：瓶、个、千克、米、箱、提
      */
-    private String unitName;
+    private String unitExtendName;
 
-    private Long id;
+    /**
+     * id
+     */
+    private Long extendId;
     /**
      *
      */
@@ -24,4 +27,6 @@ public class UnitExtendResVO implements Serializable {
      *转换比例
      */
     private BigDecimal conversionRatio;
+
+
 }

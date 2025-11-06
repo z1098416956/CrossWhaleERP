@@ -12,7 +12,7 @@ public class CreateUnitExtendVO implements Serializable {
     /**
      *单位名称如：瓶、个、千克、米、箱、提
      */
-    private String unitName;
+    private String unitExtendName;
 
     /**
      *转换比例

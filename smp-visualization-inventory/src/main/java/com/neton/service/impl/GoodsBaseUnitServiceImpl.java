@@ -1,8 +1,10 @@
 package com.neton.service.impl;
 
-import cn.hutool.db.PageResult;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.neton.bean.NetonBeanUtils;
 import com.neton.common.CommonResult;
+import com.neton.common.PageUtil;
 import com.neton.common.SystemErrorCodeConstants;
 import com.neton.dao.GoodsBaseUnitDao;
 import com.neton.dao.GoodsBaseUnitExtendDao;
@@ -14,6 +16,7 @@ import com.neton.req.QueryUnitReqVO;
 import com.neton.req.UpdateUnitReqVO;
 import com.neton.res.UnitResVO;
 import com.neton.service.GoodsBaseUnitService;
+import com.neton.utils.SecurityUtils;
 import jakarta.annotation.Resource;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
@@ -65,8 +68,15 @@ public class GoodsBaseUnitServiceImpl implements GoodsBaseUnitService {
      * @return
      */
     @Override
-    public CommonResult<PageResult<UnitResVO>> getGoodsBaseUnitPage(QueryUnitReqVO queryUnitReqVO) {
-        return null;
+    public CommonResult<PageUtil<UnitResVO>> getGoodsBaseUnitPage(QueryUnitReqVO queryUnitReqVO) {
+        IPage<UnitResVO> page = new Page<>();
+        page.setCurrent(queryUnitReqVO.getPage());
+        page.setSize(queryUnitReqVO.getSize());
+        IPage<UnitResVO> iPage = goodsBaseUnitDao.getGoodsBaseUnitPage(page, queryUnitReqVO);
+        PageUtil<UnitResVO> pageResult = new PageUtil<>();
+        pageResult.setPageList(iPage.getRecords());
+        pageResult.setTotal(iPage.getTotal());
+        return CommonResult.success(pageResult);
     }
 
     /**
@@ -77,7 +87,8 @@ public class GoodsBaseUnitServiceImpl implements GoodsBaseUnitService {
      */
     @Override
     public CommonResult<UnitResVO> getGoodsBaseUnitById(Long id) {
-        return null;
+        UnitResVO unitById = goodsBaseUnitDao.getUnitById(id);
+        return CommonResult.success(unitById);
     }
 
     /**
@@ -86,9 +97,29 @@ public class GoodsBaseUnitServiceImpl implements GoodsBaseUnitService {
      * @param updateUnitVO
      * @return
      */
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public CommonResult<Void> updateGoodsBaseUnitInfo(UpdateUnitReqVO updateUnitVO) {
-        return null;
+        if (updateUnitVO.getId() == null) {
+            return CommonResult.error(SystemErrorCodeConstants.GOOD_UNIT_ID_IS_NULL);
+        }
+        GoodsBaseUnitDO goodsBaseUnitDO = goodsBaseUnitDao.selectById(updateUnitVO.getId());
+        if (goodsBaseUnitDO == null) {
+            return CommonResult.error(SystemErrorCodeConstants.GOOD_UNIT_ID_IS_ERR);
+        }
+        NetonBeanUtils.copyProperties(updateUnitVO, goodsBaseUnitDO);
+        goodsBaseUnitDao.updateById(goodsBaseUnitDO);
+        if (updateUnitVO.getExtendList() == null || updateUnitVO.getExtendList().isEmpty()) {
+            return CommonResult.success();
+        }
+        goodsBaseUnitExtendDao.deleteByGoodsBaseUnitId(updateUnitVO.getId());
+        List<CreateUnitExtendVO> extendList = updateUnitVO.getExtendList();
+        List<GoodsBaseUnitExtendDO> unitExtendVOList = NetonBeanUtils.toBean(extendList, GoodsBaseUnitExtendDO.class);
+        unitExtendVOList.forEach(unitExtendDO -> {
+            unitExtendDO.setUnitId(goodsBaseUnitDO.getId());
+        });
+        goodsBaseUnitExtendDao.insert(unitExtendVOList);
+        return CommonResult.success();
     }
 
     /**
@@ -97,8 +128,15 @@ public class GoodsBaseUnitServiceImpl implements GoodsBaseUnitService {
      * @param id
      * @return
      */
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public CommonResult<Void> deleteGoodsBaseUnitInfo(Long id) {
-        return null;
+        GoodsBaseUnitDO goodsBaseUnitDO = goodsBaseUnitDao.selectById(id);
+        if (goodsBaseUnitDO == null) {
+            return CommonResult.error(SystemErrorCodeConstants.GOOD_UNIT_ID_IS_ERR);
+        }
+        goodsBaseUnitDao.deleteById(id);
+        goodsBaseUnitExtendDao.updateByGoodsBaseUnitId(id, SecurityUtils.getUserId());
+        return CommonResult.success();
     }
 }

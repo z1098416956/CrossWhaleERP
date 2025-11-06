@@ -2,5 +2,51 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.neton.dao.GoodsBaseUnitDao">
 
+    <resultMap id="goodsBaseUnitPage" type="com.neton.res.UnitResVO" autoMapping="true">
+        <id property="id" column="id"/>
+        <result property="unitName" column="unit_name"/>
+        <result property="unitType" column="unit_type"/>
+        <collection property="extendList" ofType="com.neton.res.UnitExtendResVO" autoMapping="true">
+            <id property="extendId" column="extend_id"/>
+            <result property="unitExtendName" column="unit_extend_name"/>
+            <result property="unitId" column="unit_id"/>
+            <result property="conversionRatio" column="conversion_ratio"/>
+        </collection>
+    </resultMap>
 
+    <select id="getGoodsBaseUnitPage" resultMap="goodsBaseUnitPage">
+        SELECT
+            u.id,
+            u.unit_name,
+            u.unit_type,
+            e.id as extend_id,
+            e.unit_extend_name,
+            e.unit_id,
+            e.conversion_ratio
+        FROM
+            goods_base_unit u
+        LEFT JOIN
+            goods_base_unit_extend e ON u.id = e.unit_id
+        WHERE is_deleted = 0
+        <if test="queryUnitReqVO.unitName != null and queryUnitReqVO.unitName != ''">
+            AND u.unit_name LIKE CONCAT('%', #{queryUnitReqVO.unitName}, '%')
+        </if>
+        ORDER BY u.id ASC
+    </select>
+    <select id="getUnitById" resultMap="goodsBaseUnitPage">
+        SELECT
+            u.id,
+            u.unit_name,
+            u.unit_type,
+            e.id as extend_id,
+            e.unit_extend_name,
+            e.unit_id,
+            e.conversion_ratio
+        FROM
+            goods_base_unit u
+                LEFT JOIN
+            goods_base_unit_extend e ON u.id = e.unit_id
+        WHERE u.is_deleted = 0
+        AND u.id = #{id}
+    </select>
 </mapper>

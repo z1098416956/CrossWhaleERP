@@ -3,17 +3,12 @@ package com.neton.feign.inventory;
 import com.neton.common.CommonResult;
 import com.neton.common.PageUtil;
 import com.neton.feign.FeignConfig;
-import com.neton.req.CreateProductTypeVO;
-import com.neton.req.DeleteProductTypeVO;
-import com.neton.req.QueryProductTypeVO;
-import com.neton.req.UpdateProductTypeVO;
+import com.neton.req.*;
 import com.neton.res.ProductTypeDetailsVO;
 import com.neton.res.TreeNodeVO;
+import com.neton.res.UnitResVO;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -77,4 +72,45 @@ public interface InventoryClient {
      */
     @PostMapping("/v1/product/type/deleteProductTypeIds")
     public CommonResult deleteProductTypeIds(@RequestBody DeleteProductTypeVO deleteProductTypeVO);
+
+
+
+    /**
+     * 创建基本单位副单位
+     * @param createUnitVO
+     * @return
+     */
+    @PostMapping("/v1/good/base/unit/createGoodsBaseUnitInfo")
+    public CommonResult<Void> createGoodsBaseUnitInfo(@RequestBody CreateUnitVO createUnitVO);
+
+    /**
+     * 分页查询基本单位副单位
+     * @param queryUnitReqVO
+     * @return
+     */
+    @PostMapping("/v1/good/base/unit/getGoodsBaseUnitPage")
+    public CommonResult<PageUtil<UnitResVO>> getGoodsBaseUnitPage(@RequestBody QueryUnitReqVO queryUnitReqVO);
+
+    /**
+     * 根据ID查询基本单位副单位
+     * @param id
+     * @return
+     */
+    @GetMapping("/v1/good/base/unit/getGoodsBaseUnitById")
+    public CommonResult<UnitResVO> getGoodsBaseUnitById(@RequestParam("id") Long id);
+    /**
+     * 更新基本单位副单位
+     * @param updateUnitVO
+     * @return
+     */
+    @PostMapping("/v1/good/base/unit/updateGoodsBaseUnitInfo")
+    public CommonResult<Void> updateGoodsBaseUnitInfo(@RequestBody UpdateUnitReqVO updateUnitVO);
+
+    /**
+     * 删除基本单位副单位
+     * @param id
+     * @return
+     */
+    @DeleteMapping("/v1/good/base/unit/deleteGoodsBaseUnitInfo")
+    public CommonResult<Void> deleteGoodsBaseUnitInfo(@RequestParam("id") Long id);
 }

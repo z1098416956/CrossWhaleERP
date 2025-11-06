@@ -19,7 +19,7 @@ public class GoodsBaseUnitExtendDO extends BaseDO<GoodsBaseUnitExtendDO> {
     /**
      *单位名称如：瓶、个、千克、米、箱、提
      */
-    private String unitName;
+    private String unitExtendName;
     /**
      *基本单位id
      */
