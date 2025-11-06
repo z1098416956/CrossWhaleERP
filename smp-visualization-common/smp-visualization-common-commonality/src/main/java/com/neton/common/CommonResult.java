@@ -106,6 +106,11 @@ public class CommonResult <T> implements Serializable {
 
         return error(errorCode.code(), errorCode.message());
     }
+    public static <T> CommonResult<T> error() {
+
+        return error(500, "操作失败。");
+    }
+
 
     public static <T> CommonResult<T> validatedError(String message) {
 

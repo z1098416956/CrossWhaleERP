@@ -59,4 +59,6 @@ public interface SystemErrorCodeConstants {
     ErrorCode BRAND_IPD_IS_NULL = new ErrorCode(1003003010, "分类父id不能为空");
     ErrorCode BRAND_IPD_IS_ERR = new ErrorCode(1003003011, "分类父id不存在");
     ErrorCode BRAND_ID_IS_ERR = new ErrorCode(1003003012, "id不能为空");
+    //================商品模块===============1003004000
+    ErrorCode GOOD_UNIT_NAME_IS_NULL = new ErrorCode(1003004000, "单位名称不能为空");
 }

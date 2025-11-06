@@ -37,15 +37,16 @@ public class FileUploadServiceImpl implements FileUploadService {
         return CommonResult.success(fileUrl);
     }
 
+
     @SneakyThrows(Exception.class)
     public ObjectWriteResponse uploadFile(String bucketName, MultipartFile file, String objectName, String contentType) {
-        InputStream inputStream = file.getInputStream();
-        return minioClient.putObject(
-                PutObjectArgs.builder()
-                        .bucket(bucketName)
-                        .object(objectName)
-                        .contentType(contentType)
-                        .stream(inputStream, inputStream.available(), -1)
-                        .build());
+           InputStream inputStream = file.getInputStream();
+           return minioClient.putObject(
+                   PutObjectArgs.builder()
+                           .bucket(bucketName)
+                           .object(objectName)
+                           .contentType(contentType)
+                           .stream(inputStream, inputStream.available(), -1)
+                           .build());
     }
 }
