@@ -9,10 +9,10 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr: 192.168.3.22:8848
+        server-addr: 192.168.3.62:8848
         namespace: aaa
       config:
-        server-addr: 192.168.3.22:8848
+        server-addr: 192.168.3.62:8848
         file-extension: yaml
         namespace: aaa
         group: DEFAULT_GROUP
