@@ -18,7 +18,10 @@ public class UpdateUnitReqVO implements Serializable {
      *单位类型（如：基本单位、包装单位、重量单位等，可选）
      */
     private Integer unitType;
-
+    /**
+     * 是否启用0是1否
+     */
+    private Integer isEnabled;
     /**
      * 副单位列表
      */

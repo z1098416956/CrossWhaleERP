@@ -23,6 +23,10 @@ public class UnitResVO implements Serializable {
     private Integer unitType;
 
     /**
+     * 是否启用0是1否
+     */
+    private Integer isEnabled;
+    /**
      * 副单位列表
      */
     private List<UnitExtendResVO> extendList;

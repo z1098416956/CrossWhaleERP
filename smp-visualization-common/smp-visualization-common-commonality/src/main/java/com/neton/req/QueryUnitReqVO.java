@@ -14,4 +14,9 @@ public class QueryUnitReqVO  extends PageParam implements Serializable{
      * 单位名称
      */
     private String unitName;
+
+    /**
+     * 是否启用0是1否
+     */
+    private Integer isEnabled;
 }

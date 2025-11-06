@@ -48,6 +48,8 @@ public class GoodsBaseUnitServiceImpl implements GoodsBaseUnitService {
         }
         GoodsBaseUnitDO goodsBaseUnitDO = new GoodsBaseUnitDO();
         BeanUtils.copyProperties(createUnitVO, goodsBaseUnitDO);
+        //设置默认启用
+        goodsBaseUnitDO.setIsEnabled(0);
         goodsBaseUnitDao.insert(goodsBaseUnitDO);
         if (createUnitVO.getExtendList() == null || createUnitVO.getExtendList().isEmpty()){
             return CommonResult.success();
