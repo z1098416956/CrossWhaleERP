@@ -1,10 +1,13 @@
 package com.neton.service.impl;
 
 import cn.hutool.db.PageResult;
+import com.neton.bean.NetonBeanUtils;
 import com.neton.common.CommonResult;
 import com.neton.common.SystemErrorCodeConstants;
 import com.neton.dao.GoodsBaseUnitDao;
+import com.neton.dao.GoodsBaseUnitExtendDao;
 import com.neton.entity.GoodsBaseUnitDO;
+import com.neton.entity.GoodsBaseUnitExtendDO;
 import com.neton.req.CreateUnitExtendVO;
 import com.neton.req.CreateUnitVO;
 import com.neton.req.QueryUnitReqVO;
@@ -25,6 +28,8 @@ public class GoodsBaseUnitServiceImpl implements GoodsBaseUnitService {
     @Resource
     private GoodsBaseUnitDao goodsBaseUnitDao;
 
+    @Resource
+    private GoodsBaseUnitExtendDao goodsBaseUnitExtendDao;
     /**
      * 创建基本单位副单位
      *
@@ -45,8 +50,12 @@ public class GoodsBaseUnitServiceImpl implements GoodsBaseUnitService {
             return CommonResult.success();
         }
         List<CreateUnitExtendVO> extendList = createUnitVO.getExtendList();
-
-        return null;
+        List<GoodsBaseUnitExtendDO> unitExtendVOList = NetonBeanUtils.toBean(extendList, GoodsBaseUnitExtendDO.class);
+        unitExtendVOList.forEach(unitExtendDO -> {
+            unitExtendDO.setUnitId(goodsBaseUnitDO.getId());
+        });
+        goodsBaseUnitExtendDao.insert(unitExtendVOList);
+        return CommonResult.success();
     }
 
     /**
