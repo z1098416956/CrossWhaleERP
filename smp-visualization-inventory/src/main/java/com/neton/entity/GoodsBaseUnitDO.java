@@ -25,7 +25,7 @@ public class GoodsBaseUnitDO extends BaseDO<GoodsBaseUnitDO> {
      */
     private Integer unitType;
     /**
-     * 是否启用0是1否
+     * 是否启用1是0否
      */
     private Integer isEnabled;
 }

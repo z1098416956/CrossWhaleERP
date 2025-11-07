@@ -122,4 +122,13 @@ public interface InventoryClient {
      */
     @PostMapping("/v1/good/base/unit/queryGoodsBaseUnitPage")
     public CommonResult<PageUtil<UnitPageResVO>> queryGoodsBaseUnitPage(@RequestBody QueryUnitReqVO queryUnitReqVO);
+
+
+    /**
+     * 批量根据类型删除、禁用、启用
+     * @param updateUnitStatusReqVO
+     * @return
+     */
+    @PostMapping("/v1/good/base/unit/updateGoodsBaseUnitByType")
+    public CommonResult<Void> updateGoodsBaseUnitByType(@RequestBody UpdateUnitStatusReqVO updateUnitStatusReqVO);
 }

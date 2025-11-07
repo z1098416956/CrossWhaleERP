@@ -13,6 +13,31 @@
             <result property="conversionRatio" column="conversion_ratio"/>
         </collection>
     </resultMap>
+    <update id="updateBatchBaGoodsBaseUnit">
+        UPDATE goods_base_unit u
+        JOIN (
+        <foreach collection="list" item="item" separator=" UNION ALL ">
+            SELECT
+            #{item.id} as id,
+            #{item.unitName} as unit_name,
+            <!-- #{item.unitType} as unit_type, -->
+            #{item.isEnabled} as is_enabled,
+            #{item.updateBy} as update_by,
+            #{item.updateByName} as update_by_name,
+            #{item.updateTime} as update_time,
+            #{item.isDeleted} as is_deleted
+        </foreach>
+        ) AS tmp ON u.id = tmp.id
+        SET
+            u.unit_name = tmp.unit_name,
+            <!-- u.unit_type = tmp.unit_type, -->
+            u.is_enabled = tmp.is_enabled,
+            u.update_by = tmp.update_by,
+            u.update_by_name = tmp.update_by_name,
+            u.update_time = tmp.update_time,
+            u.is_deleted = tmp.is_deleted,
+            u.version = u.version + 1
+    </update>
 
     <select id="getGoodsBaseUnitPage" resultType="com.neton.res.UnitResVO">
         SELECT

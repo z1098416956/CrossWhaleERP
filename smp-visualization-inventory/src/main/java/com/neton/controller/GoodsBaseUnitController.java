@@ -5,6 +5,7 @@ import com.neton.common.PageUtil;
 import com.neton.req.CreateUnitVO;
 import com.neton.req.QueryUnitReqVO;
 import com.neton.req.UpdateUnitReqVO;
+import com.neton.req.UpdateUnitStatusReqVO;
 import com.neton.res.UnitPageResVO;
 import com.neton.res.UnitResVO;
 import com.neton.service.GoodsBaseUnitService;
@@ -78,4 +79,13 @@ public class GoodsBaseUnitController {
         return goodsBaseUnitService.deleteGoodsBaseUnitInfo(id);
     }
 
+    /**
+     * 批量根据类型删除、禁用、启用
+     * @param updateUnitStatusReqVO
+     * @return
+     */
+    @PostMapping("/updateGoodsBaseUnitByType")
+    public CommonResult<Void> updateGoodsBaseUnitByType(@RequestBody UpdateUnitStatusReqVO updateUnitStatusReqVO){
+        return goodsBaseUnitService.updateGoodsBaseUnitByType(updateUnitStatusReqVO);
+    }
 }

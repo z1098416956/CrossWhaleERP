@@ -10,10 +10,7 @@ import com.neton.dao.GoodsBaseUnitDao;
 import com.neton.dao.GoodsBaseUnitExtendDao;
 import com.neton.entity.GoodsBaseUnitDO;
 import com.neton.entity.GoodsBaseUnitExtendDO;
-import com.neton.req.CreateUnitExtendVO;
-import com.neton.req.CreateUnitVO;
-import com.neton.req.QueryUnitReqVO;
-import com.neton.req.UpdateUnitReqVO;
+import com.neton.req.*;
 import com.neton.res.UnitExtendResVO;
 import com.neton.res.UnitPageResVO;
 import com.neton.res.UnitResVO;
@@ -238,6 +235,41 @@ public class GoodsBaseUnitServiceImpl implements GoodsBaseUnitService {
         }
         goodsBaseUnitDao.deleteById(id);
         goodsBaseUnitExtendDao.updateByGoodsBaseUnitId(id, SecurityUtils.getUserId());
+        return CommonResult.success();
+    }
+
+    /**
+     * 批量根据类型删除、禁用、启用
+     *
+     * @param updateUnitStatusReqVO
+     * @return
+     */
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public CommonResult<Void> updateGoodsBaseUnitByType(UpdateUnitStatusReqVO updateUnitStatusReqVO) {
+        if (updateUnitStatusReqVO.getType() == null) {
+            return CommonResult.error(SystemErrorCodeConstants.GOOD_UNIT_TYPE_IS_ERR);
+        }
+        if (updateUnitStatusReqVO.getType() <= 0 || updateUnitStatusReqVO.getType() > 3) {
+            return CommonResult.error(SystemErrorCodeConstants.GOOD_UNIT_TYPE_IS_ERR);
+        }
+        //批量删除
+        if (updateUnitStatusReqVO.getType() == 1) {
+            goodsBaseUnitDao.deleteByIds(updateUnitStatusReqVO.getIds());
+        }else {
+            List<GoodsBaseUnitDO> list = new ArrayList<>();
+            for (Long id : updateUnitStatusReqVO.getIds()) {
+                GoodsBaseUnitDO goodsBaseUnitDO = new GoodsBaseUnitDO();
+                goodsBaseUnitDO.setId(id);
+                goodsBaseUnitDO.setUpdateBy(SecurityUtils.getUserId());
+                goodsBaseUnitDO.setUpdateTime(LocalDateTime.now());
+                goodsBaseUnitDO.setUpdateByName(SecurityUtils.getUsername());
+                goodsBaseUnitDO.setIsDeleted(0);
+                goodsBaseUnitDO.setIsEnabled(updateUnitStatusReqVO.getType() == 2 ? 1 : 0);
+                list.add(goodsBaseUnitDO);
+            }
+           goodsBaseUnitDao.updateBatchBaGoodsBaseUnit(list);
+        }
         return CommonResult.success();
     }
 }

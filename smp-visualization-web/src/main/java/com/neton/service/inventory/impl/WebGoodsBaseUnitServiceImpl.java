@@ -6,6 +6,7 @@ import com.neton.feign.inventory.InventoryClient;
 import com.neton.req.CreateUnitVO;
 import com.neton.req.QueryUnitReqVO;
 import com.neton.req.UpdateUnitReqVO;
+import com.neton.req.UpdateUnitStatusReqVO;
 import com.neton.res.UnitPageResVO;
 import com.neton.res.UnitResVO;
 import com.neton.service.inventory.WebGoodsBaseUnitService;
@@ -81,5 +82,17 @@ public class WebGoodsBaseUnitServiceImpl implements WebGoodsBaseUnitService {
     @Override
     public CommonResult<PageUtil<UnitPageResVO>> queryGoodsBaseUnitPage(QueryUnitReqVO queryUnitReqVO) {
         return inventoryClient.queryGoodsBaseUnitPage(queryUnitReqVO);
+    }
+
+    /**
+     * 批量根据类型删除、禁用、启用
+     *
+     * @param updateUnitStatusReqVO
+     * @return
+     */
+    @Override
+    public CommonResult<Void> updateGoodsBaseUnitByType(UpdateUnitStatusReqVO updateUnitStatusReqVO) {
+
+        return inventoryClient.updateGoodsBaseUnitByType(updateUnitStatusReqVO);
     }
 }
