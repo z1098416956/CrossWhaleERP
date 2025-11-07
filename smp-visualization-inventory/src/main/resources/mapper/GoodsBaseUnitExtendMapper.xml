@@ -9,4 +9,17 @@
     <delete id="deleteByGoodsBaseUnitId">
         delete from goods_base_unit_extend where unit_id = #{unitId}
     </delete>
+    <select id="selectByGoodsBaseUnitIds" resultType="com.neton.res.UnitExtendResVO">
+        select
+            unit_extend_name,
+            unit_id,
+            conversion_ratio,
+            id  extendId
+        from goods_base_unit_extend
+        where is_deleted = 0
+        and unit_id in
+        <foreach collection="unitIds" open="(" item="id" separator="," close=")" >
+            #{id}
+        </foreach>
+    </select>
 </mapper>

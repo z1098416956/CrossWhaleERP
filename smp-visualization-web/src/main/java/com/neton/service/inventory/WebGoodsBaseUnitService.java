@@ -5,6 +5,7 @@ import com.neton.common.PageUtil;
 import com.neton.req.CreateUnitVO;
 import com.neton.req.QueryUnitReqVO;
 import com.neton.req.UpdateUnitReqVO;
+import com.neton.res.UnitPageResVO;
 import com.neton.res.UnitResVO;
 
 public interface WebGoodsBaseUnitService {
@@ -42,4 +43,12 @@ public interface WebGoodsBaseUnitService {
      * @return
      */
     CommonResult<Void> deleteGoodsBaseUnitInfo(Long id);
+
+
+    /**
+     * 分页查询基本单位副单位
+     * @param queryUnitReqVO
+     * @return
+     */
+    CommonResult<PageUtil<UnitPageResVO>> queryGoodsBaseUnitPage(QueryUnitReqVO queryUnitReqVO);
 }

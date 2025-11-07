@@ -6,6 +6,7 @@ import com.neton.common.PageUtil;
 import com.neton.req.CreateUnitVO;
 import com.neton.req.QueryUnitReqVO;
 import com.neton.req.UpdateUnitReqVO;
+import com.neton.res.UnitPageResVO;
 import com.neton.res.UnitResVO;
 
 public interface GoodsBaseUnitService {
@@ -23,6 +24,13 @@ public interface GoodsBaseUnitService {
      * @return
      */
     CommonResult<PageUtil<UnitResVO>> getGoodsBaseUnitPage(QueryUnitReqVO queryUnitReqVO);
+
+    /**
+     * 分页查询基本单位副单位
+     * @param queryUnitReqVO
+     * @return
+     */
+    CommonResult<PageUtil<UnitPageResVO>> queryGoodsBaseUnitPage(QueryUnitReqVO queryUnitReqVO);
 
     /**
      * 根据ID查询基本单位副单位

@@ -14,6 +14,8 @@ import com.neton.req.CreateUnitExtendVO;
 import com.neton.req.CreateUnitVO;
 import com.neton.req.QueryUnitReqVO;
 import com.neton.req.UpdateUnitReqVO;
+import com.neton.res.UnitExtendResVO;
+import com.neton.res.UnitPageResVO;
 import com.neton.res.UnitResVO;
 import com.neton.service.GoodsBaseUnitService;
 import com.neton.utils.SecurityUtils;
@@ -23,7 +25,11 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class GoodsBaseUnitServiceImpl implements GoodsBaseUnitService {
@@ -50,6 +56,10 @@ public class GoodsBaseUnitServiceImpl implements GoodsBaseUnitService {
         BeanUtils.copyProperties(createUnitVO, goodsBaseUnitDO);
         //设置默认启用
         goodsBaseUnitDO.setIsEnabled(0);
+        goodsBaseUnitDO.setCreateBy(SecurityUtils.getUserId());
+        goodsBaseUnitDO.setCreateTime(LocalDateTime.now());
+        goodsBaseUnitDO.setCreateByName(SecurityUtils.getUsername());
+        goodsBaseUnitDO.setIsDeleted(0);
         goodsBaseUnitDao.insert(goodsBaseUnitDO);
         if (createUnitVO.getExtendList() == null || createUnitVO.getExtendList().isEmpty()){
             return CommonResult.success();
@@ -58,6 +68,13 @@ public class GoodsBaseUnitServiceImpl implements GoodsBaseUnitService {
         List<GoodsBaseUnitExtendDO> unitExtendVOList = NetonBeanUtils.toBean(extendList, GoodsBaseUnitExtendDO.class);
         unitExtendVOList.forEach(unitExtendDO -> {
             unitExtendDO.setUnitId(goodsBaseUnitDO.getId());
+            unitExtendDO.setUpdateBy(SecurityUtils.getUserId());
+            unitExtendDO.setUpdateTime(LocalDateTime.now());
+            unitExtendDO.setUpdateByName(SecurityUtils.getUsername());
+            unitExtendDO.setCreateByName(SecurityUtils.getUsername());
+            unitExtendDO.setCreateTime(LocalDateTime.now());
+            unitExtendDO.setCreateBy(SecurityUtils.getUserId());
+            unitExtendDO.setIsDeleted(0);
         });
         goodsBaseUnitExtendDao.insert(unitExtendVOList);
         return CommonResult.success();
@@ -76,8 +93,80 @@ public class GoodsBaseUnitServiceImpl implements GoodsBaseUnitService {
         page.setSize(queryUnitReqVO.getSize());
         IPage<UnitResVO> iPage = goodsBaseUnitDao.getGoodsBaseUnitPage(page, queryUnitReqVO);
         PageUtil<UnitResVO> pageResult = new PageUtil<>();
-        pageResult.setPageList(iPage.getRecords());
+        List<UnitResVO> records = iPage.getRecords();
+        if (records != null && !records.isEmpty()) {
+            List<Long> collect = records.stream().map(UnitResVO::getId).toList();
+            List<UnitExtendResVO> list = goodsBaseUnitExtendDao.selectByGoodsBaseUnitIds(collect);
+            if (list != null && !list.isEmpty()) {
+                Map<Long, List<UnitExtendResVO>> map = list.stream().collect(Collectors.groupingBy(UnitExtendResVO::getUnitId));
+                records.forEach(record -> {
+                    record.setExtendList(map.get(record.getId()));
+                });
+            }
+        }
+        pageResult.setPageList(records);
         pageResult.setTotal(iPage.getTotal());
+        return CommonResult.success(pageResult);
+    }
+
+    /**
+     * 分页查询基本单位副单位
+     *
+     * @param queryUnitReqVO
+     * @return
+     */
+    @Override
+    public CommonResult<PageUtil<UnitPageResVO>> queryGoodsBaseUnitPage(QueryUnitReqVO queryUnitReqVO) {
+        IPage<UnitResVO> page = new Page<>();
+        page.setCurrent(queryUnitReqVO.getPage());
+        page.setSize(queryUnitReqVO.getSize());
+        IPage<UnitResVO> iPage = goodsBaseUnitDao.getGoodsBaseUnitPage(page, queryUnitReqVO);
+        PageUtil<UnitPageResVO> pageResult = new PageUtil<>();
+        List<UnitResVO> records = iPage.getRecords();
+        if (records != null && !records.isEmpty()) {
+            List<Long> collect = records.stream().map(UnitResVO::getId).toList();
+            List<UnitExtendResVO> list = goodsBaseUnitExtendDao.selectByGoodsBaseUnitIds(collect);
+            List<UnitPageResVO> res = new ArrayList<>();
+            if (list != null && !list.isEmpty()) {
+                Map<Long, List<UnitExtendResVO>> map = list.stream().collect(Collectors.groupingBy(UnitExtendResVO::getUnitId));
+                records.forEach(record -> {
+                    List<UnitExtendResVO> resVOS = map.get(record.getId());
+                    UnitPageResVO unitPageResVO = new UnitPageResVO();
+                    unitPageResVO.setId(record.getId());
+                    unitPageResVO.setBaseUnitName(record.getUnitName());
+                    unitPageResVO.setIsEnabled(record.getIsEnabled());
+                    StringBuffer sb = new StringBuffer();
+                    sb.append(record.getUnitName()).append("/(");
+                    if (resVOS != null && !resVOS.isEmpty()) {
+                        sb.append(resVOS.get(0).getUnitExtendName());
+                        sb.append("=");
+                        sb.append(resVOS.get(0).getConversionRatio());
+                        sb.append(record.getUnitName()+")");
+                        unitPageResVO.setDeputyUnitName(resVOS.get(0).getUnitExtendName()+"="+resVOS.get(0).getConversionRatio()+record.getUnitName());
+                        if (resVOS.size() >=2){
+                            sb.append("/(");
+                            sb.append(resVOS.get(1).getUnitExtendName());
+                            sb.append("=");
+                            sb.append(resVOS.get(1).getConversionRatio());
+                            sb.append(record.getUnitName()+")");
+                            unitPageResVO.setDeputyUnitName2(resVOS.get(1).getUnitExtendName()+"="+resVOS.get(1).getConversionRatio()+record.getUnitName());
+                        }
+                        if (resVOS.size() >=3){
+                            sb.append("/(");
+                            sb.append(resVOS.get(2).getUnitExtendName());
+                            sb.append("=");
+                            sb.append(resVOS.get(2).getConversionRatio());
+                            sb.append(record.getUnitName()+")");
+                            unitPageResVO.setDeputyUnitName3(resVOS.get(2).getUnitExtendName()+"="+resVOS.get(2).getConversionRatio()+record.getUnitName());
+                        }
+                    }
+                    unitPageResVO.setUnitName(sb.toString());
+                    res.add(unitPageResVO);
+                });
+            }
+            pageResult.setTotal(iPage.getTotal());
+            pageResult.setPageList(res);
+        }
         return CommonResult.success(pageResult);
     }
 
@@ -110,6 +199,9 @@ public class GoodsBaseUnitServiceImpl implements GoodsBaseUnitService {
             return CommonResult.error(SystemErrorCodeConstants.GOOD_UNIT_ID_IS_ERR);
         }
         NetonBeanUtils.copyProperties(updateUnitVO, goodsBaseUnitDO);
+        goodsBaseUnitDO.setUpdateBy(SecurityUtils.getUserId());
+        goodsBaseUnitDO.setUpdateTime(LocalDateTime.now());
+        goodsBaseUnitDO.setUpdateByName(SecurityUtils.getUsername());
         goodsBaseUnitDao.updateById(goodsBaseUnitDO);
         if (updateUnitVO.getExtendList() == null || updateUnitVO.getExtendList().isEmpty()) {
             return CommonResult.success();
@@ -119,6 +211,13 @@ public class GoodsBaseUnitServiceImpl implements GoodsBaseUnitService {
         List<GoodsBaseUnitExtendDO> unitExtendVOList = NetonBeanUtils.toBean(extendList, GoodsBaseUnitExtendDO.class);
         unitExtendVOList.forEach(unitExtendDO -> {
             unitExtendDO.setUnitId(goodsBaseUnitDO.getId());
+            unitExtendDO.setUpdateBy(SecurityUtils.getUserId());
+            unitExtendDO.setUpdateTime(LocalDateTime.now());
+            unitExtendDO.setUpdateByName(SecurityUtils.getUsername());
+            unitExtendDO.setCreateByName(SecurityUtils.getUsername());
+            unitExtendDO.setIsDeleted(0);
+            unitExtendDO.setCreateTime(LocalDateTime.now());
+            unitExtendDO.setCreateBy(SecurityUtils.getUserId());
         });
         goodsBaseUnitExtendDao.insert(unitExtendVOList);
         return CommonResult.success();

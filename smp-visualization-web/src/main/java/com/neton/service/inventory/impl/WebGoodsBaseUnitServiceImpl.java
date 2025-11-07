@@ -6,6 +6,7 @@ import com.neton.feign.inventory.InventoryClient;
 import com.neton.req.CreateUnitVO;
 import com.neton.req.QueryUnitReqVO;
 import com.neton.req.UpdateUnitReqVO;
+import com.neton.res.UnitPageResVO;
 import com.neton.res.UnitResVO;
 import com.neton.service.inventory.WebGoodsBaseUnitService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,5 +70,16 @@ public class WebGoodsBaseUnitServiceImpl implements WebGoodsBaseUnitService {
     @Override
     public CommonResult<Void> deleteGoodsBaseUnitInfo(Long id) {
         return inventoryClient.deleteGoodsBaseUnitInfo(id);
+    }
+
+    /**
+     * 分页查询基本单位副单位
+     *
+     * @param queryUnitReqVO
+     * @return
+     */
+    @Override
+    public CommonResult<PageUtil<UnitPageResVO>> queryGoodsBaseUnitPage(QueryUnitReqVO queryUnitReqVO) {
+        return inventoryClient.queryGoodsBaseUnitPage(queryUnitReqVO);
     }
 }

@@ -6,6 +6,7 @@ import com.neton.feign.FeignConfig;
 import com.neton.req.*;
 import com.neton.res.ProductTypeDetailsVO;
 import com.neton.res.TreeNodeVO;
+import com.neton.res.UnitPageResVO;
 import com.neton.res.UnitResVO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
@@ -113,4 +114,12 @@ public interface InventoryClient {
      */
     @DeleteMapping("/v1/good/base/unit/deleteGoodsBaseUnitInfo")
     public CommonResult<Void> deleteGoodsBaseUnitInfo(@RequestParam("id") Long id);
+
+    /**
+     * 分页查询基本单位副单位
+     * @param queryUnitReqVO
+     * @return
+     */
+    @PostMapping("/v1/good/base/unit/queryGoodsBaseUnitPage")
+    public CommonResult<PageUtil<UnitPageResVO>> queryGoodsBaseUnitPage(@RequestBody QueryUnitReqVO queryUnitReqVO);
 }

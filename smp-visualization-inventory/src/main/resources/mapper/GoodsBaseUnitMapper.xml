@@ -14,24 +14,23 @@
         </collection>
     </resultMap>
 
-    <select id="getGoodsBaseUnitPage" resultMap="goodsBaseUnitPage">
+    <select id="getGoodsBaseUnitPage" resultType="com.neton.res.UnitResVO">
         SELECT
             u.id,
             u.unit_name,
             u.unit_type,
-            e.id as extend_id,
-            e.unit_extend_name,
-            e.unit_id,
-            e.conversion_ratio
+            u.is_enabled
+
         FROM
             goods_base_unit u
-        LEFT JOIN
-            goods_base_unit_extend e ON u.id = e.unit_id
-        WHERE is_deleted = 0
+        WHERE u.is_deleted = 0
         <if test="queryUnitReqVO.unitName != null and queryUnitReqVO.unitName != ''">
             AND u.unit_name LIKE CONCAT('%', #{queryUnitReqVO.unitName}, '%')
         </if>
-        ORDER BY u.id ASC
+        <if test="queryUnitReqVO.isEnabled != null">
+            AND u.is_enabled = #{queryUnitReqVO.isEnabled}
+        </if>
+        ORDER BY u.create_time desc
     </select>
     <select id="getUnitById" resultMap="goodsBaseUnitPage">
         SELECT
@@ -41,7 +40,8 @@
             e.id as extend_id,
             e.unit_extend_name,
             e.unit_id,
-            e.conversion_ratio
+            e.conversion_ratio,
+            u.is_enabled
         FROM
             goods_base_unit u
                 LEFT JOIN

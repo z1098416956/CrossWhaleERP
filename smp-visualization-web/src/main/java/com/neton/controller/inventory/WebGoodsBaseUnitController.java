@@ -5,6 +5,7 @@ import com.neton.common.PageUtil;
 import com.neton.req.CreateUnitVO;
 import com.neton.req.QueryUnitReqVO;
 import com.neton.req.UpdateUnitReqVO;
+import com.neton.res.UnitPageResVO;
 import com.neton.res.UnitResVO;
 import com.neton.service.inventory.WebGoodsBaseUnitService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,5 +66,15 @@ public class WebGoodsBaseUnitController {
     @DeleteMapping("/deleteGoodsBaseUnitInfo")
     public CommonResult<Void> deleteGoodsBaseUnitInfo(@RequestParam("id") Long id) {
         return goodsBaseUnitService.deleteGoodsBaseUnitInfo(id);
+    }
+
+    /**
+     * 分页查询基本单位副单位
+     * @param queryUnitReqVO
+     * @return
+     */
+    @PostMapping("/queryGoodsBaseUnitPage")
+    public CommonResult<PageUtil<UnitPageResVO>> queryGoodsBaseUnitPage(@RequestBody QueryUnitReqVO queryUnitReqVO){
+        return goodsBaseUnitService.queryGoodsBaseUnitPage(queryUnitReqVO);
     }
 }
