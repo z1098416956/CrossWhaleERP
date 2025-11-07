@@ -4,10 +4,7 @@ import com.neton.common.CommonResult;
 import com.neton.common.PageUtil;
 import com.neton.feign.FeignConfig;
 import com.neton.req.*;
-import com.neton.res.ProductTypeDetailsVO;
-import com.neton.res.TreeNodeVO;
-import com.neton.res.UnitPageResVO;
-import com.neton.res.UnitResVO;
+import com.neton.res.*;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
@@ -131,4 +128,57 @@ public interface InventoryClient {
      */
     @PostMapping("/v1/good/base/unit/updateGoodsBaseUnitByType")
     public CommonResult<Void> updateGoodsBaseUnitByType(@RequestBody UpdateUnitStatusReqVO updateUnitStatusReqVO);
+
+
+    /**
+     * 创建商品多属性
+     *
+     * @param createMultiAttributeVO
+     * @return
+     */
+    @PostMapping("/v1/goods/multi/attribute/createGoodsMultiAttribute")
+    public CommonResult<Void> createGoodsMultiAttribute(@RequestBody CreateGoodsMultiAttributeReqVO createMultiAttributeVO);
+    /**
+     * 更新商品多属性
+     *
+     * @param updateMultiAttributeVO
+     * @return
+     */
+    @PostMapping("/v1/goods/multi/attribute/updateGoodsMultiAttribute")
+    public CommonResult<Void> updateGoodsMultiAttribute(@RequestBody UpdateGoodsMultiAttributeReqVO updateMultiAttributeVO) ;
+
+    /**
+     * 批量删除多属性
+     */
+    @DeleteMapping("/v1/goods/multi/attribute/deleteGoodsMultiAttribute")
+    public CommonResult<Void> deleteGoodsMultiAttribute(@RequestBody DeleteGoodsMultiAttributeReqVO deleteMultiAttributeVO);
+
+
+    /**
+     * 分页查询商品多属性
+     *
+     * @param queryMultiAttributeVO
+     * @return
+     */
+    @PostMapping("/v1/goods/multi/attribute/queryGoodsMultiAttributePage")
+    public CommonResult<PageUtil<GoodsMultiAttributeResVO>> queryGoodsMultiAttributePage(@RequestBody QueryGoodsMultiAttributeReqVO queryMultiAttributeVO);
+
+    /**
+     * 根据ID查询商品多属性
+     *
+     * @param id
+     * @return
+     */
+    @GetMapping("/v1/goods/multi/attribute/getGoodsMultiAttributeById")
+    public CommonResult<GoodsMultiAttributeResVO> getGoodsMultiAttributeById(@RequestParam("id") Long id);
+
+
+    /**
+     * 根据属性id删除商品多属性
+     *
+     * @param id
+     * @return
+     */
+    @DeleteMapping("/v1/goods/multi/attribute/deleteGoodsMultiAttributeByAttributeId")
+    public CommonResult<Void> deleteGoodsMultiAttributeByAttributeId(@RequestParam("id") Long id);
 }

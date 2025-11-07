@@ -19,7 +19,7 @@
         <foreach collection="list" item="item" separator=" UNION ALL ">
             SELECT
             #{item.id} as id,
-            #{item.unitName} as unit_name,
+            <!-- #{item.unitName} as unit_name, -->
             <!-- #{item.unitType} as unit_type, -->
             #{item.isEnabled} as is_enabled,
             #{item.updateBy} as update_by,
@@ -29,7 +29,7 @@
         </foreach>
         ) AS tmp ON u.id = tmp.id
         SET
-            u.unit_name = tmp.unit_name,
+            <!-- u.unit_name = tmp.unit_name, -->
             <!-- u.unit_type = tmp.unit_type, -->
             u.is_enabled = tmp.is_enabled,
             u.update_by = tmp.update_by,

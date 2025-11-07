@@ -63,5 +63,8 @@ public interface SystemErrorCodeConstants {
     ErrorCode GOOD_UNIT_NAME_IS_NULL = new ErrorCode(1003004000, "单位名称不能为空");
     ErrorCode GOOD_UNIT_ID_IS_NULL = new ErrorCode(1003004001, "单位ID不能为空");
     ErrorCode GOOD_UNIT_ID_IS_ERR = new ErrorCode(1003004002, "单位不存在");
-    ErrorCode GOOD_UNIT_TYPE_IS_ERR = new ErrorCode(1003004004, "操作类型错误");
+    ErrorCode GOOD_UNIT_TYPE_IS_ERR = new ErrorCode(1003004003, "操作类型错误");
+    ErrorCode GOOD_ATT_VALUE_IS_NULL = new ErrorCode(1003004004, "属性名或值不能为空");
+    ErrorCode GOOD_ATT_ID_NULL = new ErrorCode(1003004004, "属性ID不能为空");
+    ErrorCode GOOD_ATT_ID_ERR = new ErrorCode(1003004005, "属性不存在");
 }
