@@ -10,8 +10,8 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 @EnableFeignClients
 @MapperScan({"com.neton.dao"})
 @SpringBootApplication(scanBasePackages = {"com.neton.config","com.neton"})
-public class InventoryApplication {
+public class GoodsApplication {
     public static void main(String[] args) {
-        SpringApplication.run(InventoryApplication.class,args);
+        SpringApplication.run(GoodsApplication.class,args);
     }
 }

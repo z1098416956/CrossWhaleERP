@@ -1,4 +1,4 @@
-package com.neton.service.inventory;
+package com.neton.service.goods;
 
 import com.neton.common.CommonResult;
 import com.neton.common.PageUtil;

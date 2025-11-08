@@ -2,7 +2,7 @@ package com.neton.service.inventory.impl;
 
 import com.neton.common.CommonResult;
 import com.neton.common.PageUtil;
-import com.neton.feign.inventory.InventoryClient;
+import com.neton.feign.goods.InventoryClient;
 import com.neton.req.CreateProductTypeVO;
 import com.neton.req.DeleteProductTypeVO;
 import com.neton.req.QueryProductTypeVO;

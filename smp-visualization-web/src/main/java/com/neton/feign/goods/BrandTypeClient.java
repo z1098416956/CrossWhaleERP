@@ -1,4 +1,4 @@
-package com.neton.feign.inventory;
+package com.neton.feign.goods;
 
 import com.neton.common.CommonResult;
 import com.neton.feign.FeignConfig;
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
-@FeignClient(name = "smp-inventory-service" ,configuration = FeignConfig.class,contextId = "brand-type-service")
+@FeignClient(name = "smp-goods-service" ,configuration = FeignConfig.class,contextId = "brand-type-service")
 public interface BrandTypeClient {
 
     /**

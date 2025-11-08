@@ -2,7 +2,7 @@ package com.neton.service.inventory.impl;
 
 import com.neton.common.CommonResult;
 import com.neton.common.PageUtil;
-import com.neton.feign.inventory.StorageClient;
+import com.neton.feign.goods.StorageClient;
 import com.neton.feign.system.SystemServiceClient;
 import com.neton.req.CreateStorageVO;
 import com.neton.req.QueryAccAccountVO;
@@ -17,7 +17,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;

@@ -1,4 +1,4 @@
-package com.neton.controller.inventory;
+package com.neton.controller.goods;
 
 import com.neton.common.CommonResult;
 import com.neton.common.PageUtil;
@@ -7,7 +7,7 @@ import com.neton.req.DeleteGoodsMultiAttributeReqVO;
 import com.neton.req.QueryGoodsMultiAttributeReqVO;
 import com.neton.req.UpdateGoodsMultiAttributeReqVO;
 import com.neton.res.GoodsMultiAttributeResVO;
-import com.neton.service.inventory.WebGoodsMultiAttributeService;
+import com.neton.service.goods.WebGoodsMultiAttributeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

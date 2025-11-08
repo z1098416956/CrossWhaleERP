@@ -1,10 +1,10 @@
 spring:
   application:
-    name: smp-inventory-service
+    name: smp-goods-service
   profiles:
     active: dev
   config:
-    import: optional:nacos:inventory-information-dev.yaml
+    import: optional:nacos:goods-information-dev.yaml
     enabled: true
   cloud:
     nacos:

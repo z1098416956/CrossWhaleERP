@@ -1,4 +1,4 @@
-package com.neton.controller.inventory;
+package com.neton.controller.goods;
 
 import com.neton.common.CommonResult;
 import com.neton.common.PageUtil;
@@ -8,7 +8,7 @@ import com.neton.req.UpdateUnitReqVO;
 import com.neton.req.UpdateUnitStatusReqVO;
 import com.neton.res.UnitPageResVO;
 import com.neton.res.UnitResVO;
-import com.neton.service.inventory.WebGoodsBaseUnitService;
+import com.neton.service.goods.WebGoodsBaseUnitService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

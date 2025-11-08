@@ -1,15 +1,15 @@
-package com.neton.service.inventory.impl;
+package com.neton.service.goods.impl;
 
 import com.neton.common.CommonResult;
 import com.neton.common.PageUtil;
-import com.neton.feign.inventory.InventoryClient;
+import com.neton.feign.goods.GoodsClient;
 import com.neton.req.CreateUnitVO;
 import com.neton.req.QueryUnitReqVO;
 import com.neton.req.UpdateUnitReqVO;
 import com.neton.req.UpdateUnitStatusReqVO;
 import com.neton.res.UnitPageResVO;
 import com.neton.res.UnitResVO;
-import com.neton.service.inventory.WebGoodsBaseUnitService;
+import com.neton.service.goods.WebGoodsBaseUnitService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
 public class WebGoodsBaseUnitServiceImpl implements WebGoodsBaseUnitService {
 
     @Autowired
-    private InventoryClient inventoryClient;
+    private GoodsClient goodsClient;
     /**
      * 创建基本单位副单位
      *
@@ -26,7 +26,7 @@ public class WebGoodsBaseUnitServiceImpl implements WebGoodsBaseUnitService {
      */
     @Override
     public CommonResult<Void> createGoodsBaseUnitInfo(CreateUnitVO createUnitVO) {
-        return inventoryClient.createGoodsBaseUnitInfo(createUnitVO);
+        return goodsClient.createGoodsBaseUnitInfo(createUnitVO);
     }
 
     /**
@@ -37,7 +37,7 @@ public class WebGoodsBaseUnitServiceImpl implements WebGoodsBaseUnitService {
      */
     @Override
     public CommonResult<PageUtil<UnitResVO>> getGoodsBaseUnitPage(QueryUnitReqVO queryUnitReqVO) {
-        return inventoryClient.getGoodsBaseUnitPage(queryUnitReqVO);
+        return goodsClient.getGoodsBaseUnitPage(queryUnitReqVO);
     }
 
     /**
@@ -48,7 +48,7 @@ public class WebGoodsBaseUnitServiceImpl implements WebGoodsBaseUnitService {
      */
     @Override
     public CommonResult<UnitResVO> getGoodsBaseUnitById(Long id) {
-        return inventoryClient.getGoodsBaseUnitById(id);
+        return goodsClient.getGoodsBaseUnitById(id);
     }
 
     /**
@@ -59,7 +59,7 @@ public class WebGoodsBaseUnitServiceImpl implements WebGoodsBaseUnitService {
      */
     @Override
     public CommonResult<Void> updateGoodsBaseUnitInfo(UpdateUnitReqVO updateUnitVO) {
-        return inventoryClient.updateGoodsBaseUnitInfo(updateUnitVO);
+        return goodsClient.updateGoodsBaseUnitInfo(updateUnitVO);
     }
 
     /**
@@ -70,7 +70,7 @@ public class WebGoodsBaseUnitServiceImpl implements WebGoodsBaseUnitService {
      */
     @Override
     public CommonResult<Void> deleteGoodsBaseUnitInfo(Long id) {
-        return inventoryClient.deleteGoodsBaseUnitInfo(id);
+        return goodsClient.deleteGoodsBaseUnitInfo(id);
     }
 
     /**
@@ -81,7 +81,7 @@ public class WebGoodsBaseUnitServiceImpl implements WebGoodsBaseUnitService {
      */
     @Override
     public CommonResult<PageUtil<UnitPageResVO>> queryGoodsBaseUnitPage(QueryUnitReqVO queryUnitReqVO) {
-        return inventoryClient.queryGoodsBaseUnitPage(queryUnitReqVO);
+        return goodsClient.queryGoodsBaseUnitPage(queryUnitReqVO);
     }
 
     /**
@@ -93,6 +93,6 @@ public class WebGoodsBaseUnitServiceImpl implements WebGoodsBaseUnitService {
     @Override
     public CommonResult<Void> updateGoodsBaseUnitByType(UpdateUnitStatusReqVO updateUnitStatusReqVO) {
 
-        return inventoryClient.updateGoodsBaseUnitByType(updateUnitStatusReqVO);
+        return goodsClient.updateGoodsBaseUnitByType(updateUnitStatusReqVO);
     }
 }

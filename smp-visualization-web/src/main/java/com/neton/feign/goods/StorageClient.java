@@ -1,4 +1,4 @@
-package com.neton.feign.inventory;
+package com.neton.feign.goods;
 
 import com.neton.common.CommonResult;
 import com.neton.common.PageUtil;
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
-@FeignClient(name = "smp-inventory-service" ,configuration = FeignConfig.class,contextId = "storage-service")
+@FeignClient(name = "smp-goods-service" ,configuration = FeignConfig.class,contextId = "storage-service")
 public interface StorageClient {
 
     /**

@@ -1,14 +1,14 @@
-package com.neton.service.inventory.impl;
+package com.neton.service.goods.impl;
 
 import com.neton.common.CommonResult;
 import com.neton.common.PageUtil;
-import com.neton.feign.inventory.InventoryClient;
+import com.neton.feign.goods.GoodsClient;
 import com.neton.req.CreateGoodsMultiAttributeReqVO;
 import com.neton.req.DeleteGoodsMultiAttributeReqVO;
 import com.neton.req.QueryGoodsMultiAttributeReqVO;
 import com.neton.req.UpdateGoodsMultiAttributeReqVO;
 import com.neton.res.GoodsMultiAttributeResVO;
-import com.neton.service.inventory.WebGoodsMultiAttributeService;
+import com.neton.service.goods.WebGoodsMultiAttributeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 public class WebGoodsMultiAttributeServiceImpl implements WebGoodsMultiAttributeService {
 
     @Autowired
-    private InventoryClient inventoryClient;
+    private GoodsClient goodsClient;
     /**
      * 创建商品多属性
      *
@@ -25,7 +25,7 @@ public class WebGoodsMultiAttributeServiceImpl implements WebGoodsMultiAttribute
      */
     @Override
     public CommonResult<Void> createGoodsMultiAttribute(CreateGoodsMultiAttributeReqVO createMultiAttributeVO) {
-        return inventoryClient.createGoodsMultiAttribute(createMultiAttributeVO);
+        return goodsClient.createGoodsMultiAttribute(createMultiAttributeVO);
     }
 
     /**
@@ -36,7 +36,7 @@ public class WebGoodsMultiAttributeServiceImpl implements WebGoodsMultiAttribute
      */
     @Override
     public CommonResult<Void> updateGoodsMultiAttribute(UpdateGoodsMultiAttributeReqVO updateMultiAttributeVO) {
-        return inventoryClient.updateGoodsMultiAttribute(updateMultiAttributeVO);
+        return goodsClient.updateGoodsMultiAttribute(updateMultiAttributeVO);
     }
 
     /**
@@ -46,7 +46,7 @@ public class WebGoodsMultiAttributeServiceImpl implements WebGoodsMultiAttribute
      */
     @Override
     public CommonResult<Void> deleteGoodsMultiAttribute(DeleteGoodsMultiAttributeReqVO deleteMultiAttributeVO) {
-        return inventoryClient.deleteGoodsMultiAttribute(deleteMultiAttributeVO);
+        return goodsClient.deleteGoodsMultiAttribute(deleteMultiAttributeVO);
     }
 
     /**
@@ -57,7 +57,7 @@ public class WebGoodsMultiAttributeServiceImpl implements WebGoodsMultiAttribute
      */
     @Override
     public CommonResult<PageUtil<GoodsMultiAttributeResVO>> queryGoodsMultiAttributePage(QueryGoodsMultiAttributeReqVO queryMultiAttributeVO) {
-        return inventoryClient.queryGoodsMultiAttributePage(queryMultiAttributeVO);
+        return goodsClient.queryGoodsMultiAttributePage(queryMultiAttributeVO);
     }
 
     /**
@@ -68,7 +68,7 @@ public class WebGoodsMultiAttributeServiceImpl implements WebGoodsMultiAttribute
      */
     @Override
     public CommonResult<GoodsMultiAttributeResVO> getGoodsMultiAttributeById(Long id) {
-        return inventoryClient.getGoodsMultiAttributeById(id);
+        return goodsClient.getGoodsMultiAttributeById(id);
     }
 
     /**
@@ -79,6 +79,6 @@ public class WebGoodsMultiAttributeServiceImpl implements WebGoodsMultiAttribute
      */
     @Override
     public CommonResult<Void> deleteGoodsMultiAttributeByAttributeId(Long id) {
-        return inventoryClient.deleteGoodsMultiAttributeByAttributeId(id);
+        return goodsClient.deleteGoodsMultiAttributeByAttributeId(id);
     }
 }

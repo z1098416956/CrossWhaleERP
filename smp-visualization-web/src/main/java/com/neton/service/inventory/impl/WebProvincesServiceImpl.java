@@ -1,7 +1,7 @@
 package com.neton.service.inventory.impl;
 
 import com.neton.common.CommonResult;
-import com.neton.feign.inventory.ProvincesClient;
+import com.neton.feign.goods.ProvincesClient;
 import com.neton.res.ProvincesVO;
 import com.neton.service.inventory.WebProvincesService;
 import lombok.extern.slf4j.Slf4j;

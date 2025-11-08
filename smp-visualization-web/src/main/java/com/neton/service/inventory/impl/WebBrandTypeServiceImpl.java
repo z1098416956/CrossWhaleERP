@@ -1,7 +1,7 @@
 package com.neton.service.inventory.impl;
 
 import com.neton.common.CommonResult;
-import com.neton.feign.inventory.BrandTypeClient;
+import com.neton.feign.goods.BrandTypeClient;
 import com.neton.req.CreateBrandTypeVO;
 import com.neton.req.DeleteBrandTypeVO;
 import com.neton.req.UpdateBrandTypeVO;
