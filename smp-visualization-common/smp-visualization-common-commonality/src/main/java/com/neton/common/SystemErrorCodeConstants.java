@@ -67,4 +67,7 @@ public interface SystemErrorCodeConstants {
     ErrorCode GOOD_ATT_VALUE_IS_NULL = new ErrorCode(1003004004, "属性名或值不能为空");
     ErrorCode GOOD_ATT_ID_NULL = new ErrorCode(1003004004, "属性ID不能为空");
     ErrorCode GOOD_ATT_ID_ERR = new ErrorCode(1003004005, "属性不存在");
+    ErrorCode GOOD_INFO_ATT_ERR = new ErrorCode(1003004006, "多单位和多属性不能同时勾选");
+    ErrorCode GOOD_INFO_INVENTORY_ERR = new ErrorCode(1003004007, "商品仓库信息不能为空");
+    ErrorCode GOOD_INFO_MORE_ATT_ERR = new ErrorCode(1003004008, "商品多属性不能为空");
 }

@@ -14,3 +14,7 @@ smp-visualization-common/smp-visualization-common-minio/target/
 smp-visualization-inventory/target/
 smp-visualization-common/smp-visualization-common-mybatis/target/
 smp-visualization-common/smp-visualization-common-es/target/
+refresh-idea.bat
+smp-visualization-goods/target/
+smp-visualization-system/.LCKpom.xml~
+smp-visualization-web/.LCKpom.xml~
