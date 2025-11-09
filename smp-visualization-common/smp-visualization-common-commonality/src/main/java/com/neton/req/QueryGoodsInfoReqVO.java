@@ -15,7 +15,10 @@ public class QueryGoodsInfoReqVO extends PageParam {
      */
     private String specification;
 
-
+    /**
+     * 条码
+     */
+    private String goodsBarcode;
     /**
      * 颜色
      */
@@ -47,15 +50,6 @@ public class QueryGoodsInfoReqVO extends PageParam {
      */
     private String manufacturer;
 
-    /**
-     * 序列号 0 有 1无 如果选择为有，则在采购入库单需要录入该商品的序列号
-     */
-    private Integer serialNumber;
-
-    /**
-     * 批号 0 有 1无 如果选择为有，则在采购入库单需要录入该商品的批号和有效期
-     */
-    private Integer lotNumber;
     /**
      * 是否启用0是1否
      */

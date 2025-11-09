@@ -228,7 +228,12 @@ public class GoodsInfoServiceImpl extends ServiceImpl<GoodsInfoDao,GoodsInfoDO> 
         IPage<GoodsInfoPageResVO> page = new Page<>();
         page.setCurrent(queryGoodsInfoReqVO.getPage());
         page.setSize(queryGoodsInfoReqVO.getSize());
-
-        return null;
+        
+        IPage<GoodsInfoPageResVO> iPage = goodsInfoDao.queryGoodsInfoPage(page, queryGoodsInfoReqVO);
+        PageUtil<GoodsInfoPageResVO> pageUtil = new PageUtil<>();
+        pageUtil.setPageList(iPage.getRecords());
+        pageUtil.setTotal(iPage.getTotal());
+        
+        return CommonResult.success(pageUtil);
     }
 }

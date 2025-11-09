@@ -21,7 +21,10 @@ public class GoodsInfoDetailsResVO implements Serializable {
      * 商品名称
      */
     private String goodsName;
-
+    /**
+     * 条码
+     */
+    private String goodsBarcode;
     /**
      * 规格
      */

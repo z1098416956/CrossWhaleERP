@@ -22,7 +22,10 @@ public class GoodsInfoPageResVO implements Serializable {
      * 规格
      */
     private String specification;
-
+    /**
+     * 条码
+     */
+    private String goodsBarcode;
     /**
      * 型号
      */
@@ -101,5 +104,10 @@ public class GoodsInfoPageResVO implements Serializable {
      * 当前库存
      */
     private Long currentStock;
+
+    /**
+     * 品牌名称
+     */
+    private String brandName;
 
 }

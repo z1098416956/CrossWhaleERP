@@ -24,7 +24,10 @@ public class GoodsInfoDO extends BaseDO<GoodsInfoDO> {
      * 商品名称
      */
     private String goodsName;
-
+    /**
+     * 条码
+     */
+    private String goodsBarcode;
     /**
      * 规格
      */

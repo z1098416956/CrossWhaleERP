@@ -4,9 +4,7 @@ import com.neton.common.CommonResult;
 import com.neton.common.PageUtil;
 import com.neton.feign.FeignConfig;
 import com.neton.req.*;
-import com.neton.res.GoodsMultiAttributeResVO;
-import com.neton.res.UnitPageResVO;
-import com.neton.res.UnitResVO;
+import com.neton.res.*;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,6 +13,7 @@ public interface GoodsClient {
 
     /**
      * 创建基本单位副单位
+     *
      * @param createUnitVO
      * @return
      */
@@ -23,6 +22,7 @@ public interface GoodsClient {
 
     /**
      * 分页查询基本单位副单位
+     *
      * @param queryUnitReqVO
      * @return
      */
@@ -31,13 +31,16 @@ public interface GoodsClient {
 
     /**
      * 根据ID查询基本单位副单位
+     *
      * @param id
      * @return
      */
     @GetMapping("/v1/good/base/unit/getGoodsBaseUnitById")
     public CommonResult<UnitResVO> getGoodsBaseUnitById(@RequestParam("id") Long id);
+
     /**
      * 更新基本单位副单位
+     *
      * @param updateUnitVO
      * @return
      */
@@ -46,6 +49,7 @@ public interface GoodsClient {
 
     /**
      * 删除基本单位副单位
+     *
      * @param id
      * @return
      */
@@ -54,6 +58,7 @@ public interface GoodsClient {
 
     /**
      * 分页查询基本单位副单位
+     *
      * @param queryUnitReqVO
      * @return
      */
@@ -63,6 +68,7 @@ public interface GoodsClient {
 
     /**
      * 批量根据类型删除、禁用、启用
+     *
      * @param updateUnitStatusReqVO
      * @return
      */
@@ -78,6 +84,7 @@ public interface GoodsClient {
      */
     @PostMapping("/v1/goods/multi/attribute/createGoodsMultiAttribute")
     public CommonResult<Void> createGoodsMultiAttribute(@RequestBody CreateGoodsMultiAttributeReqVO createMultiAttributeVO);
+
     /**
      * 更新商品多属性
      *
@@ -85,7 +92,7 @@ public interface GoodsClient {
      * @return
      */
     @PostMapping("/v1/goods/multi/attribute/updateGoodsMultiAttribute")
-    public CommonResult<Void> updateGoodsMultiAttribute(@RequestBody UpdateGoodsMultiAttributeReqVO updateMultiAttributeVO) ;
+    public CommonResult<Void> updateGoodsMultiAttribute(@RequestBody UpdateGoodsMultiAttributeReqVO updateMultiAttributeVO);
 
     /**
      * 批量删除多属性
@@ -121,4 +128,63 @@ public interface GoodsClient {
      */
     @DeleteMapping("/v1/goods/multi/attribute/deleteGoodsMultiAttributeByAttributeId")
     public CommonResult<Void> deleteGoodsMultiAttributeByAttributeId(@RequestParam("id") Long id);
+
+
+    /**
+     * 创建商品信息
+     *
+     * @param createGoodsInfoReqVO
+     * @return
+     */
+    @PostMapping("/v1/goods/info/createGoodsInfo")
+    public CommonResult<Void> createGoodsInfo(@RequestBody CreateGoodsInfoReqVO createGoodsInfoReqVO);
+
+
+    /**
+     * 删除商品信息
+     *
+     * @param goodsId
+     * @return
+     */
+    @DeleteMapping("/v1/goods/info/deleteGoodsInfo")
+    public CommonResult<Void> deleteGoodsInfo(@RequestParam("goodsId") Long goodsId);
+
+    /**
+     * 更新商品信息
+     *
+     * @param updateGoodsInfoReqVO
+     * @return
+     */
+    @PutMapping("/v1/goods/info/updateGoodsInfo")
+    public CommonResult<Void> updateGoodsInfo(@RequestBody UpdateGoodsInfoReqVO updateGoodsInfoReqVO);
+
+
+    /**
+     * 获取商品信息详情
+     *
+     * @param goodsId
+     * @return
+     */
+    @GetMapping("/v1/goods/info/getGoodsInfoDetailsById")
+    public CommonResult<GoodsInfoDetailsResVO> getGoodsInfoDetailsById(@RequestParam("goodsId") Long goodsId);
+
+
+    /**
+     * 更新商品状态
+     *
+     * @param updateGoodsInfoStatusReqVO
+     * @return
+     */
+    @PutMapping("/v1/goods/info/updateGoodsInfoStatus")
+    public CommonResult<Void> updateGoodsInfoStatus(@RequestBody UpdateGoodsInfoStatusReqVO updateGoodsInfoStatusReqVO);
+
+
+    /**
+     * 商品分页查询
+     *
+     * @param queryGoodsInfoReqVO
+     * @return
+     */
+    @PostMapping("/v1/goods/info/queryGoodsInfoPage")
+    public CommonResult<PageUtil<GoodsInfoPageResVO>> queryGoodsInfoPage(@RequestBody QueryGoodsInfoReqVO queryGoodsInfoReqVO);
 }
