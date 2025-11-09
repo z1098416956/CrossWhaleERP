@@ -1,25 +1,18 @@
-package com.neton.entity;
+package com.neton.req;
 
-import com.baomidou.mybatisplus.annotation.TableName;
-import com.neton.mybatis.base.BaseDO;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
-import java.io.Serial;
+import java.io.Serializable;
+import java.util.List;
 
-/**
- * 商品基本信息实体类
- * @author TheSunshine
- * @date 2025-11-8
- */
-@EqualsAndHashCode(callSuper = true)
 @Data
-@TableName(value = "goods_info")
-public class GoodsInfoDO extends BaseDO<GoodsInfoDO> {
+public class UpdateGoodsInfoReqVO implements Serializable {
 
-    @Serial
-    private static final long serialVersionUID = -6155520593458223103L;
-
+    private static final long serialVersionUID = 1L;
+    /**
+     * 商品id
+     */
+    private Long id;
     /**
      * 商品名称
      */
@@ -99,8 +92,24 @@ public class GoodsInfoDO extends BaseDO<GoodsInfoDO> {
      */
     private Integer isEnabled;
 
+
     /**
-     * 多属性 多个id用逗号分隔
+     * 单位采购、零售、销售、最低价
      */
-    private String multiattribute;
+    private List<UpdateGoodsAttributeInfoReqVO> attributes;
+
+    /**
+     * 扩展信息
+     */
+    private List<UpdateGoodsExtendReqVO> extendInfo;
+
+    /**
+     * 库存数量
+     */
+    private List<UpdateGoodsInventoryReqVO> inventoryInfo;
+
+    /**
+     * 选择的属性
+     */
+    private List<UpdateGoodsAttributeReqVO> attributeReq;
 }

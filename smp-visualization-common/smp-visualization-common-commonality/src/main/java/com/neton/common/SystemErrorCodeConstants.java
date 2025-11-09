@@ -70,4 +70,8 @@ public interface SystemErrorCodeConstants {
     ErrorCode GOOD_INFO_ATT_ERR = new ErrorCode(1003004006, "多单位和多属性不能同时勾选");
     ErrorCode GOOD_INFO_INVENTORY_ERR = new ErrorCode(1003004007, "商品仓库信息不能为空");
     ErrorCode GOOD_INFO_MORE_ATT_ERR = new ErrorCode(1003004008, "商品多属性不能为空");
+    ErrorCode GOOD_INFO_EXTEND_IS_NULL = new ErrorCode(1003004009, "商品扩展信息不能为空");
+    ErrorCode GOOD_INFO_NAME_IS_REPEAT = new ErrorCode(1003004010, "商品名称重复");
+    ErrorCode GOOD_INFO_ID_IS_NULL = new ErrorCode(1003004010, "商品ID不能为空");
+    ErrorCode GOOD_INFO_ID_IS_ERR = new ErrorCode(1003004011, "商品ID错误");
 }

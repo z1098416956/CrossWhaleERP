@@ -2,5 +2,41 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.neton.dao.GoodsInventoryDao">
 
+    <!-- 批量更新商品库存信息 -->
+    <update id="updateBatch" parameterType="java.util.List">
+        <foreach collection="list" item="item" separator=";">
+            UPDATE goods_inventory
+            <set>
+                <if test="item.storageId != null">
+                    storage_id = #{item.storageId},
+                </if>
+                <if test="item.firstCount != null">
+                    first_count = #{item.firstCount},
+                </if>
+                <if test="item.currentStock != null">
+                    current_stock = #{item.currentStock},
+                </if>
+                <if test="item.lowCount != null">
+                    low_count = #{item.lowCount},
+                </if>
+                <if test="item.highCount != null">
+                    high_count = #{item.highCount},
+                </if>
+                <if test="item.updateBy != null">
+                    update_by = #{item.updateBy},
+                </if>
+                <if test="item.updateByName != null">
+                    update_by_name = #{item.updateByName},
+                </if>
+                <if test="item.updateTime != null">
+                    update_time = #{item.updateTime}
+                </if>
+                <if test="item.isDeleted != null">
+                    is_deleted = #{item.isDeleted}
+                </if>
+            </set>
+            WHERE id = #{item.id}
+        </foreach>
+    </update>
 
 </mapper>

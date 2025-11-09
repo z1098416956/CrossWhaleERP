@@ -10,7 +10,6 @@
     <packaging>pom</packaging>
     <modules>
         <module>smp-visualization-common</module>
-        <module>smp-visualization-gateway</module>
         <module>smp-visualization-goods</module>
         <module>smp-visualization-oauth</module>
         <module>smp-visualization-system</module>
