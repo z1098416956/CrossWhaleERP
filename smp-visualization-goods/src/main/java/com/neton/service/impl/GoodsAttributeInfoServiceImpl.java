@@ -8,6 +8,7 @@ import com.neton.dao.GoodsAttributeInfoDao;
 import com.neton.entity.GoodsAttributeInfoDO;
 import com.neton.req.CreateGoodsInfoReqVO;
 import com.neton.req.UpdateGoodsInfoReqVO;
+import com.neton.res.GoodsAttributeInfoDetailsResVO;
 import com.neton.service.GoodsAttributeInfoService;
 import com.neton.utils.SecurityUtils;
 
@@ -16,6 +17,7 @@ import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -72,9 +74,6 @@ public class GoodsAttributeInfoServiceImpl extends ServiceImpl<GoodsAttributeInf
             GoodsAttributeInfoDO goodsAttributeInfoDO = new GoodsAttributeInfoDO();
             goodsAttributeInfoDO.setGoodsId(updateGoodsInfoReqVO.getId());
             NetonBeanUtils.copyProperties(item, goodsAttributeInfoDO);
-            goodsAttributeInfoDO.setCreateBy(SecurityUtils.getUserId());
-            goodsAttributeInfoDO.setCreateByName(SecurityUtils.getUsername());
-            goodsAttributeInfoDO.setCreateTime(LocalDateTime.now());
             goodsAttributeInfoDO.setIsDeleted(0);
             goodsAttributeInfoDO.setUpdateBy(SecurityUtils.getUserId());
             goodsAttributeInfoDO.setUpdateByName(SecurityUtils.getUsername());
@@ -102,5 +101,21 @@ public class GoodsAttributeInfoServiceImpl extends ServiceImpl<GoodsAttributeInf
             item.setUpdateByName(SecurityUtils.getUsername());
         });
         updateBatchById(byGoodsId);
+    }
+
+    /**
+     * 获取商品多属性
+     *
+     * @param goodsId
+     * @return
+     */
+    @Override
+    public List<GoodsAttributeInfoDetailsResVO> getGoodsAttributeInfoDetails(Long goodsId) {
+        List<GoodsAttributeInfoDO> byGoodsId = baseMapper.findByGoodsId(goodsId);
+        if (byGoodsId == null || byGoodsId.isEmpty()) {
+            return new ArrayList<>();
+        }
+        List<GoodsAttributeInfoDetailsResVO> bean = NetonBeanUtils.toBean(byGoodsId, GoodsAttributeInfoDetailsResVO.class);
+        return bean;
     }
 }

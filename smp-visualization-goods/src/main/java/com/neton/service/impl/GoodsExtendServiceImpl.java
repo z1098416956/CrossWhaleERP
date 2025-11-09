@@ -1,16 +1,19 @@
 package com.neton.service.impl;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.neton.bean.NetonBeanUtils;
 import com.neton.common.CommonResult;
 import com.neton.common.ServiceException;
 import com.neton.dao.GoodsExtendDao;
 import com.neton.entity.GoodsExtendDO;
 import com.neton.req.CreateGoodsInfoReqVO;
 import com.neton.req.UpdateGoodsInfoReqVO;
+import com.neton.res.GoodsExtendDetailsResVO;
 import com.neton.service.GoodsExtendService;
 import com.neton.utils.SecurityUtils;
 
@@ -93,5 +96,21 @@ public class GoodsExtendServiceImpl extends ServiceImpl<GoodsExtendDao,GoodsExte
             item.setUpdateByName(SecurityUtils.getUsername());
         });
         baseMapper.updateById(list);
+    }
+
+    /**
+     * 获取商品扩展信息
+     *
+     * @param goodsId
+     * @return
+     */
+    @Override
+    public List<GoodsExtendDetailsResVO> getGoodsExtendDetails(Long goodsId) {
+        List<GoodsExtendDO> list = baseMapper.selectByGoodsId(goodsId);
+        if (list == null || list.isEmpty()) {
+            return new ArrayList<>();
+        }
+        List<GoodsExtendDetailsResVO> bean = NetonBeanUtils.toBean(list, GoodsExtendDetailsResVO.class);
+        return bean;
     }
 }

@@ -2,7 +2,11 @@ package com.neton.dao;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.neton.entity.GoodsInfoDO;
+import com.neton.req.QueryGoodsInfoReqVO;
+import com.neton.res.GoodsInfoPageResVO;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -18,4 +22,12 @@ public interface GoodsInfoDao extends BaseMapper<GoodsInfoDO> {
         queryWrapper.eq(GoodsInfoDO::getGoodsName,goodsName);
         return selectList(queryWrapper);
     }
+
+    /**
+     * 商品分页
+     * @param page
+     * @param queryGoodsInfoReqVO
+     * @return
+     */
+    IPage<GoodsInfoPageResVO> queryGoodsInfoPage(IPage<GoodsInfoPageResVO> page,@Param("params") QueryGoodsInfoReqVO queryGoodsInfoReqVO);
 }

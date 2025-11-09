@@ -1,10 +1,12 @@
 package com.neton.service.impl;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.neton.bean.NetonBeanUtils;
 import com.neton.common.CommonResult;
 import com.neton.common.ServiceException;
 import com.neton.common.SystemErrorCodeConstants;
@@ -14,6 +16,7 @@ import com.neton.req.CreateGoodsInfoReqVO;
 import com.neton.req.UpdateGoodsAttributeReqVO;
 import com.neton.req.UpdateGoodsInfoReqVO;
 import com.neton.req.UpdateGoodsInventoryReqVO;
+import com.neton.res.GoodsInventoryDetailsResVO;
 import com.neton.service.GoodsInventoryService;
 
 import com.neton.utils.SecurityUtils;
@@ -132,5 +135,21 @@ public class GoodsInventoryServiceImpl extends ServiceImpl<GoodsInventoryDao,Goo
             goodsInventoryDO.setUpdateByName(SecurityUtils.getUsername());
         });
         baseMapper.updateById(list);
+    }
+
+    /**
+     * 获取商品库存列表
+     *
+     * @param goodsId
+     * @return
+     */
+    @Override
+    public List<GoodsInventoryDetailsResVO> getGoodsInventoryList(Long goodsId) {
+        List<GoodsInventoryDO> list = baseMapper.queryGoodsInventory(goodsId);
+        if (list == null || list.isEmpty()) {
+            return new ArrayList<>();
+        }
+        List<GoodsInventoryDetailsResVO> bean = NetonBeanUtils.toBean(list, GoodsInventoryDetailsResVO.class);
+        return bean;
     }
 }

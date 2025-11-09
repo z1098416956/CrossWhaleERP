@@ -1,12 +1,19 @@
 package com.neton.service.impl;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.neton.bean.NetonBeanUtils;
 import com.neton.common.CommonResult;
+import com.neton.common.PageUtil;
 import com.neton.common.SystemErrorCodeConstants;
 import com.neton.dao.GoodsInfoDao;
 import com.neton.entity.GoodsInfoDO;
 import com.neton.req.CreateGoodsInfoReqVO;
+import com.neton.req.QueryGoodsInfoReqVO;
 import com.neton.req.UpdateGoodsInfoReqVO;
+import com.neton.req.UpdateGoodsInfoStatusReqVO;
+import com.neton.res.*;
 import com.neton.service.*;
 import com.neton.utils.SecurityUtils;
 import jakarta.annotation.Resource;
@@ -19,7 +26,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
-public class GoodsInfoServiceImpl implements GoodsInfoService {
+public class GoodsInfoServiceImpl extends ServiceImpl<GoodsInfoDao,GoodsInfoDO> implements GoodsInfoService {
 
     @Resource
     private GoodsInfoDao goodsInfoDao;
@@ -148,5 +155,80 @@ public class GoodsInfoServiceImpl implements GoodsInfoService {
             goodsAttributeService.deleteGoodsAttributeInfo(goodsId);
         }
         return CommonResult.success();
+    }
+
+    /**
+     * 获取商品信息详情
+     *
+     * @param goodsId
+     * @return
+     */
+    @Override
+    public CommonResult<GoodsInfoDetailsResVO> getGoodsInfoDetailsById(Long goodsId) {
+        if (goodsId == null) {
+            return CommonResult.error(SystemErrorCodeConstants.GOOD_INFO_ID_IS_NULL);
+        }
+        GoodsInfoDO goodsInfoDO = goodsInfoDao.selectById(goodsId);
+        if (goodsInfoDO == null) {
+            return CommonResult.error(SystemErrorCodeConstants.GOOD_INFO_ID_IS_ERR);
+        }
+        GoodsInfoDetailsResVO goodsInfoDetailsResVO = new GoodsInfoDetailsResVO();
+        BeanUtils.copyProperties(goodsInfoDO, goodsInfoDetailsResVO);
+        //商品与仓库
+        List<GoodsInventoryDetailsResVO> list = goodsInventoryService.getGoodsInventoryList(goodsId);
+        goodsInfoDetailsResVO.setInventoryInfo(list);
+        //采购最低价
+        List<GoodsAttributeInfoDetailsResVO> goodsAttributeInfoDetails = goodsAttributeInfoService.getGoodsAttributeInfoDetails(goodsId);
+        goodsInfoDetailsResVO.setAttributes(goodsAttributeInfoDetails);
+        //扩展信息
+        List<GoodsExtendDetailsResVO> goodsExtendDetails = goodsExtendService.getGoodsExtendDetails(goodsId);
+        goodsInfoDetailsResVO.setExtendInfo(goodsExtendDetails);
+        //选择的属性
+        if (goodsInfoDO.getIsUnit() == 1) {
+            List<GoodsAttributeDetailsResVO> goodsAttributeDetailsByGoodsId = goodsAttributeService.getGoodsAttributeDetailsByGoodsId(goodsId);
+            goodsInfoDetailsResVO.setAttributeRes(goodsAttributeDetailsByGoodsId);
+        }
+        return CommonResult.success(goodsInfoDetailsResVO);
+    }
+
+    /**
+     * 更新商品状态
+     *
+     * @param updateGoodsInfoStatusReqVO
+     * @return
+     */
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public CommonResult<Void> updateGoodsInfoStatus(UpdateGoodsInfoStatusReqVO updateGoodsInfoStatusReqVO) {
+        if (updateGoodsInfoStatusReqVO.getGoodsIds() == null || updateGoodsInfoStatusReqVO.getGoodsIds().isEmpty()) {
+            return CommonResult.error(SystemErrorCodeConstants.GOOD_INFO_ID_IS_NULL);
+        }
+        List<GoodsInfoDO> goodsInfoDOS = goodsInfoDao.selectByIds(updateGoodsInfoStatusReqVO.getGoodsIds());
+        if (goodsInfoDOS == null || goodsInfoDOS.isEmpty()) {
+            return CommonResult.error(SystemErrorCodeConstants.GOOD_INFO_ID_IS_ERR);
+        }
+        goodsInfoDOS.forEach(goodsInfoDO -> {
+            goodsInfoDO.setUpdateBy(SecurityUtils.getUserId());
+            goodsInfoDO.setUpdateTime(LocalDateTime.now());
+            goodsInfoDO.setUpdateByName(SecurityUtils.getUsername());
+            goodsInfoDO.setIsEnabled(updateGoodsInfoStatusReqVO.getIsEnabled());
+        });
+        baseMapper.updateById(goodsInfoDOS);
+        return CommonResult.success();
+    }
+
+    /**
+     * 商品分页查询
+     *
+     * @param queryGoodsInfoReqVO
+     * @return
+     */
+    @Override
+    public CommonResult<PageUtil<GoodsInfoPageResVO>> queryGoodsInfoPage(QueryGoodsInfoReqVO queryGoodsInfoReqVO) {
+        IPage<GoodsInfoPageResVO> page = new Page<>();
+        page.setCurrent(queryGoodsInfoReqVO.getPage());
+        page.setSize(queryGoodsInfoReqVO.getSize());
+
+        return null;
     }
 }

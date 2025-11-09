@@ -3,4 +3,7 @@
 <mapper namespace="com.neton.dao.GoodsInfoDao">
 
 
+    <select id="queryGoodsInfoPage" resultType="com.neton.res.GoodsInfoPageResVO">
+
+    </select>
 </mapper>

@@ -5,6 +5,9 @@ import com.neton.common.CommonResult;
 import com.neton.entity.GoodsInventoryDO;
 import com.neton.req.CreateGoodsInfoReqVO;
 import com.neton.req.UpdateGoodsInfoReqVO;
+import com.neton.res.GoodsInventoryDetailsResVO;
+
+import java.util.List;
 
 public interface GoodsInventoryService extends IService<GoodsInventoryDO> {
 
@@ -28,4 +31,11 @@ public interface GoodsInventoryService extends IService<GoodsInventoryDO> {
      * @param goodsId
      */
     void deleteGoodsInventory(Long goodsId);
+
+    /**
+     * 获取商品库存列表
+     * @param goodsId
+     * @return
+     */
+    List<GoodsInventoryDetailsResVO> getGoodsInventoryList(Long goodsId);
 }

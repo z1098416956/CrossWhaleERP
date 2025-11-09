@@ -5,6 +5,9 @@ import com.neton.common.CommonResult;
 import com.neton.entity.GoodsAttributeInfoDO;
 import com.neton.req.CreateGoodsInfoReqVO;
 import com.neton.req.UpdateGoodsInfoReqVO;
+import com.neton.res.GoodsAttributeInfoDetailsResVO;
+
+import java.util.List;
 
 public interface GoodsAttributeInfoService extends IService<GoodsAttributeInfoDO> {
 
@@ -24,4 +27,12 @@ public interface GoodsAttributeInfoService extends IService<GoodsAttributeInfoDO
      * @param goodsId
      */
     void deleteGoodsAttributeInfo(Long goodsId);
+
+
+    /**
+     * 获取商品多属性
+     * @param goodsId
+     * @return
+     */
+    List<GoodsAttributeInfoDetailsResVO> getGoodsAttributeInfoDetails(Long goodsId);
 }

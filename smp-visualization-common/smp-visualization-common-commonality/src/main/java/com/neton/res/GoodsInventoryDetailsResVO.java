@@ -1,11 +1,11 @@
-package com.neton.req;
+package com.neton.res;
 
 import lombok.Data;
 
 import java.io.Serializable;
 
 @Data
-public class UpdateGoodsInventoryReqVO implements Serializable {
+public class GoodsInventoryDetailsResVO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -22,7 +22,6 @@ public class UpdateGoodsInventoryReqVO implements Serializable {
      * 当前库存
      */
     private Long currentStock;
-
     /**
      * 初期库存数量
      */

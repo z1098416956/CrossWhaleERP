@@ -1,10 +1,17 @@
 package com.neton.service;
 
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.neton.common.CommonResult;
+import com.neton.common.PageUtil;
+import com.neton.entity.GoodsInfoDO;
 import com.neton.req.CreateGoodsInfoReqVO;
+import com.neton.req.QueryGoodsInfoReqVO;
 import com.neton.req.UpdateGoodsInfoReqVO;
+import com.neton.req.UpdateGoodsInfoStatusReqVO;
+import com.neton.res.GoodsInfoDetailsResVO;
+import com.neton.res.GoodsInfoPageResVO;
 
-public interface GoodsInfoService {
+public interface GoodsInfoService extends IService<GoodsInfoDO> {
 
     /**
      * 创建商品信息
@@ -26,4 +33,27 @@ public interface GoodsInfoService {
      * @return
      */
     CommonResult<Void> deleteGoodsInfo(Long goodsId);
+
+    /**
+     * 获取商品信息详情
+     * @param goodsId
+     * @return
+     */
+    CommonResult<GoodsInfoDetailsResVO> getGoodsInfoDetailsById(Long goodsId);
+
+
+    /**
+     * 更新商品状态
+     * @param updateGoodsInfoStatusReqVO
+     * @return
+     */
+    CommonResult<Void> updateGoodsInfoStatus(UpdateGoodsInfoStatusReqVO updateGoodsInfoStatusReqVO);
+
+
+    /**
+     * 商品分页查询
+     * @param queryGoodsInfoReqVO
+     * @return
+     */
+    CommonResult<PageUtil<GoodsInfoPageResVO>> queryGoodsInfoPage(QueryGoodsInfoReqVO queryGoodsInfoReqVO);
 }
