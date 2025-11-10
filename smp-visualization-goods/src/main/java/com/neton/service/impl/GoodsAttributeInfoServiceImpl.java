@@ -104,6 +104,26 @@ public class GoodsAttributeInfoServiceImpl extends ServiceImpl<GoodsAttributeInf
     }
 
     /**
+     * 批量删除
+     *
+     * @param goodsIds
+     */
+    @Override
+    public void batchDeleteGoodsAttributeInfos(List<Long> goodsIds) {
+        List<GoodsAttributeInfoDO> byGoodsId = baseMapper.findByGoodsIds(goodsIds);
+        if (byGoodsId == null || byGoodsId.isEmpty()) {
+            return;
+        }
+        byGoodsId.forEach(item -> {
+            item.setIsDeleted(1);
+            item.setUpdateBy(SecurityUtils.getUserId());
+            item.setUpdateTime(LocalDateTime.now());
+            item.setUpdateByName(SecurityUtils.getUsername());
+        });
+        updateBatchById(byGoodsId);
+    }
+
+    /**
      * 获取商品多属性
      *
      * @param goodsId

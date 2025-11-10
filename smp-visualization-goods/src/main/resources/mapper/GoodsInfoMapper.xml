@@ -10,6 +10,8 @@
             t1.goods_barcode,
             t1.specification,
             t1.model,
+            t1.shelf_life,
+            t1.position_shelves,
             t1.is_unit,
             t1.custom_unit,
             t1.unit_id,

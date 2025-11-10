@@ -9,9 +9,11 @@ import com.neton.req.CreateUserRoleVO;
 import com.neton.req.QueryRoleVO;
 import com.neton.res.SystemRuleVO;
 import com.neton.service.SystemUserRoleService;
+import com.neton.utils.GeneratedBarcodeUtils;
 import com.neton.utils.SecurityUtils;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,6 +34,9 @@ public class SystemUserRoleServiceImpl implements SystemUserRoleService {
 
     @Resource
     private SystemRoleDao systemRoleDao;
+
+    @Autowired
+    private GeneratedBarcodeUtils generatedBarcodeUtils;
 
     /**
      * 获取用户角色
@@ -83,5 +88,17 @@ public class SystemUserRoleServiceImpl implements SystemUserRoleService {
         }
         systemUserRoleDao.insert(list);
         return CommonResult.success();
+    }
+
+    /**
+     * 获取条码
+     *
+     * @param moduleName
+     * @return
+     */
+    @Override
+    public CommonResult<String> getBarcode(String moduleName) {
+        String barcode = generatedBarcodeUtils.generatedBarcode(moduleName);
+        return CommonResult.success(barcode);
     }
 }

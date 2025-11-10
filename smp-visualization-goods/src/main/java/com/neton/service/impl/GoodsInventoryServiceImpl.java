@@ -1,8 +1,7 @@
 package com.neton.service.impl;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -113,7 +112,7 @@ public class GoodsInventoryServiceImpl extends ServiceImpl<GoodsInventoryDao,Goo
                 updateInventory.setUpdateTime(LocalDateTime.now());
                 return updateInventory;
             }).collect(Collectors.toList());
-            baseMapper.updateBatch(collect);
+            updateBatchById(collect);
         }
     }
 
@@ -125,6 +124,26 @@ public class GoodsInventoryServiceImpl extends ServiceImpl<GoodsInventoryDao,Goo
     @Override
     public void deleteGoodsInventory(Long goodsId) {
         List<GoodsInventoryDO> list = baseMapper.queryGoodsInventory(goodsId);
+        if (list == null || list.isEmpty()) {
+            return;
+        }
+        list.forEach(goodsInventoryDO -> {
+            goodsInventoryDO.setIsDeleted(1);
+            goodsInventoryDO.setUpdateBy(SecurityUtils.getUserId());
+            goodsInventoryDO.setUpdateTime(LocalDateTime.now());
+            goodsInventoryDO.setUpdateByName(SecurityUtils.getUsername());
+        });
+        baseMapper.updateById(list);
+    }
+
+    /**
+     * 批量删除
+     *
+     * @param goodsIds
+     */
+    @Override
+    public void batchDeleteGoodsInventory(List<Long> goodsIds) {
+        List<GoodsInventoryDO> list = baseMapper.queryGoodsInventoryByGoodsIds(goodsIds);
         if (list == null || list.isEmpty()) {
             return;
         }
@@ -151,5 +170,33 @@ public class GoodsInventoryServiceImpl extends ServiceImpl<GoodsInventoryDao,Goo
         }
         List<GoodsInventoryDetailsResVO> bean = NetonBeanUtils.toBean(list, GoodsInventoryDetailsResVO.class);
         return bean;
+    }
+
+    /**
+     * 获取商品库存
+     *
+     * @param goodsIds
+     * @return
+     */
+    @Override
+    public Map<Long, Long> getGoodsInventoryCount(Set<Long> goodsIds) {
+        List<GoodsInventoryDO> list = baseMapper.queryGoodsInventoryByGoodsIds(goodsIds);
+        Map<Long, Long> map = new HashMap<>();
+        if (list == null || list.isEmpty()) {
+            return map;
+        }
+        Map<Long, List<GoodsInventoryDO>> collect = list.stream().collect(Collectors.groupingBy(GoodsInventoryDO::getGoodsId));
+        for (Long goodsId : goodsIds) {
+            List<GoodsInventoryDO> goodsInventoryDOList = collect.get(goodsId);
+            if (goodsInventoryDOList == null || goodsInventoryDOList.isEmpty()) {
+                continue;
+            }
+            // 计算该商品在所有仓库中的库存总和
+            long totalStock = goodsInventoryDOList.stream()
+                    .mapToLong(inventory -> inventory.getCurrentStock() != null ? inventory.getCurrentStock() : 0L)
+                    .sum();
+            map.put(goodsId, totalStock);
+        }
+        return map;
     }
 }

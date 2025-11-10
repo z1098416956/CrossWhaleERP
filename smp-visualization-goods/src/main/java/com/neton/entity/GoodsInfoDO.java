@@ -47,7 +47,14 @@ public class GoodsInfoDO extends BaseDO<GoodsInfoDO> {
      * 自定义单位
      */
     private String customUnit;
-
+    /**
+     * 保质期
+     */
+    private Integer shelfLife;
+    /**
+     * 仓位货架
+     */
+    private String positionShelves;
     /**
      * 单位id
      */

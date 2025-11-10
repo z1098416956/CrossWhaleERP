@@ -250,4 +250,13 @@ public interface SystemServiceClient {
      */
     @PostMapping("/v1/system/role/createUserRoleInfo")
     public CommonResult createUserRoleInfo(@RequestBody CreateUserRoleVO createUserRoleVO);
+
+
+    /**
+     * 获取条码
+     * @param moduleName
+     * @return
+     */
+    @GetMapping("/v1/system/role/getBarcode")
+    public CommonResult<String> getBarcode(@RequestParam String moduleName);
 }

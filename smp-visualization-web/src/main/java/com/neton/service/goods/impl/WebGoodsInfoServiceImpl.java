@@ -3,10 +3,7 @@ package com.neton.service.goods.impl;
 import com.neton.common.CommonResult;
 import com.neton.common.PageUtil;
 import com.neton.feign.goods.GoodsClient;
-import com.neton.req.CreateGoodsInfoReqVO;
-import com.neton.req.QueryGoodsInfoReqVO;
-import com.neton.req.UpdateGoodsInfoReqVO;
-import com.neton.req.UpdateGoodsInfoStatusReqVO;
+import com.neton.req.*;
 import com.neton.res.GoodsInfoDetailsResVO;
 import com.neton.res.GoodsInfoPageResVO;
 import com.neton.service.goods.WebGoodsInfoService;
@@ -83,5 +80,16 @@ public class WebGoodsInfoServiceImpl implements WebGoodsInfoService {
     @Override
     public CommonResult<PageUtil<GoodsInfoPageResVO>> queryGoodsInfoPage(QueryGoodsInfoReqVO queryGoodsInfoReqVO) {
         return goodsClient.queryGoodsInfoPage(queryGoodsInfoReqVO);
+    }
+
+    /**
+     * 批量删除
+     *
+     * @param deleteBatchGoodsReqVO
+     * @return
+     */
+    @Override
+    public CommonResult<Void> batchDeleteGoodsInfos(DeleteBatchGoodsReqVO deleteBatchGoodsReqVO) {
+        return goodsClient.batchDeleteGoodsInfos(deleteBatchGoodsReqVO);
     }
 }

@@ -112,4 +112,15 @@ public class WebSystemRoleServiceImpl implements WebSystemRoleService {
     public CommonResult createUserRoleInfo(CreateUserRoleVO createUserRoleVO) {
         return systemServiceClient.createUserRoleInfo(createUserRoleVO);
     }
+
+    /**
+     * 获取条码
+     *
+     * @param moduleName
+     * @return
+     */
+    @Override
+    public CommonResult<String> getBarcode(String moduleName) {
+        return systemServiceClient.getBarcode(moduleName);
+    }
 }

@@ -2,10 +2,7 @@ package com.neton.service.goods;
 
 import com.neton.common.CommonResult;
 import com.neton.common.PageUtil;
-import com.neton.req.CreateGoodsInfoReqVO;
-import com.neton.req.QueryGoodsInfoReqVO;
-import com.neton.req.UpdateGoodsInfoReqVO;
-import com.neton.req.UpdateGoodsInfoStatusReqVO;
+import com.neton.req.*;
 import com.neton.res.GoodsInfoDetailsResVO;
 import com.neton.res.GoodsInfoPageResVO;
 
@@ -54,4 +51,12 @@ public interface WebGoodsInfoService {
      * @return
      */
     CommonResult<PageUtil<GoodsInfoPageResVO>> queryGoodsInfoPage(QueryGoodsInfoReqVO queryGoodsInfoReqVO);
+
+
+    /**
+     * 批量删除
+     * @param deleteBatchGoodsReqVO
+     * @return
+     */
+    CommonResult<Void> batchDeleteGoodsInfos(DeleteBatchGoodsReqVO deleteBatchGoodsReqVO);
 }

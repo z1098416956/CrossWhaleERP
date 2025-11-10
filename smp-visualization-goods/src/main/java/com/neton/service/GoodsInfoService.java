@@ -4,12 +4,11 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.neton.common.CommonResult;
 import com.neton.common.PageUtil;
 import com.neton.entity.GoodsInfoDO;
-import com.neton.req.CreateGoodsInfoReqVO;
-import com.neton.req.QueryGoodsInfoReqVO;
-import com.neton.req.UpdateGoodsInfoReqVO;
-import com.neton.req.UpdateGoodsInfoStatusReqVO;
+import com.neton.req.*;
 import com.neton.res.GoodsInfoDetailsResVO;
 import com.neton.res.GoodsInfoPageResVO;
+
+import java.util.List;
 
 public interface GoodsInfoService extends IService<GoodsInfoDO> {
 
@@ -33,6 +32,13 @@ public interface GoodsInfoService extends IService<GoodsInfoDO> {
      * @return
      */
     CommonResult<Void> deleteGoodsInfo(Long goodsId);
+
+    /**
+     * 批量删除
+     * @param deleteBatchGoodsReqVO
+     * @return
+     */
+    CommonResult<Void> batchDeleteGoodsInfos(DeleteBatchGoodsReqVO deleteBatchGoodsReqVO);
 
     /**
      * 获取商品信息详情

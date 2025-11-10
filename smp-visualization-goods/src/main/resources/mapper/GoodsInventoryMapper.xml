@@ -29,10 +29,10 @@
                     update_by_name = #{item.updateByName},
                 </if>
                 <if test="item.updateTime != null">
-                    update_time = #{item.updateTime}
+                    update_time = #{item.updateTime},
                 </if>
                 <if test="item.isDeleted != null">
-                    is_deleted = #{item.isDeleted}
+                    is_deleted = #{item.isDeleted},
                 </if>
             </set>
             WHERE id = #{item.id}

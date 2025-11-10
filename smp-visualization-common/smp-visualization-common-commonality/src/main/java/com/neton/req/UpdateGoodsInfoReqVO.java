@@ -18,6 +18,14 @@ public class UpdateGoodsInfoReqVO implements Serializable {
      */
     private String goodsName;
     /**
+     * 保质期
+     */
+    private Integer shelfLife;
+    /**
+     * 仓位货架
+     */
+    private String positionShelves;
+    /**
      * 条码
      */
     private String goodsBarcode;

@@ -108,4 +108,15 @@ public class WebSystemRoleController {
         return systemRoleService.createUserRoleInfo(createUserRoleVO);
     }
 
+
+    /**
+     * 获取条码
+     * @param moduleName
+     * @return
+     */
+    @GetMapping("/getBarcode")
+    public CommonResult<String> getBarcode(@RequestParam String moduleName){
+        return systemRoleService.getBarcode(moduleName);
+    }
+
 }

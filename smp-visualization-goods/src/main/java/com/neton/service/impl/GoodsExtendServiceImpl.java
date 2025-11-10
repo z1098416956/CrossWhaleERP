@@ -99,6 +99,26 @@ public class GoodsExtendServiceImpl extends ServiceImpl<GoodsExtendDao,GoodsExte
     }
 
     /**
+     * 批量删除
+     *
+     * @param goodsIds
+     */
+    @Override
+    public void batchDeleteGoodsExtend(List<Long> goodsIds) {
+        List<GoodsExtendDO> list = baseMapper.selectByGoodsIds(goodsIds);
+        if (list == null || list.isEmpty()) {
+            return;
+        }
+        list.forEach(item -> {
+            item.setIsDeleted(1);
+            item.setUpdateBy(SecurityUtils.getUserId());
+            item.setUpdateTime(LocalDateTime.now());
+            item.setUpdateByName(SecurityUtils.getUsername());
+        });
+        baseMapper.updateById(list);
+    }
+
+    /**
      * 获取商品扩展信息
      *
      * @param goodsId

@@ -70,4 +70,11 @@ public interface WebSystemRoleService {
      * @return
      */
     public CommonResult createUserRoleInfo(CreateUserRoleVO createUserRoleVO);
+
+    /**
+     * 获取条码
+     * @param moduleName
+     * @return
+     */
+    CommonResult<String> getBarcode(String moduleName);
 }

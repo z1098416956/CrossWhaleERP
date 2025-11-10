@@ -32,6 +32,12 @@ public interface GoodsAttributeService extends IService<GoodsAttributeDO> {
     void deleteGoodsAttributeInfo(Long goodsId);
 
     /**
+     * 批量删除
+     * @param goodsIds
+     */
+    void batchDeleteGoodsAttributeInfos(List<Long> goodsIds);
+
+    /**
      * 获取商品选中的属性
      * @param goodsId
      * @return

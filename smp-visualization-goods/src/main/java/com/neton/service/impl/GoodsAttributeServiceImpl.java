@@ -107,6 +107,26 @@ public class GoodsAttributeServiceImpl extends ServiceImpl<GoodsAttributeDao,Goo
     }
 
     /**
+     * 批量删除
+     *
+     * @param goodsIds
+     */
+    @Override
+    public void batchDeleteGoodsAttributeInfos(List<Long> goodsIds) {
+        List<GoodsAttributeDO> list = baseMapper.selectByGoodsIds(goodsIds);
+        if (list == null || list.isEmpty()){
+            return;
+        }
+        list.forEach(attributeDO -> {
+            attributeDO.setIsDeleted(1);
+            attributeDO.setUpdateTime(LocalDateTime.now());
+            attributeDO.setUpdateByName(SecurityUtils.getUsername());
+            attributeDO.setUpdateBy(SecurityUtils.getUserId());
+        });
+        baseMapper.updateById(list);
+    }
+
+    /**
      * 获取商品选中的属性
      *
      * @param goodsId

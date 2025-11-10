@@ -32,6 +32,12 @@ public interface GoodsExtendService extends IService<GoodsExtendDO> {
     void deleteGoodsExtend(Long goodsId);
 
     /**
+     * 批量删除
+     * @param goodsIds
+     */
+    void batchDeleteGoodsExtend(List<Long> goodsIds);
+
+    /**
      * 获取商品扩展信息
      * @param goodsId
      * @return

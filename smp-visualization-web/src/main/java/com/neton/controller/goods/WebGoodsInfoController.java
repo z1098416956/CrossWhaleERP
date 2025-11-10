@@ -2,10 +2,7 @@ package com.neton.controller.goods;
 
 import com.neton.common.CommonResult;
 import com.neton.common.PageUtil;
-import com.neton.req.CreateGoodsInfoReqVO;
-import com.neton.req.QueryGoodsInfoReqVO;
-import com.neton.req.UpdateGoodsInfoReqVO;
-import com.neton.req.UpdateGoodsInfoStatusReqVO;
+import com.neton.req.*;
 import com.neton.res.GoodsInfoDetailsResVO;
 import com.neton.res.GoodsInfoPageResVO;
 import com.neton.service.goods.WebGoodsInfoService;
@@ -86,5 +83,15 @@ public class WebGoodsInfoController {
     @PostMapping("/queryGoodsInfoPage")
     public CommonResult<PageUtil<GoodsInfoPageResVO>> queryGoodsInfoPage(@RequestBody QueryGoodsInfoReqVO queryGoodsInfoReqVO){
         return webGoodsInfoService.queryGoodsInfoPage(queryGoodsInfoReqVO);
+    }
+
+    /**
+     * 批量删除
+     * @param deleteBatchGoodsReqVO
+     * @return
+     */
+    @DeleteMapping("/batchDeleteGoodsInfos")
+    public CommonResult<Void> batchDeleteGoodsInfos(@RequestBody DeleteBatchGoodsReqVO deleteBatchGoodsReqVO){
+        return webGoodsInfoService.batchDeleteGoodsInfos(deleteBatchGoodsReqVO);
     }
 }

@@ -2,10 +2,7 @@ package com.neton.controller;
 
 import com.neton.common.CommonResult;
 import com.neton.common.PageUtil;
-import com.neton.req.CreateGoodsInfoReqVO;
-import com.neton.req.QueryGoodsInfoReqVO;
-import com.neton.req.UpdateGoodsInfoReqVO;
-import com.neton.req.UpdateGoodsInfoStatusReqVO;
+import com.neton.req.*;
 import com.neton.res.GoodsInfoDetailsResVO;
 import com.neton.res.GoodsInfoPageResVO;
 import com.neton.service.GoodsInfoService;
@@ -50,6 +47,15 @@ public class GoodsInfoController {
         return goodsInfoService.deleteGoodsInfo(goodsId);
     }
 
+    /**
+     * 批量删除
+     * @param deleteBatchGoodsReqVO
+     * @return
+     */
+    @DeleteMapping("/batchDeleteGoodsInfos")
+    public CommonResult<Void> batchDeleteGoodsInfos(@RequestBody DeleteBatchGoodsReqVO deleteBatchGoodsReqVO){
+        return goodsInfoService.batchDeleteGoodsInfos(deleteBatchGoodsReqVO);
+    }
     /**
      * 更新商品信息
      * @param updateGoodsInfoReqVO

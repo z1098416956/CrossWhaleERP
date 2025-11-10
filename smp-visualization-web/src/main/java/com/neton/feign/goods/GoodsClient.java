@@ -187,4 +187,13 @@ public interface GoodsClient {
      */
     @PostMapping("/v1/goods/info/queryGoodsInfoPage")
     public CommonResult<PageUtil<GoodsInfoPageResVO>> queryGoodsInfoPage(@RequestBody QueryGoodsInfoReqVO queryGoodsInfoReqVO);
+
+
+    /**
+     * 批量删除
+     * @param deleteBatchGoodsReqVO
+     * @return
+     */
+    @DeleteMapping("/v1/goods/info/batchDeleteGoodsInfos")
+    public CommonResult<Void> batchDeleteGoodsInfos(@RequestBody DeleteBatchGoodsReqVO deleteBatchGoodsReqVO);
 }

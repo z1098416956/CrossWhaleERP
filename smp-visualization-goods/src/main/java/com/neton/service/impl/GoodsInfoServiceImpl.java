@@ -1,5 +1,6 @@
 package com.neton.service.impl;
 
+import com.alibaba.nacos.client.naming.utils.CollectionUtils;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -9,10 +10,7 @@ import com.neton.common.PageUtil;
 import com.neton.common.SystemErrorCodeConstants;
 import com.neton.dao.GoodsInfoDao;
 import com.neton.entity.GoodsInfoDO;
-import com.neton.req.CreateGoodsInfoReqVO;
-import com.neton.req.QueryGoodsInfoReqVO;
-import com.neton.req.UpdateGoodsInfoReqVO;
-import com.neton.req.UpdateGoodsInfoStatusReqVO;
+import com.neton.req.*;
 import com.neton.res.*;
 import com.neton.service.*;
 import com.neton.utils.SecurityUtils;
@@ -24,6 +22,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class GoodsInfoServiceImpl extends ServiceImpl<GoodsInfoDao,GoodsInfoDO> implements GoodsInfoService {
@@ -158,6 +159,40 @@ public class GoodsInfoServiceImpl extends ServiceImpl<GoodsInfoDao,GoodsInfoDO> 
     }
 
     /**
+     * 批量删除
+     *
+     * @param deleteBatchGoodsReqVO
+     * @return
+     */
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public CommonResult<Void> batchDeleteGoodsInfos(DeleteBatchGoodsReqVO deleteBatchGoodsReqVO) {
+        if (deleteBatchGoodsReqVO.getIds() == null || deleteBatchGoodsReqVO.getIds().isEmpty()) {
+            return CommonResult.error(SystemErrorCodeConstants.GOOD_INFO_ID_IS_NULL);
+        }
+        List<GoodsInfoDO> infoDOS = goodsInfoDao.selectByIds(deleteBatchGoodsReqVO.getIds());
+        if (infoDOS == null || infoDOS.isEmpty()) {
+            return CommonResult.error(SystemErrorCodeConstants.GOOD_INFO_ID_IS_ERR);
+        }
+        infoDOS.stream().forEach(infoDO -> {
+            infoDO.setIsDeleted(1);
+            infoDO.setUpdateBy(SecurityUtils.getUserId());
+            infoDO.setUpdateTime(LocalDateTime.now());
+            goodsInfoDao.updateById(infoDO);
+        });
+        updateBatchById(infoDOS);
+        //商品与仓库
+        goodsInventoryService.batchDeleteGoodsInventory(deleteBatchGoodsReqVO.getIds());
+        //采购最低价
+        goodsAttributeInfoService.batchDeleteGoodsAttributeInfos(deleteBatchGoodsReqVO.getIds());
+        //扩展信息
+        goodsExtendService.batchDeleteGoodsExtend(deleteBatchGoodsReqVO.getIds());
+        //选择的属性
+        goodsAttributeService.batchDeleteGoodsAttributeInfos(deleteBatchGoodsReqVO.getIds());
+        return CommonResult.success();
+    }
+
+    /**
      * 获取商品信息详情
      *
      * @param goodsId
@@ -228,12 +263,23 @@ public class GoodsInfoServiceImpl extends ServiceImpl<GoodsInfoDao,GoodsInfoDO> 
         IPage<GoodsInfoPageResVO> page = new Page<>();
         page.setCurrent(queryGoodsInfoReqVO.getPage());
         page.setSize(queryGoodsInfoReqVO.getSize());
-        
+
         IPage<GoodsInfoPageResVO> iPage = goodsInfoDao.queryGoodsInfoPage(page, queryGoodsInfoReqVO);
         PageUtil<GoodsInfoPageResVO> pageUtil = new PageUtil<>();
+        if (!CollectionUtils.isEmpty(iPage.getRecords())) {
+            //库存
+            Set<Long> goodsIds = iPage.getRecords().stream().map(GoodsInfoPageResVO::getId).collect(Collectors.toSet());
+            Map<Long, Long> inventoryCount = goodsInventoryService.getGoodsInventoryCount(goodsIds);
+            iPage.getRecords().forEach(goodsInfoPageResVO -> {
+                Long aLong = inventoryCount.get(goodsInfoPageResVO.getId());
+                if (aLong != null){
+                    goodsInfoPageResVO.setCurrentStock(aLong);
+                }
+            });
+        }
         pageUtil.setPageList(iPage.getRecords());
         pageUtil.setTotal(iPage.getTotal());
-        
+
         return CommonResult.success(pageUtil);
     }
 }

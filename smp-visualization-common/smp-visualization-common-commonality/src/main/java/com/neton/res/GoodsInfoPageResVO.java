@@ -17,7 +17,14 @@ public class GoodsInfoPageResVO implements Serializable {
      * 商品名称
      */
     private String goodsName;
-
+    /**
+     * 保质期
+     */
+    private Integer shelfLife;
+    /**
+     * 仓位货架
+     */
+    private String positionShelves;
     /**
      * 规格
      */

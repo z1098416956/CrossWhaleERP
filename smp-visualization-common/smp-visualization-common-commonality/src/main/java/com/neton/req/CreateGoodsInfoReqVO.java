@@ -22,7 +22,14 @@ public class CreateGoodsInfoReqVO implements Serializable {
      * 规格
      */
     private String specification;
-
+    /**
+     * 仓位货架
+     */
+    private String positionShelves;
+    /**
+     * 保质期
+     */
+    private Integer shelfLife;
     /**
      * 型号
      */

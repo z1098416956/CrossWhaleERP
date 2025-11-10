@@ -8,6 +8,8 @@ import com.neton.req.UpdateGoodsInfoReqVO;
 import com.neton.res.GoodsInventoryDetailsResVO;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public interface GoodsInventoryService extends IService<GoodsInventoryDO> {
 
@@ -33,9 +35,22 @@ public interface GoodsInventoryService extends IService<GoodsInventoryDO> {
     void deleteGoodsInventory(Long goodsId);
 
     /**
+     * 批量删除
+     * @param goodsIds
+     */
+    void batchDeleteGoodsInventory(List<Long> goodsIds);
+
+    /**
      * 获取商品库存列表
      * @param goodsId
      * @return
      */
     List<GoodsInventoryDetailsResVO> getGoodsInventoryList(Long goodsId);
+
+    /**
+     * 获取商品库存
+     * @param goodsIds
+     * @return
+     */
+    Map<Long,Long> getGoodsInventoryCount(Set<Long> goodsIds);
 }

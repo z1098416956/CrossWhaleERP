@@ -20,6 +20,11 @@ public class CreateGoodsAttributeInfoReqVO implements Serializable {
     private String unitName;
 
     /**
+     * 多属性
+     */
+    private String multiattribute;
+
+    /**
      * 采购价
      */
     private BigDecimal purchasePrice;

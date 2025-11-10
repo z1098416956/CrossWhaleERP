@@ -25,4 +25,15 @@ public interface GoodsAttributeDao extends BaseMapper<GoodsAttributeDO> {
         queryWrapperX.eq(GoodsAttributeDO::getGoodsId, goodsId);
         return selectList(queryWrapperX);
     }
+
+    /**
+     * 根据商品ID查询选择的属性
+     * @param goodsId
+     * @return
+     */
+    default List<GoodsAttributeDO> selectByGoodsIds(List<Long> goodsId) {
+        LambdaQueryWrapperX<GoodsAttributeDO> queryWrapperX = new LambdaQueryWrapperX<>();
+        queryWrapperX.in(GoodsAttributeDO::getGoodsId, goodsId);
+        return selectList(queryWrapperX);
+    }
 }
