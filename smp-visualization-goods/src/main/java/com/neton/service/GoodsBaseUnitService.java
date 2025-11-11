@@ -33,6 +33,13 @@ public interface GoodsBaseUnitService {
      */
     CommonResult<PageUtil<UnitPageResVO>> queryGoodsBaseUnitPage(QueryUnitReqVO queryUnitReqVO);
 
+
+    /**
+     * 分页查询基本单位副单位
+     * @param queryUnitReqVO
+     * @return
+     */
+    CommonResult<PageUtil<UnitPageResVO>> queryGoodsBaseUnitPage2(QueryUnitReqVO queryUnitReqVO);
     /**
      * 根据ID查询基本单位副单位
      * @param id

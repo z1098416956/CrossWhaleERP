@@ -88,4 +88,14 @@ public class WebGoodsBaseUnitController {
     public CommonResult<Void> updateGoodsBaseUnitByType(@RequestBody UpdateUnitStatusReqVO updateUnitStatusReqVO){
         return goodsBaseUnitService.updateGoodsBaseUnitByType(updateUnitStatusReqVO);
     }
+
+    /**
+     * 分页查询基本单位副单位
+     * @param queryUnitReqVO
+     * @return
+     */
+    @PostMapping("/queryGoodsBaseUnitPage2")
+    public CommonResult<PageUtil<UnitPageResVO>> queryGoodsBaseUnitPage2(@RequestBody QueryUnitReqVO queryUnitReqVO){
+        return goodsBaseUnitService.queryGoodsBaseUnitPage2(queryUnitReqVO);
+    }
 }

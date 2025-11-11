@@ -50,6 +50,18 @@ public class WebStorageController {
         return storageService.queryStoragePage(queryStorageVO);
     }
 
+
+    /**
+     * 仓库列表
+     * @param queryStorageVO
+     * @return
+     */
+    @PostMapping("/queryStoragePage2")
+    public CommonResult<PageUtil<StorageVO>> queryStoragePage2(@RequestBody QueryStorageVO queryStorageVO){
+
+        return storageService.queryStoragePage2(queryStorageVO);
+    }
+
     /**
      * 仓库详情
      * @param id

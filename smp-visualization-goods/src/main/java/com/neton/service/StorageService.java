@@ -31,6 +31,12 @@ public interface StorageService {
     public CommonResult<PageUtil<StorageVO>> queryStoragePage(QueryStorageVO queryStorageVO);
 
     /**
+     * 仓库列表
+     * @param queryStorageVO
+     * @return
+     */
+    public CommonResult<PageUtil<StorageVO>> queryStoragePage2(QueryStorageVO queryStorageVO);
+    /**
      * 仓库详情
      * @param id
      * @return

@@ -196,4 +196,14 @@ public interface GoodsClient {
      */
     @DeleteMapping("/v1/goods/info/batchDeleteGoodsInfos")
     public CommonResult<Void> batchDeleteGoodsInfos(@RequestBody DeleteBatchGoodsReqVO deleteBatchGoodsReqVO);
+
+
+    /**
+     * 分页查询基本单位副单位
+     * @param queryUnitReqVO
+     * @return
+     */
+    @PostMapping("/v1/good/base/unit/queryGoodsBaseUnitPage2")
+    public CommonResult<PageUtil<UnitPageResVO>> queryGoodsBaseUnitPage2(@RequestBody QueryUnitReqVO queryUnitReqVO);
+
 }

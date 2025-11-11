@@ -18,4 +18,15 @@
             </foreach>
         </if>
     </select>
+
+    <select id="queryStoragePage2" resultType="com.neton.res.StorageVO">
+        SELECT
+            t1.id,
+            CONCAT(t3.province,'-',t2.city,'-',t1.storage_name) as storageName
+        FROM
+            `storage` t1
+            LEFT JOIN cities t2 ON t1.city_id = t2.city_id
+            LEFT JOIN provinces t3 ON t2.province_id = t3.province_id
+        WHERE t1.is_deleted = 0
+    </select>
 </mapper>

@@ -49,6 +49,16 @@ public class GoodsBaseUnitController {
     public CommonResult<PageUtil<UnitPageResVO>> queryGoodsBaseUnitPage(@RequestBody QueryUnitReqVO queryUnitReqVO){
         return goodsBaseUnitService.queryGoodsBaseUnitPage(queryUnitReqVO);
     }
+
+    /**
+     * 分页查询基本单位副单位
+     * @param queryUnitReqVO
+     * @return
+     */
+    @PostMapping("/queryGoodsBaseUnitPage2")
+    public CommonResult<PageUtil<UnitPageResVO>> queryGoodsBaseUnitPage2(@RequestBody QueryUnitReqVO queryUnitReqVO){
+        return goodsBaseUnitService.queryGoodsBaseUnitPage2(queryUnitReqVO);
+    }
     /**
      * 根据ID查询基本单位副单位
      * @param id

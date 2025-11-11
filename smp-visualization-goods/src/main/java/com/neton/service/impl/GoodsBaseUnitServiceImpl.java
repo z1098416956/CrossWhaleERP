@@ -168,6 +168,67 @@ public class GoodsBaseUnitServiceImpl implements GoodsBaseUnitService {
     }
 
     /**
+     * 分页查询基本单位副单位
+     *
+     * @param queryUnitReqVO
+     * @return
+     */
+    @Override
+    public CommonResult<PageUtil<UnitPageResVO>> queryGoodsBaseUnitPage2(QueryUnitReqVO queryUnitReqVO) {
+        IPage<UnitResVO> page = new Page<>();
+        page.setCurrent(queryUnitReqVO.getPage());
+        page.setSize(queryUnitReqVO.getSize());
+        IPage<UnitResVO> iPage = goodsBaseUnitDao.getGoodsBaseUnitPage(page, queryUnitReqVO);
+        PageUtil<UnitPageResVO> pageResult = new PageUtil<>();
+        List<UnitResVO> records = iPage.getRecords();
+        if (records != null && !records.isEmpty()) {
+            List<Long> collect = records.stream().map(UnitResVO::getId).toList();
+            List<UnitExtendResVO> list = goodsBaseUnitExtendDao.selectByGoodsBaseUnitIds(collect);
+            List<UnitPageResVO> res = new ArrayList<>();
+            if (list != null && !list.isEmpty()) {
+                Map<Long, List<UnitExtendResVO>> map = list.stream().collect(Collectors.groupingBy(UnitExtendResVO::getUnitId));
+                records.forEach(record -> {
+                    List<UnitExtendResVO> resVOS = map.get(record.getId());
+                    UnitPageResVO unitPageResVO = new UnitPageResVO();
+                    unitPageResVO.setId(record.getId());
+                    unitPageResVO.setBaseUnitName(record.getUnitName());
+                    unitPageResVO.setIsEnabled(record.getIsEnabled());
+                    StringBuffer sb = new StringBuffer();
+                    sb.append(record.getUnitName()).append("/(");
+                    if (resVOS != null && !resVOS.isEmpty()) {
+                        sb.append(resVOS.get(0).getUnitExtendName());
+                        sb.append("=");
+                        sb.append(resVOS.get(0).getConversionRatio());
+                        sb.append(record.getUnitName()+")");
+                        unitPageResVO.setDeputyUnitName(resVOS.get(0).getUnitExtendName());
+                        if (resVOS.size() >=2){
+                            sb.append("/(");
+                            sb.append(resVOS.get(1).getUnitExtendName());
+                            sb.append("=");
+                            sb.append(resVOS.get(1).getConversionRatio());
+                            sb.append(record.getUnitName()+")");
+                            unitPageResVO.setDeputyUnitName2(resVOS.get(1).getUnitExtendName());
+                        }
+                        if (resVOS.size() >=3){
+                            sb.append("/(");
+                            sb.append(resVOS.get(2).getUnitExtendName());
+                            sb.append("=");
+                            sb.append(resVOS.get(2).getConversionRatio());
+                            sb.append(record.getUnitName()+")");
+                            unitPageResVO.setDeputyUnitName3(resVOS.get(2).getUnitExtendName());
+                        }
+                    }
+                    unitPageResVO.setUnitName(sb.toString());
+                    res.add(unitPageResVO);
+                });
+            }
+            pageResult.setTotal(iPage.getTotal());
+            pageResult.setPageList(res);
+        }
+        return CommonResult.success(pageResult);
+    }
+
+    /**
      * 根据ID查询基本单位副单位
      *
      * @param id

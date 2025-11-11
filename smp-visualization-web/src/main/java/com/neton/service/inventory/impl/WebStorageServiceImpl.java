@@ -95,6 +95,19 @@ public class WebStorageServiceImpl implements WebStorageService {
     }
 
     /**
+     * 仓库列表
+     *
+     * @param queryStorageVO
+     * @return
+     */
+    @Override
+    public CommonResult<PageUtil<StorageVO>> queryStoragePage2(QueryStorageVO queryStorageVO) {
+
+
+        return storageClient.queryStoragePage2(queryStorageVO);
+    }
+
+    /**
      * 仓库详情
      *
      * @param id

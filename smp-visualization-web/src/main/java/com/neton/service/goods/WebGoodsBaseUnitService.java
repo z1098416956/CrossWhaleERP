@@ -60,4 +60,11 @@ public interface WebGoodsBaseUnitService {
      * @return
      */
     CommonResult<Void> updateGoodsBaseUnitByType(UpdateUnitStatusReqVO updateUnitStatusReqVO);
+
+    /**
+     * 分页查询基本单位副单位
+     * @param queryUnitReqVO
+     * @return
+     */
+    CommonResult<PageUtil<UnitPageResVO>> queryGoodsBaseUnitPage2(QueryUnitReqVO queryUnitReqVO);
 }

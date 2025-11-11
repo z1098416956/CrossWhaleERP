@@ -39,6 +39,13 @@ public interface StorageClient {
      */
     @PostMapping("/v1/storage/queryStoragePage")
     public CommonResult<PageUtil<StorageVO>> queryStoragePage(@RequestBody QueryStorageVO queryStorageVO);
+    /**
+     * 仓库列表
+     * @param queryStorageVO
+     * @return
+     */
+    @PostMapping("/v1/storage/queryStoragePage2")
+    public CommonResult<PageUtil<StorageVO>> queryStoragePage2(@RequestBody QueryStorageVO queryStorageVO);
 
     /**
      * 仓库详情

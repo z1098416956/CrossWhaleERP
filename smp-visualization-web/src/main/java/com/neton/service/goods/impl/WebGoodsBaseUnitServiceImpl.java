@@ -95,4 +95,15 @@ public class WebGoodsBaseUnitServiceImpl implements WebGoodsBaseUnitService {
 
         return goodsClient.updateGoodsBaseUnitByType(updateUnitStatusReqVO);
     }
+
+    /**
+     * 分页查询基本单位副单位
+     *
+     * @param queryUnitReqVO
+     * @return
+     */
+    @Override
+    public CommonResult<PageUtil<UnitPageResVO>> queryGoodsBaseUnitPage2(QueryUnitReqVO queryUnitReqVO) {
+        return goodsClient.queryGoodsBaseUnitPage2(queryUnitReqVO);
+    }
 }

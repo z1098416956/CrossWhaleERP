@@ -120,6 +120,24 @@ public class StorageServiceImpl implements StorageService {
     }
 
     /**
+     * 仓库列表
+     *
+     * @param queryStorageVO
+     * @return
+     */
+    @Override
+    public CommonResult<PageUtil<StorageVO>> queryStoragePage2(QueryStorageVO queryStorageVO) {
+        IPage<StorageVO> page = new Page<>();
+        page.setCurrent(queryStorageVO.getPage());
+        page.setSize(queryStorageVO.getSize());
+        IPage<StorageVO> iPage = storageDao.queryStoragePage2(page, queryStorageVO);
+        PageUtil<StorageVO> pageUtil = new PageUtil<>();
+        pageUtil.setPageList(iPage.getRecords());
+        pageUtil.setTotal(iPage.getTotal());
+        return CommonResult.success(pageUtil);
+    }
+
+    /**
      * 仓库详情
      *
      * @param id
