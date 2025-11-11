@@ -42,7 +42,10 @@ public class GoodsInfoDO extends BaseDO<GoodsInfoDO> {
      * 是否多单位 0是 1否
      */
     private Integer isUnit;
-
+    /**
+     * 基础重量
+     */
+    private Integer basicWeight;
     /**
      * 自定义单位
      */

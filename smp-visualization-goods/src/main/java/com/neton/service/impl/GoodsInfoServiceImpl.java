@@ -53,7 +53,7 @@ public class GoodsInfoServiceImpl extends ServiceImpl<GoodsInfoDao,GoodsInfoDO> 
     @Override
     public CommonResult<Void> createGoodsInfo(CreateGoodsInfoReqVO createGoodsInfoReqVO) {
 
-        if (createGoodsInfoReqVO.getIsUnit() == 0 && createGoodsInfoReqVO.getAttributeReq() != null && !createGoodsInfoReqVO.getAttributes().isEmpty()) {
+        if (createGoodsInfoReqVO.getIsUnit() == 0 && createGoodsInfoReqVO.getAttributeReq() != null && !createGoodsInfoReqVO.getAttributeReq().isEmpty()) {
             return CommonResult.error(SystemErrorCodeConstants.GOOD_INFO_ATT_ERR);
         }
         //检查商品名称是否重复
@@ -63,6 +63,8 @@ public class GoodsInfoServiceImpl extends ServiceImpl<GoodsInfoDao,GoodsInfoDO> 
         }
         GoodsInfoDO goodsInfoDO = new GoodsInfoDO();
         BeanUtils.copyProperties(createGoodsInfoReqVO, goodsInfoDO);
+        goodsInfoDO.setGoodsStatus(0);
+        goodsInfoDO.setIsEnabled(0);
         //商品信息
         goodsInfoDO.setCreateBy(SecurityUtils.getUserId());
         goodsInfoDO.setCreateTime(LocalDateTime.now());
@@ -107,7 +109,7 @@ public class GoodsInfoServiceImpl extends ServiceImpl<GoodsInfoDao,GoodsInfoDO> 
         if (repeat != null && !repeat.isEmpty() && goodsInfoDO.getId().longValue() != repeat.get(0).getId().longValue()) {
             return CommonResult.error(SystemErrorCodeConstants.GOOD_INFO_NAME_IS_REPEAT);
         }
-        if (updateGoodsInfoReqVO.getIsUnit() == 0 && updateGoodsInfoReqVO.getAttributeReq() != null && !updateGoodsInfoReqVO.getAttributes().isEmpty()) {
+        if (updateGoodsInfoReqVO.getIsUnit() == 0 && updateGoodsInfoReqVO.getAttributeReq() != null && !updateGoodsInfoReqVO.getAttributeReq().isEmpty()) {
             return CommonResult.error(SystemErrorCodeConstants.GOOD_INFO_ATT_ERR);
         }
         //更新商品信息

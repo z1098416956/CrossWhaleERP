@@ -15,7 +15,7 @@ import java.math.BigDecimal;
 @Data
 @TableName(value = "goods_attribute_info")
 public class GoodsAttributeInfoDO extends BaseDO<GoodsAttributeInfoDO> {
-    
+
     @Serial
     private static final long serialVersionUID = -6155520593458223103L;
 
@@ -33,6 +33,11 @@ public class GoodsAttributeInfoDO extends BaseDO<GoodsAttributeInfoDO> {
      * 单位名称
      */
     private String unitName;
+
+    /**
+     * 商品多属性
+     */
+    private String goodsSku;
 
     /**
      * 采购价

@@ -35,7 +35,8 @@ public class GoodsExtendServiceImpl extends ServiceImpl<GoodsExtendDao,GoodsExte
     @Override
     public CommonResult<Void> createGoodsExtend(CreateGoodsInfoReqVO createGoodsInfoReqVO, Long goodsId) {
         if(createGoodsInfoReqVO.getExtendInfo() == null || createGoodsInfoReqVO.getExtendInfo().isEmpty()){
-           throw new ServiceException(SystemErrorCodeConstants.GOOD_INFO_EXTEND_IS_NULL);
+          // throw new ServiceException(SystemErrorCodeConstants.GOOD_INFO_EXTEND_IS_NULL);
+            return CommonResult.success();
         }
         List<GoodsExtendDO> goodsExtendDOList = createGoodsInfoReqVO.getExtendInfo().stream().map(item -> {
             GoodsExtendDO goodsExtendDO = new GoodsExtendDO();

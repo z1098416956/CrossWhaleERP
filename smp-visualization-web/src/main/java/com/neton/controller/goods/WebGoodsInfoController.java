@@ -53,12 +53,12 @@ public class WebGoodsInfoController {
 
     /**
      * 获取商品信息详情
-     * @param goodsId
+     * @param id
      * @return
      */
     @GetMapping("/getGoodsInfoDetailsById")
-    public CommonResult<GoodsInfoDetailsResVO> getGoodsInfoDetailsById(@RequestParam("goodsId") Long goodsId){
-        return webGoodsInfoService.getGoodsInfoDetailsById(goodsId);
+    public CommonResult<GoodsInfoDetailsResVO> getGoodsInfoDetailsById(@RequestParam Long id){
+        return webGoodsInfoService.getGoodsInfoDetailsById(id);
     }
 
 

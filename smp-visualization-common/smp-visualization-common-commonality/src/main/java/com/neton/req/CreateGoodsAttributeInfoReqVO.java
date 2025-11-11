@@ -18,6 +18,10 @@ public class CreateGoodsAttributeInfoReqVO implements Serializable {
      * 单位名称
      */
     private String unitName;
+    /**
+     * 商品多属性
+     */
+    private String goodsSku;
 
     /**
      * 多属性
