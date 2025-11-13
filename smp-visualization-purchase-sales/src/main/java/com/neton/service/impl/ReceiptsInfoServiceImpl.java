@@ -15,6 +15,7 @@ import com.neton.res.ReceiptsInfoPageResVO;
 import com.neton.res.ReceiptsInfoResVO;
 import com.neton.service.ReceiptsInfoDetailsService;
 import com.neton.service.ReceiptsInfoService;
+import com.neton.utils.DateUtils;
 import com.neton.utils.SecurityUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,6 +66,8 @@ public class ReceiptsInfoServiceImpl extends ServiceImpl<ReceiptsInfoDao, Receip
                 sb.append(" | ");
             }
         }
+        receiptsInfoDO.setGoodsQuantity(details.size());
+        receiptsInfoDO.setReceiptsTime(LocalDateTime.now());
         receiptsInfoDO.setGoodsInfo(sb.toString());
         receiptsInfoDO.setReceiptsStatus(createReceiptsInfoReqVO.getReceiptsStatus() == null ? 0 : createReceiptsInfoReqVO.getReceiptsStatus());
         receiptsInfoDO.setCreateBy(SecurityUtils.getUserId());
@@ -106,6 +109,7 @@ public class ReceiptsInfoServiceImpl extends ServiceImpl<ReceiptsInfoDao, Receip
         }
         ReceiptsInfoResVO receiptsInfoResVO = new ReceiptsInfoResVO();
         BeanUtils.copyProperties(infoDO, receiptsInfoResVO);
+
         List<ReceiptsInfoDetailsResVO> list = receiptsInfoDetailsService.listReceiptsInfoDetails(id);
         receiptsInfoResVO.setReceiptsInfoDetails(list);
         return CommonResult.success(receiptsInfoResVO);

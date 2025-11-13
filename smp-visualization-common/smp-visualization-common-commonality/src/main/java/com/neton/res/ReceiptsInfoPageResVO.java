@@ -21,10 +21,6 @@ public class ReceiptsInfoPageResVO  implements Serializable {
     /**
      * 单据时间
      */
-    private String receiptsTimeStr;
-    /**
-     * 单据时间
-     */
     private LocalDateTime receiptsTime;
     /**
      * 据状态 0 未审核 1已审核 3采购完成 4部分采购完成

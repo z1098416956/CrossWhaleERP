@@ -3,6 +3,7 @@ package com.neton.res;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -18,6 +19,11 @@ public class ReceiptsInfoResVO implements Serializable {
      * 单据编号
      */
     private String receiptsNumber;
+
+    /**
+     * 单据时间
+     */
+    private LocalDateTime receiptsTime;
 
     /**
      * 备注

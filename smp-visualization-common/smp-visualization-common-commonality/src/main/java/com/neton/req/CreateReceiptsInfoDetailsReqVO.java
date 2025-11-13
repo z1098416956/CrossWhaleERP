@@ -19,7 +19,10 @@ public class CreateReceiptsInfoDetailsReqVO  implements Serializable {
      * 商品名称
      */
     private String goodsName;
-
+    /**
+     * 商品条码
+     */
+    private String goodsBarcode;
     /**
      * 规格
      */

@@ -19,7 +19,10 @@ public class ReceiptsInfoDetailsResVO implements Serializable {
      * 商品id
      */
     private Long goodsId;
-
+    /**
+     * 商品条码
+     */
+    private String goodsBarcode;
     /**
      * 商品名称
      */

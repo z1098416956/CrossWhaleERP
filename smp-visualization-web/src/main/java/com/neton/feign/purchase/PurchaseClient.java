@@ -21,7 +21,7 @@ public interface PurchaseClient {
      * @param createReceiptsInfoReqVO
      * @return
      */
-    @RequestMapping(value = "/createReceiptsInfo", method = RequestMethod.POST)
+    @RequestMapping(value = "/v1/receipts/info/createReceiptsInfo", method = RequestMethod.POST)
     public CommonResult<Void> createReceiptsInfo(@RequestBody CreateReceiptsInfoReqVO createReceiptsInfoReqVO);
 
 
@@ -31,7 +31,7 @@ public interface PurchaseClient {
      * @param id
      * @return
      */
-    @RequestMapping(value = "/getReceiptsDetailsInfo", method = RequestMethod.GET)
+    @RequestMapping(value = "/v1/receipts/info/getReceiptsDetailsInfo", method = RequestMethod.GET)
     public CommonResult<ReceiptsInfoResVO> getReceiptsDetailsInfo(@RequestParam Long id);
 
 
@@ -41,7 +41,7 @@ public interface PurchaseClient {
      * @param id
      * @return
      */
-    @RequestMapping(value = "/deleteReceiptsInfo", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/v1/receipts/info/deleteReceiptsInfo", method = RequestMethod.DELETE)
     public CommonResult<Void> deleteReceiptsInfo(@RequestParam Long id);
 
     /**
@@ -50,7 +50,7 @@ public interface PurchaseClient {
      * @param updateReceiptsStatusReqVO
      * @return
      */
-    @RequestMapping(value = "/updateReceiptsStatus", method = RequestMethod.PUT)
+    @RequestMapping(value = "/v1/receipts/info/updateReceiptsStatus", method = RequestMethod.PUT)
     public CommonResult<Void> updateReceiptsStatus(@RequestBody UpdateReceiptsStatusReqVO updateReceiptsStatusReqVO);
 
 
@@ -60,7 +60,7 @@ public interface PurchaseClient {
      * @param deleteReceiptsReqVO
      * @return
      */
-    @RequestMapping(value = "/deleteReceipts", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/v1/receipts/info/deleteReceipts", method = RequestMethod.DELETE)
     public CommonResult<Void> deleteReceipts(@RequestBody DeleteReceiptsReqVO deleteReceiptsReqVO);
 
     /**
@@ -69,7 +69,7 @@ public interface PurchaseClient {
      * @param queryReceiptsReqVO
      * @return
      */
-    @RequestMapping(value = "/queryReceiptsPage", method = RequestMethod.POST)
+    @RequestMapping(value = "/v1/receipts/info/queryReceiptsPage", method = RequestMethod.POST)
     public CommonResult<PageUtil<ReceiptsInfoPageResVO>> queryReceiptsPage(@RequestBody QueryReceiptsReqVO queryReceiptsReqVO);
 
     /**
@@ -78,7 +78,7 @@ public interface PurchaseClient {
      * @param updateReceiptsInfoReqVO
      * @return
      */
-    @RequestMapping(value = "/updateReceiptsInfo", method = RequestMethod.PUT)
+    @RequestMapping(value = "/v1/receipts/info/updateReceiptsInfo", method = RequestMethod.PUT)
     public CommonResult<Void> updateReceiptsInfo(@RequestBody UpdateReceiptsInfoReqVO updateReceiptsInfoReqVO);
 
 

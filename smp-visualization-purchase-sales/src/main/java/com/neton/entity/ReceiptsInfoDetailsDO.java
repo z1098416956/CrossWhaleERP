@@ -54,7 +54,10 @@ public class ReceiptsInfoDetailsDO extends BaseDO<ReceiptsInfoDetailsDO> {
      * 品牌名称
      */
     private String brandName;
-
+    /**
+     * 商品条码
+     */
+    private String goodsBarcode;
     /**
      * 制造商
      */
