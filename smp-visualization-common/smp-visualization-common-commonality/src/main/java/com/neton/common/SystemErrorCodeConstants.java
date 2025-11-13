@@ -74,4 +74,10 @@ public interface SystemErrorCodeConstants {
     ErrorCode GOOD_INFO_NAME_IS_REPEAT = new ErrorCode(1003004010, "商品名称重复");
     ErrorCode GOOD_INFO_ID_IS_NULL = new ErrorCode(1003004010, "商品ID不能为空");
     ErrorCode GOOD_INFO_ID_IS_ERR = new ErrorCode(1003004011, "商品ID错误");
+    //====================采购模块===============1003005000
+    ErrorCode RECEIPTS_GOODS_DETAILS_INFO_IS_NULL = new ErrorCode(1003005001, "请购单商品详情不能为空");
+    ErrorCode RECEIPTS_STATUS_IS_NULL = new ErrorCode(1003005002, "单据状态不能为空");
+    ErrorCode RECEIPTS_STATUS_IS_ERR = new ErrorCode(1003005003, "单据状态错误");
+    ErrorCode RECEIPTS_ID_IS_ERR = new ErrorCode(1003005004, "单据ID错误");
+    ErrorCode RECEIPTS_ID_IS_NULL = new ErrorCode(1003005004, "单据ID错误不能为空");
 }

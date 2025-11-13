@@ -8,6 +8,8 @@ import com.neton.req.UpdateGoodsInfoReqVO;
 import com.neton.res.GoodsExtendDetailsResVO;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public interface GoodsExtendService extends IService<GoodsExtendDO> {
 
@@ -43,4 +45,11 @@ public interface GoodsExtendService extends IService<GoodsExtendDO> {
      * @return
      */
     List<GoodsExtendDetailsResVO> getGoodsExtendDetails(Long goodsId);
+
+    /**
+     * 获取商品扩展信息
+     * @param goodsIds
+     * @return
+     */
+    Map<Long,List<String>> getGoodsExtendInfo(Set<Long> goodsIds);
 }

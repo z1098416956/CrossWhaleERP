@@ -1,8 +1,7 @@
 package com.neton.service.impl;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -133,5 +132,31 @@ public class GoodsExtendServiceImpl extends ServiceImpl<GoodsExtendDao,GoodsExte
         }
         List<GoodsExtendDetailsResVO> bean = NetonBeanUtils.toBean(list, GoodsExtendDetailsResVO.class);
         return bean;
+    }
+
+    /**
+     * 获取商品扩展信息
+     *
+     * @param goodsIds
+     * @return
+     */
+    @Override
+    public Map<Long, List<String>> getGoodsExtendInfo(Set<Long> goodsIds) {
+        List<GoodsExtendDO> list = baseMapper.selectByGoodsIds(goodsIds);
+        Map<Long, List<String>> map = new HashMap<>();
+        if (list == null || list.isEmpty()) {
+            return map;
+        }
+        Map<Long, List<GoodsExtendDO>> collect = list.stream().collect(Collectors.groupingBy(GoodsExtendDO::getGoodsId));
+        for (Long goodsId : goodsIds) {
+            List<GoodsExtendDO> extendDOList = collect.get(goodsId);
+            if (extendDOList == null || extendDOList.isEmpty()) {
+                continue;
+            }
+
+            List<String> str = extendDOList.stream().map(extendDO -> extendDO.getGoodsValue()).collect(Collectors.toList());
+            map.put(goodsId, str);
+        }
+        return map;
     }
 }

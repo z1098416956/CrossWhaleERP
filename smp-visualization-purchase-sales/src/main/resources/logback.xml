@@ -13,7 +13,7 @@
 
     <!-- 按照每天生成一个日志文件，保留5天 -->
     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>logs/system.log</file>
+        <file>logs/purchase-salse.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!-- 每天生成一个日志文件 -->
             <fileNamePattern>logs/system.%d{yyyy-MM-dd}.log.gz</fileNamePattern>

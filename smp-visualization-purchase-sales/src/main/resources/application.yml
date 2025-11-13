@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: smp-purchase-salse-service
+  profiles:
+    active: dev
+  config:
+    import: optional:nacos:smp-purchase-salse-dev.yaml
+    enabled: true
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 192.168.3.62:8848
+        namespace: aaa
+      config:
+        server-addr: 192.168.3.62:8848
+        file-extension: yaml
+        namespace: aaa
+        group: DEFAULT_GROUP
+

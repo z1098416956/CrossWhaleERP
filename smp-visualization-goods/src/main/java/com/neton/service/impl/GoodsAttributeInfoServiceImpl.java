@@ -17,8 +17,7 @@ import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import com.neton.bean.NetonBeanUtils;
@@ -137,5 +136,31 @@ public class GoodsAttributeInfoServiceImpl extends ServiceImpl<GoodsAttributeInf
         }
         List<GoodsAttributeInfoDetailsResVO> bean = NetonBeanUtils.toBean(byGoodsId, GoodsAttributeInfoDetailsResVO.class);
         return bean;
+    }
+
+    /**
+     * 获取商品多属性
+     *
+     * @param goodsId
+     * @return
+     */
+    @Override
+    public Map<Long,List<GoodsAttributeInfoDetailsResVO>> getGoodsAttributeInfoByGoodsIds(Set<Long> goodsId) {
+        List<GoodsAttributeInfoDO> byGoodsId = baseMapper.findByGoodsIds(goodsId);
+        if (byGoodsId == null || byGoodsId.isEmpty()) {
+            return new HashMap<>();
+        }
+        Map<Long,List<GoodsAttributeInfoDetailsResVO>> map = new HashMap<>();
+
+        Map<Long, List<GoodsAttributeInfoDO>> collect = byGoodsId.stream().collect(Collectors.groupingBy(GoodsAttributeInfoDO::getGoodsId));
+        for (Long itemId : goodsId) {
+            List<GoodsAttributeInfoDO> vos = collect.get(itemId);
+            if (vos == null || vos.isEmpty()) {
+                continue;
+            }
+            List<GoodsAttributeInfoDetailsResVO> res = NetonBeanUtils.toBean(vos, GoodsAttributeInfoDetailsResVO.class);
+            map.put(itemId,res);
+        }
+        return map;
     }
 }

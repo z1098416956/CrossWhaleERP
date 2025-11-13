@@ -5,6 +5,7 @@ import com.neton.common.PageUtil;
 import com.neton.req.*;
 import com.neton.res.GoodsInfoDetailsResVO;
 import com.neton.res.GoodsInfoPageResVO;
+import com.neton.res.GoodsInfoReceiptsPageResVO;
 import com.neton.service.GoodsInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -100,5 +101,15 @@ public class GoodsInfoController {
     @PostMapping("/queryGoodsInfoPage")
     public CommonResult<PageUtil<GoodsInfoPageResVO>> queryGoodsInfoPage(@RequestBody QueryGoodsInfoReqVO queryGoodsInfoReqVO){
         return goodsInfoService.queryGoodsInfoPage(queryGoodsInfoReqVO);
+    }
+
+    /**
+     * 请购单查询商品
+     * @param queryGoodsInfoReqVO
+     * @return
+     */
+    @PostMapping("/queryGoodsReceiptsPage")
+    public CommonResult<PageUtil<GoodsInfoReceiptsPageResVO>> queryGoodsReceiptsPage(@RequestBody QueryGoodsInfoReqVO queryGoodsInfoReqVO){
+        return goodsInfoService.queryGoodsReceiptsPage(queryGoodsInfoReqVO);
     }
 }

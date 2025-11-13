@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.neton.entity.GoodsInfoDO;
 import com.neton.req.QueryGoodsInfoReqVO;
 import com.neton.res.GoodsInfoPageResVO;
+import com.neton.res.GoodsInfoReceiptsPageResVO;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -30,4 +31,12 @@ public interface GoodsInfoDao extends BaseMapper<GoodsInfoDO> {
      * @return
      */
     IPage<GoodsInfoPageResVO> queryGoodsInfoPage(IPage<GoodsInfoPageResVO> page,@Param("params") QueryGoodsInfoReqVO queryGoodsInfoReqVO);
+
+    /**
+     * 采购单商品分页
+     * @param page
+     * @param queryGoodsInfoReqVO
+     * @return
+     */
+    IPage<GoodsInfoReceiptsPageResVO> queryGoodsReceiptsPage(IPage<GoodsInfoReceiptsPageResVO> page,@Param("params") QueryGoodsInfoReqVO queryGoodsInfoReqVO);
 }

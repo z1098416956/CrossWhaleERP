@@ -6,6 +6,7 @@ import com.neton.entity.GoodsExtendDO;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Set;
 
 public interface GoodsExtendDao extends BaseMapper<GoodsExtendDO> {
 
@@ -33,6 +34,18 @@ public interface GoodsExtendDao extends BaseMapper<GoodsExtendDO> {
      * @return
      */
     default List<GoodsExtendDO> selectByGoodsIds(List<Long> goodsId) {
+        LambdaQueryWrapper<GoodsExtendDO> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.in(GoodsExtendDO::getGoodsId, goodsId);
+        return selectList(queryWrapper);
+    }
+
+
+    /**
+     * 根据商品ID查询选择的扩展信息
+     * @param goodsId
+     * @return
+     */
+    default List<GoodsExtendDO> selectByGoodsIds(Set<Long> goodsId) {
         LambdaQueryWrapper<GoodsExtendDO> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.in(GoodsExtendDO::getGoodsId, goodsId);
         return selectList(queryWrapper);

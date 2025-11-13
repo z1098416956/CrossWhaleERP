@@ -180,7 +180,7 @@ public class GoodsInfoServiceImpl extends ServiceImpl<GoodsInfoDao,GoodsInfoDO> 
             infoDO.setIsDeleted(1);
             infoDO.setUpdateBy(SecurityUtils.getUserId());
             infoDO.setUpdateTime(LocalDateTime.now());
-            goodsInfoDao.updateById(infoDO);
+            //goodsInfoDao.updateById(infoDO);
         });
         updateBatchById(infoDOS);
         //商品与仓库
@@ -282,6 +282,47 @@ public class GoodsInfoServiceImpl extends ServiceImpl<GoodsInfoDao,GoodsInfoDO> 
         pageUtil.setPageList(iPage.getRecords());
         pageUtil.setTotal(iPage.getTotal());
 
+        return CommonResult.success(pageUtil);
+    }
+
+    /**
+     * 请购单查询商品
+     *
+     * @param queryGoodsInfoReqVO
+     * @return
+     */
+    @Override
+    public CommonResult<PageUtil<GoodsInfoReceiptsPageResVO>> queryGoodsReceiptsPage(QueryGoodsInfoReqVO queryGoodsInfoReqVO) {
+        IPage<GoodsInfoReceiptsPageResVO> page = new Page<>();
+        page.setCurrent(queryGoodsInfoReqVO.getPage());
+        page.setSize(queryGoodsInfoReqVO.getSize());
+        IPage<GoodsInfoReceiptsPageResVO> iPage = goodsInfoDao.queryGoodsReceiptsPage(page, queryGoodsInfoReqVO);
+        PageUtil<GoodsInfoReceiptsPageResVO> pageUtil = new PageUtil<>();
+        if (!CollectionUtils.isEmpty(iPage.getRecords())) {
+            //库存
+            Set<Long> goodsIds = iPage.getRecords().stream().map(GoodsInfoReceiptsPageResVO::getId).collect(Collectors.toSet());
+            Map<Long, Long> inventoryCount = goodsInventoryService.getGoodsInventoryCount(goodsIds);
+            //扩展信息
+            Map<Long, List<String>> extendInfo = goodsExtendService.getGoodsExtendInfo(goodsIds);
+            // SKU
+            Map<Long, List<GoodsAttributeInfoDetailsResVO>> info = goodsAttributeInfoService.getGoodsAttributeInfoByGoodsIds(goodsIds);
+            iPage.getRecords().forEach(goodsInfoPageResVO -> {
+                Long aLong = inventoryCount.get(goodsInfoPageResVO.getId());
+                if (aLong != null){
+                    goodsInfoPageResVO.setCurrentStock(aLong);
+                }
+                List<String> list = extendInfo.get(goodsInfoPageResVO.getId());
+                if (list != null && !list.isEmpty()) {
+                    goodsInfoPageResVO.setGoodsExtend(list);
+                }
+                List<GoodsAttributeInfoDetailsResVO> voList = info.get(goodsInfoPageResVO.getId());
+                if (voList != null && !voList.isEmpty()) {
+                    goodsInfoPageResVO.setGoodsSKU(voList);
+                }
+            });
+        }
+        pageUtil.setPageList(iPage.getRecords());
+        pageUtil.setTotal(iPage.getTotal());
         return CommonResult.success(pageUtil);
     }
 }

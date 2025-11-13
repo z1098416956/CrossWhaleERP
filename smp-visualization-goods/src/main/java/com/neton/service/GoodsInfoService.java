@@ -7,6 +7,7 @@ import com.neton.entity.GoodsInfoDO;
 import com.neton.req.*;
 import com.neton.res.GoodsInfoDetailsResVO;
 import com.neton.res.GoodsInfoPageResVO;
+import com.neton.res.GoodsInfoReceiptsPageResVO;
 
 import java.util.List;
 
@@ -62,4 +63,11 @@ public interface GoodsInfoService extends IService<GoodsInfoDO> {
      * @return
      */
     CommonResult<PageUtil<GoodsInfoPageResVO>> queryGoodsInfoPage(QueryGoodsInfoReqVO queryGoodsInfoReqVO);
+
+    /**
+     * 请购单查询商品
+     * @param queryGoodsInfoReqVO
+     * @return
+     */
+    CommonResult<PageUtil<GoodsInfoReceiptsPageResVO>> queryGoodsReceiptsPage(QueryGoodsInfoReqVO queryGoodsInfoReqVO);
 }
