@@ -31,4 +31,11 @@ public interface SystemUserRoleService {
      * @return
      */
     CommonResult<String> getBarcode(String moduleName);
+
+    /**
+     * 获取单据号
+     * @param moduleName
+     * @return
+     */
+    CommonResult<String> getReceipts(String moduleName);
 }

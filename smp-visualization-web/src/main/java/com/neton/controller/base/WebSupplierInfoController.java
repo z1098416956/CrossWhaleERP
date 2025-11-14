@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/web/supplier")
+@RequestMapping("/web/v1/supplier")
 public class WebSupplierInfoController {
 
     @Autowired

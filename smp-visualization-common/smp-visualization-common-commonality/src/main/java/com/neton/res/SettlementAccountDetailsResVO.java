@@ -1,0 +1,48 @@
+package com.neton.res;
+
+import lombok.Data;
+
+import java.io.Serializable;
+import java.math.BigDecimal;
+
+@Data
+public class SettlementAccountDetailsResVO implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+    /**
+     * id
+     */
+    private Long id;
+    /**
+     * 账户名称
+     */
+    private String accountName;
+
+    /**
+     * 是否默认0是1否
+     */
+    private Integer isDefault;
+    /**
+     * 账户状态0启用1禁用
+     */
+    private Integer accountStatus;
+    /**
+     * 编号
+     */
+    private String accountNumber;
+
+    /**
+     * 初期金额
+     */
+    private BigDecimal startAmount;
+
+    /**
+     * 排序
+     */
+    private Integer sortValue;
+
+    /**
+     * 备注
+     */
+    private String remake;
+}

@@ -119,4 +119,14 @@ public class WebSystemRoleController {
         return systemRoleService.getBarcode(moduleName);
     }
 
+    /**
+     * 获取条码
+     * @param moduleName
+     * @return
+     */
+    @GetMapping("/getReceipts")
+    public CommonResult<String> getReceipts(@RequestParam String moduleName){
+        return systemRoleService.getReceipts(moduleName);
+    }
+
 }

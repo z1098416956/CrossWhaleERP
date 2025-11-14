@@ -121,4 +121,15 @@ public class SystemRoleController {
     public CommonResult<String> getBarcode(@RequestParam String moduleName){
         return systemUserRoleService.getBarcode(moduleName);
     }
+
+
+    /**
+     * 获取条码
+     * @param moduleName
+     * @return
+     */
+    @GetMapping("/getReceipts")
+    public CommonResult<String> getReceipts(@RequestParam String moduleName){
+        return systemUserRoleService.getReceipts(moduleName);
+    }
 }

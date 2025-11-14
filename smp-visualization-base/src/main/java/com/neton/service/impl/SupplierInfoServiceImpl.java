@@ -16,6 +16,7 @@ import com.neton.res.SupplierInfoDetailsResVO;
 import com.neton.service.SupplierInfoService;
 import com.neton.utils.SecurityUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -43,6 +44,7 @@ public class SupplierInfoServiceImpl extends ServiceImpl<SupplierInfoDao,Supplie
         SupplierInfoDO bean = NetonBeanUtils.toBean(createSupplierInfoReqVO, SupplierInfoDO.class);
         bean.setCreateBy(SecurityUtils.getUserId());
         bean.setUpdateBy(SecurityUtils.getUserId());
+        bean.setIsDeleted(0);
         bean.setCreateTime(LocalDateTime.now());
         bean.setUpdateTime(LocalDateTime.now());
         bean.setCreateByName(SecurityUtils.getUsername());
@@ -63,19 +65,34 @@ public class SupplierInfoServiceImpl extends ServiceImpl<SupplierInfoDao,Supplie
         if (StringUtils.isBlank(updateSupplierInfoReqVO.getSupplierName())) {
             return CommonResult.error(SystemErrorCodeConstants.BASE_SUPPLIER_NAME_NULL);
         }
+        SupplierInfoDO infoDO = baseMapper.selectById(updateSupplierInfoReqVO.getId());
+        if (infoDO == null) {
+            return CommonResult.error(SystemErrorCodeConstants.BASE_SUPPLIER_IS_NULL);
+        }
         List<SupplierInfoDO> list = baseMapper.checkSupperName(updateSupplierInfoReqVO.getSupplierName());
         if (list != null && !list.isEmpty() && list.size() > 2) {
             return CommonResult.error(SystemErrorCodeConstants.BASE_SUPPLIER_NAME_REPEAT);
         }
-        SupplierInfoDO supplierInfoDO = list.get(0);
-        if (supplierInfoDO.getId().longValue() != updateSupplierInfoReqVO.getId().longValue()) {
-            return CommonResult.error(SystemErrorCodeConstants.BASE_SUPPLIER_NAME_REPEAT);
+
+        if (list == null || list.isEmpty()) {
+            SupplierInfoDO supplierInfoDO = baseMapper.selectById(updateSupplierInfoReqVO.getId());
+            BeanUtils.copyProperties(updateSupplierInfoReqVO, supplierInfoDO);
+            supplierInfoDO.setUpdateBy(SecurityUtils.getUserId());
+            supplierInfoDO.setUpdateTime(LocalDateTime.now());
+            supplierInfoDO.setUpdateByName(SecurityUtils.getUsername());
+            baseMapper.updateById(supplierInfoDO);
+        }else {
+            SupplierInfoDO supplierInfoDO = list.get(0);
+            if (supplierInfoDO.getId().longValue() != updateSupplierInfoReqVO.getId().longValue()) {
+                return CommonResult.error(SystemErrorCodeConstants.BASE_SUPPLIER_NAME_REPEAT);
+            }
+            NetonBeanUtils.copyProperties(updateSupplierInfoReqVO, supplierInfoDO);
+            supplierInfoDO.setUpdateBy(SecurityUtils.getUserId());
+            supplierInfoDO.setUpdateTime(LocalDateTime.now());
+            supplierInfoDO.setUpdateByName(SecurityUtils.getUsername());
+            baseMapper.updateById(supplierInfoDO);
         }
-        NetonBeanUtils.copyProperties(updateSupplierInfoReqVO, supplierInfoDO);
-        supplierInfoDO.setUpdateBy(SecurityUtils.getUserId());
-        supplierInfoDO.setUpdateTime(LocalDateTime.now());
-        supplierInfoDO.setUpdateByName(SecurityUtils.getUsername());
-        baseMapper.updateById(supplierInfoDO);
+
         return CommonResult.success();
     }
 
@@ -96,7 +113,7 @@ public class SupplierInfoServiceImpl extends ServiceImpl<SupplierInfoDao,Supplie
         supplierInfoDO.setUpdateTime(LocalDateTime.now());
         supplierInfoDO.setUpdateByName(SecurityUtils.getUsername());
         supplierInfoDO.setIsDeleted(1);
-        baseMapper.updateById(supplierInfoDO);
+        baseMapper.deleteById(supplierInfoDO);
         return CommonResult.success();
     }
 

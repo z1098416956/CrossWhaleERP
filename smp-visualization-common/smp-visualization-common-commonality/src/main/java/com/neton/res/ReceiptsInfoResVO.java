@@ -19,6 +19,10 @@ public class ReceiptsInfoResVO implements Serializable {
      * 单据编号
      */
     private String receiptsNumber;
+    /**
+     * 据状态 0 未审核 1已审核 2采购强制结单 3采购完成 4部分采购完成
+     */
+    private Integer receiptsStatus;
 
     /**
      * 单据时间

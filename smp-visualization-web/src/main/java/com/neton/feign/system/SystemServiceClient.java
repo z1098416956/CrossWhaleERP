@@ -259,4 +259,13 @@ public interface SystemServiceClient {
      */
     @GetMapping("/v1/system/role/getBarcode")
     public CommonResult<String> getBarcode(@RequestParam String moduleName);
+
+
+    /**
+     * 获取条码
+     * @param moduleName
+     * @return
+     */
+    @GetMapping("/v1/system/role/getReceipts")
+    public CommonResult<String> getReceipts(@RequestParam String moduleName);
 }

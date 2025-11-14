@@ -84,4 +84,7 @@ public interface SystemErrorCodeConstants {
     ErrorCode BASE_SUPPLIER_NAME_NULL = new ErrorCode(1003006001, "供应商名称不能为空");
     ErrorCode BASE_SUPPLIER_NAME_REPEAT = new ErrorCode(1003006002, "供应商名称重复");
     ErrorCode BASE_SUPPLIER_IS_NULL = new ErrorCode(1003006004, "供应商不存在");
+    ErrorCode BASE_ACCOUNT_IS_REPEAT = new ErrorCode(1003006005, "已经存在默认账户");
+    ErrorCode BASE_ACCOUNT_IS_NULL = new ErrorCode(1003006006, "账户不存在");
+    ErrorCode BASE_ACCOUNT_IS_ID = new ErrorCode(1003006007, "ID不能为空");
 }

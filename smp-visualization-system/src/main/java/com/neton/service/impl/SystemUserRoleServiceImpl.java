@@ -98,7 +98,19 @@ public class SystemUserRoleServiceImpl implements SystemUserRoleService {
      */
     @Override
     public CommonResult<String> getBarcode(String moduleName) {
-        String barcode = generatedBarcodeUtils.generatedBarcode(moduleName);
+        String barcode = generatedBarcodeUtils.generateReceipts(moduleName);
+        return CommonResult.success(barcode);
+    }
+
+    /**
+     * 获取单据号
+     *
+     * @param moduleName
+     * @return
+     */
+    @Override
+    public CommonResult<String> getReceipts(String moduleName) {
+        String barcode = generatedBarcodeUtils.generateReceipts(moduleName);
         return CommonResult.success(barcode);
     }
 }

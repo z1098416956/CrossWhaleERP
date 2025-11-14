@@ -18,14 +18,14 @@ public interface SupplierClient {
      * @param createSupplierInfoReqVO
      * @return
      */
-    @PostMapping("/saveSupplierInfo")
+    @PostMapping("/v1/supplier/info/saveSupplierInfo")
     public CommonResult<Void> saveSupplierInfo(@RequestBody CreateSupplierInfoReqVO createSupplierInfoReqVO);
     /**
      * 更新供应商信息
      * @param updateSupplierInfoReqVO
      * @return
      */
-    @PostMapping("/updateSupplierInfo")
+    @PostMapping("/v1/supplier/info/updateSupplierInfo")
     public CommonResult<Void> updateSupplierInfo(@RequestBody UpdateSupplierInfoReqVO updateSupplierInfoReqVO);
 
     /**
@@ -33,7 +33,7 @@ public interface SupplierClient {
      * @param id
      * @return
      */
-    @DeleteMapping("/deleteSupplierInfo")
+    @DeleteMapping("/v1/supplier/info/deleteSupplierInfo")
     public CommonResult<Void> deleteSupplierInfo(@RequestParam Long id);
 
     /**
@@ -41,7 +41,7 @@ public interface SupplierClient {
      * @param id
      * @return
      */
-    @GetMapping("/getSupplierInfo")
+    @GetMapping("/v1/supplier/info/getSupplierInfo")
     public CommonResult<SupplierInfoDetailsResVO> getSupplierInfo(@RequestParam Long id);
 
     /**
@@ -49,6 +49,6 @@ public interface SupplierClient {
      * @param querySupplierInfoReqVO
      * @return
      */
-    @PostMapping("/listSupplierInfo")
+    @PostMapping("/v1/supplier/info/listSupplierInfo")
     public CommonResult<PageUtil<SupplierInfoDetailsResVO>> listSupplierInfo(@RequestBody QuerySupplierInfoReqVO querySupplierInfoReqVO);
 }

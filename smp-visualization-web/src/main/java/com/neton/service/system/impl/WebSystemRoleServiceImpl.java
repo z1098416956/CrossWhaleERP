@@ -123,4 +123,15 @@ public class WebSystemRoleServiceImpl implements WebSystemRoleService {
     public CommonResult<String> getBarcode(String moduleName) {
         return systemServiceClient.getBarcode(moduleName);
     }
+
+    /**
+     * 获取单据号
+     *
+     * @param moduleName
+     * @return
+     */
+    @Override
+    public CommonResult<String> getReceipts(String moduleName) {
+        return systemServiceClient.getReceipts(moduleName);
+    }
 }
