@@ -80,4 +80,8 @@ public interface SystemErrorCodeConstants {
     ErrorCode RECEIPTS_STATUS_IS_ERR = new ErrorCode(1003005003, "单据状态错误");
     ErrorCode RECEIPTS_ID_IS_ERR = new ErrorCode(1003005004, "单据ID错误");
     ErrorCode RECEIPTS_ID_IS_NULL = new ErrorCode(1003005004, "单据ID错误不能为空");
+    //===================基础信息==================1003006000
+    ErrorCode BASE_SUPPLIER_NAME_NULL = new ErrorCode(1003006001, "供应商名称不能为空");
+    ErrorCode BASE_SUPPLIER_NAME_REPEAT = new ErrorCode(1003006002, "供应商名称重复");
+    ErrorCode BASE_SUPPLIER_IS_NULL = new ErrorCode(1003006004, "供应商不存在");
 }
