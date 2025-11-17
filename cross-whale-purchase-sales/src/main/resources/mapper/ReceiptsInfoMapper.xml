@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cross.whale.dao.ReceiptsInfoDao">
+
+
+    <select id="queryReceiptsPage" resultType="com.cross.whale.res.ReceiptsInfoPageResVO">
+        select
+            id,
+            goods_info,
+            goods_quantity,
+            receipts_time,
+            receipts_status,
+            remake,
+            create_by_name as createBy,
+            DATE_FORMAT(receipts_time, '%Y-%m-%d %H:%i:%s') as receiptsTimeStr
+        from
+            r_receipts_info
+        where is_deleted = 0
+        <if test="params.startTime != null and params.startTime != ''">
+            and DATE_FORMAT(receipts_time, '%Y-%m-%d') &gt;= DATE_FORMAT(#{params.startTime}, '%Y-%m-%d')
+        </if>
+        <if test="params.endTime != null and params.endTime != ''">
+            and DATE_FORMAT(receipts_time, '%Y-%m-%d') &lt;= DATE_FORMAT(#{params.endTime}, '%Y-%m-%d')
+        </if>
+        <if test="params.goodsInfo != null and params.goodsInfo != ''">
+            and goods_info like concat('%', #{params.goodsInfo}, '%')
+        </if>
+        <if test="params.receiptsNumber != null and params.receiptsNumber != ''">
+            and receipts_number like concat('%', #{params.receiptsNumber}, '%')
+        </if>
+        order by create_time desc
+    </select>
+</mapper>

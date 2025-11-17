@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cross.whale.dao.GoodsBaseUnitDao">
+
+    <resultMap id="goodsBaseUnitPage" type="com.cross.whale.res.UnitResVO" autoMapping="true">
+        <id property="id" column="id"/>
+        <result property="unitName" column="unit_name"/>
+        <result property="unitType" column="unit_type"/>
+        <collection property="extendList" ofType="com.cross.whale.res.UnitExtendResVO" autoMapping="true">
+            <id property="extendId" column="extend_id"/>
+            <result property="unitExtendName" column="unit_extend_name"/>
+            <result property="unitId" column="unit_id"/>
+            <result property="conversionRatio" column="conversion_ratio"/>
+        </collection>
+    </resultMap>
+    <update id="updateBatchBaGoodsBaseUnit">
+        UPDATE goods_base_unit u
+        JOIN (
+        <foreach collection="list" item="item" separator=" UNION ALL ">
+            SELECT
+            #{item.id} as id,
+            <!-- #{item.unitName} as unit_name, -->
+            <!-- #{item.unitType} as unit_type, -->
+            #{item.isEnabled} as is_enabled,
+            #{item.updateBy} as update_by,
+            #{item.updateByName} as update_by_name,
+            #{item.updateTime} as update_time,
+            #{item.isDeleted} as is_deleted
+        </foreach>
+        ) AS tmp ON u.id = tmp.id
+        SET
+            <!-- u.unit_name = tmp.unit_name, -->
+            <!-- u.unit_type = tmp.unit_type, -->
+            u.is_enabled = tmp.is_enabled,
+            u.update_by = tmp.update_by,
+            u.update_by_name = tmp.update_by_name,
+            u.update_time = tmp.update_time,
+            u.is_deleted = tmp.is_deleted,
+            u.version = u.version + 1
+    </update>
+
+    <select id="getGoodsBaseUnitPage" resultType="com.cross.whale.res.UnitResVO">
+        SELECT
+            u.id,
+            u.unit_name,
+            u.unit_type,
+            u.is_enabled
+
+        FROM
+            goods_base_unit u
+        WHERE u.is_deleted = 0
+        <if test="queryUnitReqVO.unitName != null and queryUnitReqVO.unitName != ''">
+            AND u.unit_name LIKE CONCAT('%', #{queryUnitReqVO.unitName}, '%')
+        </if>
+        <if test="queryUnitReqVO.isEnabled != null">
+            AND u.is_enabled = #{queryUnitReqVO.isEnabled}
+        </if>
+        ORDER BY u.create_time desc
+    </select>
+    <select id="getUnitById" resultMap="goodsBaseUnitPage">
+        SELECT
+            u.id,
+            u.unit_name,
+            u.unit_type,
+            e.id as extend_id,
+            e.unit_extend_name,
+            e.unit_id,
+            e.conversion_ratio,
+            u.is_enabled
+        FROM
+            goods_base_unit u
+                LEFT JOIN
+            goods_base_unit_extend e ON u.id = e.unit_id
+        WHERE u.is_deleted = 0
+        AND u.id = #{id}
+    </select>
+</mapper>

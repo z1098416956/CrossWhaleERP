@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cross.whale.dao.SupplierInfoDao">
+
+
+    <select id="listSupplierInfo" resultType="com.cross.whale.res.SupplierInfoDetailsResVO">
+        SELECT
+            id,
+            supplier_status AS supplierStatus,
+            supplier_name AS supplierName,
+            phone_number AS phoneNumber,
+            supplier_email AS supplierEmail,
+            initial_oping AS initialOping,
+            taxpayer_identification_number AS taxpayerIdentificationNumber,
+            open_bank AS openBank,
+            address,
+            remake,
+            contact_person AS contactPerson,
+            contact_number AS contactNumber,
+            supplier_fax AS supplierFax,
+            last_oping AS lastOping,
+            tax_rate AS taxRate,
+            account,
+            sort_value AS sortValue
+        FROM s_supplier_info
+        WHERE is_deleted = 0
+        <if test="params.supplierName != null and params.supplierName != ''">
+            AND supplier_name LIKE CONCAT('%', #{params.supplierName}, '%')
+        </if>
+        <if test="params.phoneNumber != null and params.phoneNumber != ''">
+            AND phone_number LIKE CONCAT('%', #{params.phoneNumber}, '%')
+        </if>
+        <if test="params.contactPerson != null and params.contactPerson != ''">
+            AND contact_person LIKE CONCAT('%', #{params.contactPerson}, '%')
+        </if>
+        ORDER BY sort_value ASC, create_time DESC
+    </select>
+</mapper>

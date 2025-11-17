@@ -1,0 +1,17 @@
+package com.cross.whale.req;
+
+import lombok.Data;
+
+import java.io.Serializable;
+import java.util.List;
+
+@Data
+public class DeleteBatchGoodsReqVO implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
+    /**
+     * 商品ids
+     */
+    private List<Long> ids;
+}

@@ -1,8 +1,8 @@
-# SMP-Visualization 电商ERP系统
+# 跨鲸电商ERP 电商ERP系统
 
 ## 项目简介
 
-SMP-Visualization是一个基于SpringCloud Alibaba技术栈构建的现代化电商ERP系统，提供完整的商品管理、采购销售、库存管理、系统管理等功能模块。系统采用微服务架构，支持高并发、高可用、可扩展的业务场景。
+CrossWhale ERP(跨鲸电商ERP)是一个基于SpringCloud Alibaba技术栈构建的现代化电商ERP系统，提供完整的商品管理、采购销售、库存管理、系统管理等功能模块。系统采用微服务架构，支持高并发、高可用、可扩展的业务场景。
 
 ## 技术栈
 

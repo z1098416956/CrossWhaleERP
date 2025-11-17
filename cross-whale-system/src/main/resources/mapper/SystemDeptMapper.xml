@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cross.whale.dao.SystemDeptDao">
+
+
+    <select id="querySystemDeptAll" resultType="com.cross.whale.res.SystemDeptTree">
+        select * from system_dept where is_deleted = 0
+    </select>
+    <select id="getSystemDeptPage" resultType="com.cross.whale.res.SystemDeptDetailsVO">
+        select
+            id,
+            p_id,
+            dept_name
+        from
+            system_dept
+        where is_deleted = 0
+        <if test="params.id != null and params.id != ''">
+            and (id = #{params.id} or p_id = #{params.id})
+        </if>
+        <if test="params.deptName != null and params.deptName != ''">
+            and dept_name like concat ('%',#{params.deptName},'%')
+        </if>
+    </select>
+</mapper>
