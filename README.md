@@ -39,8 +39,8 @@ CrossWhale ERP(跨鲸电商ERP)是一个基于SpringCloud Alibaba技术栈构建
 ┌─────────────────────▼───────────────────────────────────────┐
 │                    微服务集群                               │
 │  ┌─────────────┐  ┌─────────────┐  ┌─────────────────────┐ │
-│  │  商品服务    │  │  采购销售服务 │  │   系统管理服务       │ │
-│  │   Goods     │  │Purchase-Sales│  │     System         │ │
+│  │  基本资料服务 │  │  商品服务    │  │   采购销售服务       │ │
+│  │    Base     │  │   Goods     │  │Purchase-Sales│      │ │
 │  └─────────────┘  └─────────────┘  └─────────────────────┘ │
 │                                                             │
 │  ┌─────────────┐  ┌─────────────┐  ┌─────────────────────┐ │
@@ -65,41 +65,40 @@ CrossWhale ERP(跨鲸电商ERP)是一个基于SpringCloud Alibaba技术栈构建
 
 ## 模块说明
 
-### 1. smp-visualization-common (通用模块)
-- **smp-visualization-common-commonality**: 通用工具类、常量、异常处理等
-- **smp-visualization-common-interceptor**: 拦截器相关功能
-- **smp-visualization-common-minio**: MinIO文件存储相关功能
-- **smp-visualization-common-mybatis**: MyBatis-Plus通用配置和BaseMapper
-- **smp-visualization-common-serializer**: 序列化相关功能
+### 1. cross-whale-base (基本资料服务)
+- **供应商信息管理**: 供应商基本信息维护
+- **结算账户管理**: 企业结算账户信息维护
+- **基础数据服务**: 提供系统基础数据支持
 
-### 2. smp-visualization-gateway (网关服务)
+### 2. cross-whale-common (通用模块)
+- **cross-whale-common-commonality**: 通用工具类、常量、异常处理等
+- **cross-whale-common-interceptor**: 拦截器相关功能
+- **cross-whale-common-minio**: MinIO文件存储相关功能
+- **cross-whale-common-mybatis**: MyBatis-Plus通用配置和BaseMapper
+- **cross-whale-common-serializer**: 序列化相关功能
+
+### 3. cross-whale-gateway (网关服务)
 - 提供API网关功能
 - 实现路由转发、负载均衡、权限验证等
 
-### 3. smp-visualization-goods (商品服务)
+### 4. cross-whale-goods (商品服务)
 - 商品信息管理
 - 商品分类管理
 - 商品属性管理
 - 商品库存管理
 
-### 4. smp-visualization-oauth (认证授权服务)
+### 5. cross-whale-oauth (认证授权服务)
 - 用户认证与授权
 - JWT令牌管理
 - 权限控制
 
-### 5. smp-visualization-system (系统管理服务)
-- 用户管理
-- 角色管理
-- 菜单管理
-- 部门管理
-
-### 6. smp-visualization-purchase-sales (采购销售服务)
+### 6. cross-whale-purchase-sales (采购销售服务)
 - 请购单管理
 - 采购单管理
 - 销售单管理
 - 供应商管理
 
-### 7. smp-visualization-web (Web服务)
+### 7. cross-whale-web (Web服务)
 - 提供Web界面访问
 - 整合各微服务功能
 
@@ -116,8 +115,10 @@ CrossWhale ERP(跨鲸电商ERP)是一个基于SpringCloud Alibaba技术栈构建
 
 1. **克隆项目**
    ```bash
-   git clone [https://gitee.com/zhang-1098416956/spring-cloud-alibaba-v2023.git]
-   cd smp-visualization-cloud
+   git clone https://gitee.com/zhang-1098416956/CrossWhaleERP.git
+   或
+   git clone https://github.com/z1098416956/CrossWhaleERP.git
+   cd cross-whale-erp
    ```
 
 2. **安装依赖**
@@ -135,7 +136,7 @@ CrossWhale ERP(跨鲸电商ERP)是一个基于SpringCloud Alibaba技术栈构建
 
 5. **启动服务**
    - 按照依赖关系依次启动各个微服务
-   - 启动顺序：Common → Nacos → OAuth → System → Goods → Purchase-Sales → Gateway → Web
+   - 启动顺序：Common → Base → Nacos → OAuth → Goods → Purchase-Sales → Gateway → Web
 
 ### 服务端口配置
 
@@ -143,7 +144,7 @@ CrossWhale ERP(跨鲸电商ERP)是一个基于SpringCloud Alibaba技术栈构建
 |---------|------|------|
 | Gateway | 8080 | API网关 |
 | OAuth | 8081 | 认证授权服务 |
-| System | 8082 | 系统管理服务 |
+| Base | 8082 | 基本资料服务 |
 | Goods | 8083 | 商品服务 |
 | Purchase-Sales | 8084 | 采购销售服务 |
 | Web | 8085 | Web服务 |
@@ -189,8 +190,8 @@ CrossWhale ERP(跨鲸电商ERP)是一个基于SpringCloud Alibaba技术栈构建
 
 ## 联系方式
 
-- 项目维护者: [TheSunshine]
-- 邮箱: [1098416956@qq.com]
+- 项目维护者: TheSunshine
+- 邮箱: 1098416956@qq.com
 
 
 ## 更新日志
@@ -200,3 +201,8 @@ CrossWhale ERP(跨鲸电商ERP)是一个基于SpringCloud Alibaba技术栈构建
 - 实现基础的商品管理功能
 - 实现系统管理功能
 - 完成微服务架构搭建
+
+### v1.0.1 (2025-11-17)
+- 更新项目包名从smp-visualization到cross-whale
+- 新增cross-whale-base基本资料服务模块
+- 区分base模块(基本资料)和common模块(代码公用)功能
