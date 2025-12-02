@@ -2,7 +2,7 @@ package com.cross.whale.feign.goods;
 
 import com.cross.whale.common.CommonResult;
 import com.cross.whale.common.PageUtil;
-import com.neton.feign.FeignConfig;
+import com.cross.whale.feign.FeignConfig;
 import com.cross.whale.req.CreateStorageVO;
 import com.cross.whale.req.QueryStorageVO;
 import com.cross.whale.req.UpdateStorageVO;

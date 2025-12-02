@@ -62,4 +62,14 @@ public interface ReceiptsInfoService extends IService<ReceiptsInfoDO> {
      * @return
      */
     CommonResult<Void> updateReceiptsInfo(UpdateReceiptsInfoReqVO updateReceiptsInfoReqVO);
+
+    /**
+     * 采购单查询请购单，获取采购单详情
+     */
+    ReceiptsInfoResVO getPurchaseInfoByPurchaseNumber(String purchaseNumber);
+
+    /**
+     * 根据id更新请购单状态
+     */
+    void updateReceiptsStatusById(Long id, Integer status);
 }

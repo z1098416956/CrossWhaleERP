@@ -81,6 +81,14 @@ public interface SystemErrorCodeConstants {
     ErrorCode RECEIPTS_ID_IS_ERR = new ErrorCode(1003005004, "单据ID错误");
     ErrorCode RECEIPTS_ID_IS_NULL = new ErrorCode(1003005005, "单据ID错误不能为空");
     ErrorCode RECEIPTS_SETTLEMENT_STATUS_IS_ERR = new ErrorCode(1003005006, "采购单状态错误");
+    ErrorCode RECEIPTS_PURCHASE_NUMBER_IS_NULL = new ErrorCode(1003005007, "请购单编号不能为空");
+    ErrorCode RECEIPTS_PURCHASE_NUMBER_IS_ERR = new ErrorCode(1003005008, "请购单编号错误");
+    ErrorCode RECEIPTS_PURCHASE_NUMBER_IS_NOT_EXIST = new ErrorCode(1003005009, "请购单不存在");
+    ErrorCode RECEIPTS_PURCHASE_NUMBER_IS_NOT_PURCHASE = new ErrorCode(1003005010, "请购单不是待采购或待审核状态");
+    ErrorCode RECEIPTS_PURCHASE_NUMBER_IS_ERROR = new ErrorCode(1003005011, "请购单商品与采购单商品不一致");
+    ErrorCode RECEIPTS_PURCHASE_NUMBER_IS_EMPTY = new ErrorCode(1003005012, "请购单商品不能为空");
+    ErrorCode RECEIPTS_PURCHASE_NUMBER_QUANTITY_ERROR = new ErrorCode(1003005013, "请购单商品数量错误");
+
     //===================基础信息==================1003006000
     ErrorCode BASE_SUPPLIER_NAME_NULL = new ErrorCode(1003006001, "供应商名称不能为空");
     ErrorCode BASE_SUPPLIER_NAME_REPEAT = new ErrorCode(1003006002, "供应商名称重复");
@@ -88,4 +96,6 @@ public interface SystemErrorCodeConstants {
     ErrorCode BASE_ACCOUNT_IS_REPEAT = new ErrorCode(1003006005, "已经存在默认账户");
     ErrorCode BASE_ACCOUNT_IS_NULL = new ErrorCode(1003006006, "账户不存在");
     ErrorCode BASE_ACCOUNT_IS_ID = new ErrorCode(1003006007, "ID不能为空");
+    
+    
 }

@@ -2,8 +2,8 @@ package com.cross.whale.feign.purchase;
 
 import com.cross.whale.common.CommonResult;
 import com.cross.whale.common.PageUtil;
+import com.cross.whale.feign.FeignConfig;
 import com.cross.whale.req.*;
-import com.neton.feign.FeignConfig;
 import com.cross.whale.res.ReceiptsInfoPageResVO;
 import com.cross.whale.res.ReceiptsInfoResVO;
 import org.springframework.cloud.openfeign.FeignClient;

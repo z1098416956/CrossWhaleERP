@@ -1,7 +1,7 @@
 package com.cross.whale.feign.oauth;
 
 import com.cross.whale.common.CommonResult;
-import com.neton.feign.FeignConfig;
+import com.cross.whale.feign.FeignConfig;
 import com.cross.whale.req.QueryAccAccountVO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;

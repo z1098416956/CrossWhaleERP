@@ -36,7 +36,7 @@ public class ReceiptsInfoDO extends BaseDO<ReceiptsInfoDO> {
     private LocalDateTime receiptsTime;
 
     /**
-     * 单据状态 0 未审核 1已审核
+     * 单据状态  0 未审核 1已审核 2采购强制结单 3采购完成 4部分采购完成
      */
     private Integer receiptsStatus;
 

@@ -2,7 +2,7 @@ package com.cross.whale.feign.base;
 
 import com.cross.whale.common.CommonResult;
 import com.cross.whale.common.PageUtil;
-import com.neton.feign.FeignConfig;
+import com.cross.whale.feign.FeignConfig;
 import com.cross.whale.req.CreateSupplierInfoReqVO;
 import com.cross.whale.req.QuerySupplierInfoReqVO;
 import com.cross.whale.req.UpdateSupplierInfoReqVO;

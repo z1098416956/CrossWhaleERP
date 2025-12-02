@@ -1,7 +1,7 @@
 package com.cross.whale.feign.goods;
 
 import com.cross.whale.common.CommonResult;
-import com.neton.feign.FeignConfig;
+import com.cross.whale.feign.FeignConfig;
 import com.cross.whale.req.CreateBrandTypeVO;
 import com.cross.whale.req.DeleteBrandTypeVO;
 import com.cross.whale.req.UpdateBrandTypeVO;

@@ -19,7 +19,10 @@ public class PurchaseInfoResVO implements Serializable {
      * 请购单id
      */
     private Long receiptsId;
-
+    /**
+     * 请购单编号
+     */
+    private String receiptsNumber;
     /**
      * 供应商id
      */

@@ -12,6 +12,11 @@ public class PurchaseInfoDetailsDO extends BaseDO<PurchaseInfoDetailsDO> impleme
     private static final long serialVersionUID = 1L;
 
     /**
+     * 采购id
+     */
+    private Long purchaseId;
+
+    /**
      * 商品id
      */
     private Long goodsId;
@@ -35,7 +40,10 @@ public class PurchaseInfoDetailsDO extends BaseDO<PurchaseInfoDetailsDO> impleme
      * 数量
      */
     private Integer quantity;
-
+    /**
+     * 已采购数量
+     */
+    private Integer purchasedNumber;
     /**
      * 型号
      */

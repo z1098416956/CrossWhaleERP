@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cross.whale.common.CommonResult;
 import com.cross.whale.common.PageUtil;
+import com.cross.whale.common.ServiceException;
 import com.cross.whale.common.SystemErrorCodeConstants;
 import com.cross.whale.dao.ReceiptsInfoDao;
 import com.cross.whale.entity.ReceiptsInfoDO;
@@ -16,6 +17,8 @@ import com.cross.whale.res.ReceiptsInfoResVO;
 import com.cross.whale.service.ReceiptsInfoDetailsService;
 import com.cross.whale.service.ReceiptsInfoService;
 import com.cross.whale.utils.SecurityUtils;
+
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -223,5 +226,47 @@ public class ReceiptsInfoServiceImpl extends ServiceImpl<ReceiptsInfoDao, Receip
         baseMapper.updateById(infoDO);
         receiptsInfoDetailsService.updateReceiptsInfoDetails(updateReceiptsInfoReqVO);
         return CommonResult.success();
+    }
+
+    @Override
+    public ReceiptsInfoResVO getPurchaseInfoByPurchaseNumber(String purchaseNumber) {
+        if (StringUtils.isBlank(purchaseNumber)) {
+            throw new ServiceException(SystemErrorCodeConstants.RECEIPTS_PURCHASE_NUMBER_IS_NULL);
+        }
+        ReceiptsInfoDO infoDO = baseMapper.getPurchaseInfoByPurchaseNumber(purchaseNumber);
+        if (infoDO == null) {
+            throw new ServiceException(SystemErrorCodeConstants.RECEIPTS_PURCHASE_NUMBER_IS_ERROR);
+        }
+        ReceiptsInfoResVO resVO = new ReceiptsInfoResVO();
+        BeanUtils.copyProperties(infoDO, resVO);
+        // 采购单详情
+        List<ReceiptsInfoDetailsResVO> list = receiptsInfoDetailsService.listReceiptsInfoDetails(infoDO.getId());
+        resVO.setReceiptsInfoDetails(list);
+        return resVO;
+    }
+
+    /**
+     * 根据id更新请购单状态
+     *
+     * @param id
+     * @param status
+     */
+    @Override
+    public void updateReceiptsStatusById(Long id, Integer status) {
+        if (id == null) {
+            throw new ServiceException(SystemErrorCodeConstants.RECEIPTS_ID_IS_NULL);
+        }
+        if (status == null) {
+            throw new ServiceException(SystemErrorCodeConstants.RECEIPTS_STATUS_IS_NULL);
+        }
+        ReceiptsInfoDO infoDO = getById(id);
+        if (infoDO == null) {
+            throw new ServiceException(SystemErrorCodeConstants.RECEIPTS_ID_IS_ERR);
+        }
+        infoDO.setReceiptsStatus(status);
+        infoDO.setUpdateBy(SecurityUtils.getUserId());
+        infoDO.setUpdateTime(LocalDateTime.now());
+        infoDO.setUpdateByName(SecurityUtils.getUsername());
+        baseMapper.updateById(infoDO);
     }
 }

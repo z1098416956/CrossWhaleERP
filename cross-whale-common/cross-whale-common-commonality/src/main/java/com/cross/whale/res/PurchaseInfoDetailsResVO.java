@@ -14,6 +14,10 @@ public class PurchaseInfoDetailsResVO implements Serializable {
      */
     private Long id;
     /**
+     * 采购id
+     */
+    private Long purchaseId;
+    /**
      * 商品id
      */
     private Long goodsId;
@@ -37,7 +41,10 @@ public class PurchaseInfoDetailsResVO implements Serializable {
      * 数量
      */
     private Integer quantity;
-
+    /**
+     * 已采购数量
+     */
+    private Integer purchasedNumber;
     /**
      * 型号
      */

@@ -32,7 +32,12 @@ public class CreatePurchaseInfoDetailsReqVO implements Serializable {
     /**
      * 数量
      */
-    private Integer quantity;
+    private Integer quantity = 0;
+
+    /**
+     * 已采购数量
+     */
+    private Integer purchasedNumber = 0;
 
     /**
      * 型号
