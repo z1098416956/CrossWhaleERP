@@ -122,7 +122,9 @@ public class GoodsInfoServiceImpl extends ServiceImpl<GoodsInfoDao,GoodsInfoDO> 
         //采购最低价
         goodsAttributeInfoService.updateGoodsAttributeInfo(updateGoodsInfoReqVO);
         // 扩展信息
-        goodsExtendService.updateGoodsExtend(updateGoodsInfoReqVO);
+        if (updateGoodsInfoReqVO.getExtendInfo() != null && !updateGoodsInfoReqVO.getExtendInfo().isEmpty()) {
+            goodsExtendService.updateGoodsExtend(updateGoodsInfoReqVO);
+        }
         if (updateGoodsInfoReqVO.getIsUnit() == 1) {
             // 选择的属性
             goodsAttributeService.updateGoodsAttributeInfo(updateGoodsInfoReqVO);

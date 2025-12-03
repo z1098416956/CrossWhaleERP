@@ -1,11 +1,13 @@
 package com.cross.whale.entity;
 
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.cross.whale.mybatis.base.BaseDO;
 import lombok.Data;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
 
+@TableName(value = "r_purchase_info_details")
 @Data
 public class PurchaseInfoDetailsDO extends BaseDO<PurchaseInfoDetailsDO> implements Serializable {
 
@@ -20,7 +22,19 @@ public class PurchaseInfoDetailsDO extends BaseDO<PurchaseInfoDetailsDO> impleme
      * 商品id
      */
     private Long goodsId;
+    /**
+     * 商品属性ID
+     */
+    private Long goodsAttributeId;
+    /**
+     * 单位id
+     */
+    private Long unitId;
 
+    /**
+     * 请购单详情id
+     */
+    private Long receiptsDetailsId;
     /**
      * 商品条码
      */

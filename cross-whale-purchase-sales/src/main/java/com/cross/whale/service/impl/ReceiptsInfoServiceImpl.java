@@ -8,14 +8,19 @@ import com.cross.whale.common.PageUtil;
 import com.cross.whale.common.ServiceException;
 import com.cross.whale.common.SystemErrorCodeConstants;
 import com.cross.whale.dao.ReceiptsInfoDao;
+import com.cross.whale.entity.PurchaseInfoDetailsDO;
 import com.cross.whale.entity.ReceiptsInfoDO;
 import com.cross.whale.entity.ReceiptsInfoDetailsDO;
+import com.cross.whale.feign.StorageClient;
 import com.cross.whale.req.*;
 import com.cross.whale.res.ReceiptsInfoDetailsResVO;
 import com.cross.whale.res.ReceiptsInfoPageResVO;
 import com.cross.whale.res.ReceiptsInfoResVO;
+import com.cross.whale.res.StorageVO;
+import com.cross.whale.service.PurchaseInfoDetailsService;
 import com.cross.whale.service.ReceiptsInfoDetailsService;
 import com.cross.whale.service.ReceiptsInfoService;
+import com.cross.whale.utils.PurchaseSalesStatusConstants;
 import com.cross.whale.utils.SecurityUtils;
 
 import org.apache.commons.lang3.StringUtils;
@@ -25,7 +30,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -33,6 +40,12 @@ public class ReceiptsInfoServiceImpl extends ServiceImpl<ReceiptsInfoDao, Receip
 
     @Autowired
     private ReceiptsInfoDetailsService receiptsInfoDetailsService;
+
+    @Autowired
+    private PurchaseInfoDetailsService purchaseInfoDetailsService;
+
+    @Autowired
+    private StorageClient storageClient;
 
     /**
      * 添加请购单
@@ -43,6 +56,7 @@ public class ReceiptsInfoServiceImpl extends ServiceImpl<ReceiptsInfoDao, Receip
     @Transactional(rollbackFor = Exception.class)
     @Override
     public CommonResult<Void> createReceiptsInfo(CreateReceiptsInfoReqVO createReceiptsInfoReqVO) {
+        ReceiptsInfoDO receiptsInfoDO = new ReceiptsInfoDO();
         if (createReceiptsInfoReqVO.getDetails() == null || createReceiptsInfoReqVO.getDetails().isEmpty()) {
             return CommonResult.error(SystemErrorCodeConstants.RECEIPTS_GOODS_DETAILS_INFO_IS_NULL);
         }
@@ -52,7 +66,15 @@ public class ReceiptsInfoServiceImpl extends ServiceImpl<ReceiptsInfoDao, Receip
         if (createReceiptsInfoReqVO.getReceiptsStatus() >= 2 ){
             return CommonResult.error(SystemErrorCodeConstants.RECEIPTS_STATUS_IS_ERR);
         }
-        ReceiptsInfoDO receiptsInfoDO = new ReceiptsInfoDO();
+        if (createReceiptsInfoReqVO.getWarehouseId() != null) {
+            CommonResult<StorageVO> info = storageClient.getStorageDetailInfo(createReceiptsInfoReqVO.getWarehouseId());
+            if (info.getCode() != 0){
+                return CommonResult.error(info.getCode(),info.getMessage());
+            }
+            if (info.getData() == null){
+                return CommonResult.error(SystemErrorCodeConstants.STORAGE_IS_NONENTITY);
+            }
+        }
         BeanUtils.copyProperties(createReceiptsInfoReqVO, receiptsInfoDO);
         List<CreateReceiptsInfoDetailsReqVO> details = createReceiptsInfoReqVO.getDetails();
         StringBuffer sb = new StringBuffer();
@@ -70,6 +92,8 @@ public class ReceiptsInfoServiceImpl extends ServiceImpl<ReceiptsInfoDao, Receip
         }
         receiptsInfoDO.setGoodsQuantity(details.size());
         receiptsInfoDO.setReceiptsTime(LocalDateTime.now());
+        receiptsInfoDO.setApplicantId(SecurityUtils.getUserId());
+        receiptsInfoDO.setApplicantName(SecurityUtils.getUsername());
         receiptsInfoDO.setGoodsInfo(sb.toString());
         receiptsInfoDO.setReceiptsStatus(createReceiptsInfoReqVO.getReceiptsStatus() == null ? 0 : createReceiptsInfoReqVO.getReceiptsStatus());
         receiptsInfoDO.setCreateBy(SecurityUtils.getUserId());
@@ -268,5 +292,73 @@ public class ReceiptsInfoServiceImpl extends ServiceImpl<ReceiptsInfoDao, Receip
         infoDO.setUpdateTime(LocalDateTime.now());
         infoDO.setUpdateByName(SecurityUtils.getUsername());
         baseMapper.updateById(infoDO);
+    }
+
+    /**
+     * 根据请购单ID
+     *
+     * @param purchaseNumber
+     */
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public void updateReceiptsStatusByPurchaseNumber(String purchaseNumber) {
+        if (StringUtils.isBlank(purchaseNumber)) {
+            return;
+        }
+        ReceiptsInfoDO receiptsInfoDO = baseMapper.getPurchaseInfoByPurchaseNumber(purchaseNumber);
+        if (receiptsInfoDO == null) {
+            return;
+        }
+        //请购单详情
+        List<ReceiptsInfoDetailsResVO> list = receiptsInfoDetailsService.listReceiptsInfoDetails(receiptsInfoDO.getId());
+        if (list == null || list.isEmpty()) {
+            return;
+        }
+        List<Long> receiptsDetailsIds = list.stream().map(ReceiptsInfoDetailsResVO::getId).toList();
+        //根据请购单详情id查询是否采购了
+        List<PurchaseInfoDetailsDO> detailsDOList = purchaseInfoDetailsService.listByPurchaseInfoByReceiptsDetailsIds(receiptsDetailsIds);
+        if (detailsDOList == null || detailsDOList.isEmpty()) {
+            return;
+        }
+        //根据详情id分组
+        Map<Long, List<PurchaseInfoDetailsDO>> map = detailsDOList.stream().collect(Collectors.groupingBy(PurchaseInfoDetailsDO::getReceiptsDetailsId));
+        Map<Long,Integer> goodsSum = new HashMap<>();
+        for (Long id : map.keySet()) {
+            List<PurchaseInfoDetailsDO> doList = map.get(id);
+            if (doList == null || doList.isEmpty()) {
+                continue;
+            }
+            Integer sum = 0;
+            for (PurchaseInfoDetailsDO purchaseInfoDetailsDO : doList) {
+                sum += purchaseInfoDetailsDO.getPurchasedNumber() == null ? 0 : purchaseInfoDetailsDO.getPurchasedNumber().intValue();
+            }
+            goodsSum.put(id, sum);
+        }
+        if (goodsSum.size() != receiptsDetailsIds.size()) {
+            receiptsInfoDO.setReceiptsStatus(PurchaseSalesStatusConstants.RequisitionStatus.PARTIALLY_PURCHASE_COMPLETED.getCode());
+        }else {
+            boolean isStatus = true;
+            for (PurchaseInfoDetailsDO purchaseInfoDetailsDO : detailsDOList){
+                Integer sum = goodsSum.get(purchaseInfoDetailsDO.getId());
+                if (sum == null) {
+                    isStatus = false;
+                    break;
+                }else {
+                    int value = purchaseInfoDetailsDO.getQuantity().intValue();
+                    if (sum.intValue() != value) {
+                        isStatus = false;
+                    }
+                }
+            }
+            if (isStatus) {
+                receiptsInfoDO.setReceiptsStatus(PurchaseSalesStatusConstants.RequisitionStatus.PURCHASE_COMPLETED.getCode());
+            }else {
+                receiptsInfoDO.setReceiptsStatus(PurchaseSalesStatusConstants.RequisitionStatus.PARTIALLY_PURCHASE_COMPLETED.getCode());
+            }
+        }
+        receiptsInfoDO.setUpdateBy(1l);
+        receiptsInfoDO.setUpdateTime(LocalDateTime.now());
+        receiptsInfoDO.setUpdateByName("system");
+        baseMapper.updateById(receiptsInfoDO);
     }
 }

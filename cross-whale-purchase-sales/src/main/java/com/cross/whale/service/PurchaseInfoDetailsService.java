@@ -15,5 +15,23 @@ public interface PurchaseInfoDetailsService extends IService<PurchaseInfoDetails
      */
     List<PurchaseInfoDetailsDO> listByPurchaseInfoIds(List<Long> purchaseInfoIds);
 
+    /**
+     * 根据采购单详情ID查询采购单详情
+     * @param purchaseId 采购单ID
+     * @return
+     */
+    List<PurchaseInfoDetailsDO> listByPurchaseInfoId(Long purchaseId);
 
+    /**
+     * 根据请购单详情id查询采购单详情
+     * @param receiptsDetailsIds
+     * @return
+     */
+    List<PurchaseInfoDetailsDO> listByPurchaseInfoByReceiptsDetailsIds(List<Long> receiptsDetailsIds);
+
+    /**
+     * 根据采购单ID删除采购单详情
+     * @param purchaseInfoId 采购单ID
+     */
+    void deleteByPurchaseInfoId(Long purchaseInfoId);
 }

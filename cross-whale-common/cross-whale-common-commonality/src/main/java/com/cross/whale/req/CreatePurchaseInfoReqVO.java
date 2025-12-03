@@ -29,6 +29,15 @@ public class CreatePurchaseInfoReqVO implements Serializable {
      * 采购单状态 0 未审核 1已审核 2强制结单 3采购完成 4部分采购完成
      */
     private Integer purchaseStatus = 0;
+    /**
+     * 收货仓库ID
+     */
+    private Long warehouseId;
+
+    /**
+     * 要求到货日期
+     */
+    private LocalDateTime deliveryDate;
 
     /**
      * 采购单时间

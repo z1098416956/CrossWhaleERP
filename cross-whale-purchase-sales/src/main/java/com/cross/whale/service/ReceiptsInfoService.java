@@ -72,4 +72,10 @@ public interface ReceiptsInfoService extends IService<ReceiptsInfoDO> {
      * 根据id更新请购单状态
      */
     void updateReceiptsStatusById(Long id, Integer status);
+
+    /**
+     * 根据请购单ID
+     * @param purchaseNumber
+     */
+    void updateReceiptsStatusByPurchaseNumber(String purchaseNumber);
 }

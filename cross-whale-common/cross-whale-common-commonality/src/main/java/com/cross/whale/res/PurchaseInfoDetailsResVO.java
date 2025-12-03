@@ -109,5 +109,12 @@ public class PurchaseInfoDetailsResVO implements Serializable {
      * 价税合计
      */
     private BigDecimal taxPrice;
-
+    /**
+     * 商品属性ID
+     */
+    private Long goodsAttributeId;
+    /**
+     * 单位id
+     */
+    private Long unitId;
 }

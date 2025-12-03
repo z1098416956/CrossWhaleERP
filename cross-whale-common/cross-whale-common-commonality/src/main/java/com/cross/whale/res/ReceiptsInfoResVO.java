@@ -33,6 +33,23 @@ public class ReceiptsInfoResVO implements Serializable {
      * 备注
      */
     private String remake;
+    /**
+     *申请人ID
+     */
+    private Long applicantId;
+    /**
+     *申请人名称
+     */
+    private String applicantName;
+    /**
+     *期望到货时间
+     */
+    private LocalDateTime expectedDate;
+
+    /**
+     * 收货仓库ID(非必填)
+     */
+    private Long warehouseId;
 
     /**
      * 单据商品详情

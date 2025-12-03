@@ -104,4 +104,17 @@ public class CreatePurchaseInfoDetailsReqVO implements Serializable {
      */
     private BigDecimal taxPrice;
 
+    /**
+     * 商品属性ID
+     */
+    private Long goodsAttributeId;
+    /**
+     * 单位id
+     */
+    private Long unitId;
+    /**
+     * 请购单详情id
+     */
+    private Long receiptsDetailsId;
+
 }

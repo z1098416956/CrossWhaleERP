@@ -7,26 +7,32 @@
         <groupId>com.neton</groupId>
         <artifactId>cross-whale-erp</artifactId>
         <version>1.0-SNAPSHOT</version>
+        <relativePath>../../pom.xml</relativePath>
     </parent>
 
-    <artifactId>cross-whale-common</artifactId>
-    <packaging>pom</packaging>
-    <modules>
-        <module>cross-whale-common-commonality</module>
-        <module>cross-whale-common-mybatis</module>
-        <module>cross-whale-common-interceptor</module>
-        <module>cross-whale-common-serializer</module>
-        <module>cross-whale-common-minio</module>
-        <module>cross-whale-common-rocketMQ</module>
-    </modules>
+    <artifactId>cross-whale-common-rocketMQ</artifactId>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <rocketmq.version>5.3.2</rocketmq.version>
     </properties>
 
     <dependencies>
-
+        <!-- RocketMQ 客户端依赖 -->
+        <dependency>
+            <groupId>org.apache.rocketmq</groupId>
+            <artifactId>rocketmq-client</artifactId>
+            <version>${rocketmq.version}</version>
+        </dependency>
+        
+        <!-- RocketMQ Spring Boot Starter -->
+        <dependency>
+            <groupId>org.apache.rocketmq</groupId>
+            <artifactId>rocketmq-spring-boot-starter</artifactId>
+            <version>2.3.1</version>
+        </dependency>
     </dependencies>
+
 </project>

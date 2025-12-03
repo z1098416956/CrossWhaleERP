@@ -26,7 +26,23 @@ public class ReceiptsInfoPageResVO  implements Serializable {
      * 据状态 0 未审核 1已审核 3采购完成 4部分采购完成
      */
     private Integer receiptsStatus;
+    /**
+     *申请人ID
+     */
+    private Long applicantId;
+    /**
+     *申请人名称
+     */
+    private String applicantName;
+    /**
+     *期望到货时间
+     */
+    private LocalDateTime expectedDate;
 
+    /**
+     * 收货仓库ID(非必填)
+     */
+    private Long warehouseId;
     /**
      * 操作员
      */

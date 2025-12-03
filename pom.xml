@@ -16,6 +16,7 @@
         <module>cross-whale-web</module>
         <module>cross-whale-purchase-sales</module>
         <module>cross-whale-base</module>
+        <module>cross-whale-common/cross-whale-common-rocketMQ</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>

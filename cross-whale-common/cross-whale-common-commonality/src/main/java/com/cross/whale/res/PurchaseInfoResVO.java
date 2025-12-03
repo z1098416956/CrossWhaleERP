@@ -61,7 +61,18 @@ public class PurchaseInfoResVO implements Serializable {
      * 付款账户id
      */
     private Long paymentAccountId;
-
+    /**
+     * 收货仓库ID
+     */
+    private Long warehouseId;
+    /**
+     * 收货仓库名称
+     */
+    private String warehouseName;
+    /**
+     * 要求到货日期
+     */
+    private LocalDateTime deliveryDate;
     /**
      * 付款账户
      */

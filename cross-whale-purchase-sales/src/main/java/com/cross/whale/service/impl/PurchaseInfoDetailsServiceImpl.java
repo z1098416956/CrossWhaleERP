@@ -20,4 +20,36 @@ public class PurchaseInfoDetailsServiceImpl extends ServiceImpl<PurchaseInfoDeta
     public List<PurchaseInfoDetailsDO> listByPurchaseInfoIds(List<Long> purchaseInfoIds) {
         return baseMapper.listByPurchaseInfoIds(purchaseInfoIds);
     }
+
+    /**
+     * 根据采购单详情ID查询采购单详情
+     *
+     * @param purchaseId 采购单ID
+     * @return
+     */
+    @Override
+    public List<PurchaseInfoDetailsDO> listByPurchaseInfoId(Long purchaseId) {
+        return baseMapper.listByPurchaseInfoId(purchaseId);
+    }
+
+    /**
+     * 根据请购单详情id查询采购单详情
+     *
+     * @param receiptsDetailsIds
+     * @return
+     */
+    @Override
+    public List<PurchaseInfoDetailsDO> listByPurchaseInfoByReceiptsDetailsIds(List<Long> receiptsDetailsIds) {
+        return baseMapper.listByPurchaseInfoByReceiptsDetailsIds(receiptsDetailsIds);
+    }
+
+    /**
+     * 根据采购单ID删除采购单详情
+     *
+     * @param purchaseInfoId 采购单ID
+     */
+    @Override
+    public void deleteByPurchaseInfoId(Long purchaseInfoId) {
+        baseMapper.deleteByPurchaseInfoId(purchaseInfoId);
+    }
 }

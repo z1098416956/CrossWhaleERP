@@ -59,6 +59,7 @@ public interface SystemErrorCodeConstants {
     ErrorCode BRAND_IPD_IS_NULL = new ErrorCode(1003003010, "分类父id不能为空");
     ErrorCode BRAND_IPD_IS_ERR = new ErrorCode(1003003011, "分类父id不存在");
     ErrorCode BRAND_ID_IS_ERR = new ErrorCode(1003003012, "id不能为空");
+    ErrorCode STORAGE_IS_NONENTITY = new ErrorCode(1003003013, "仓库不存在");
     //================商品模块===============1003004000
     ErrorCode GOOD_UNIT_NAME_IS_NULL = new ErrorCode(1003004000, "单位名称不能为空");
     ErrorCode GOOD_UNIT_ID_IS_NULL = new ErrorCode(1003004001, "单位ID不能为空");
@@ -88,6 +89,12 @@ public interface SystemErrorCodeConstants {
     ErrorCode RECEIPTS_PURCHASE_NUMBER_IS_ERROR = new ErrorCode(1003005011, "请购单商品与采购单商品不一致");
     ErrorCode RECEIPTS_PURCHASE_NUMBER_IS_EMPTY = new ErrorCode(1003005012, "请购单商品不能为空");
     ErrorCode RECEIPTS_PURCHASE_NUMBER_QUANTITY_ERROR = new ErrorCode(1003005013, "请购单商品数量错误");
+    ErrorCode PURCHASE_INFO_DETAILS_IS_EMPTY = new ErrorCode(1003005014, "采购单商品不能为空");
+    ErrorCode PURCHASE_INFO_NULL_ERROR = new ErrorCode(1003005015, "采购单不能为空");
+    ErrorCode PURCHASE_INFO_ID_IS_NULL = new ErrorCode(1003005016, "采购单ID不能为空");
+    ErrorCode PURCHASE_INFO_STATUS_IS_ERR = new ErrorCode(1003005017, "采购单状态错误");
+    ErrorCode PURCHASE_INFO_ID_IS_ERR = new ErrorCode(1003005018, "采购单ID错误");
+
 
     //===================基础信息==================1003006000
     ErrorCode BASE_SUPPLIER_NAME_NULL = new ErrorCode(1003006001, "供应商名称不能为空");
@@ -96,6 +103,6 @@ public interface SystemErrorCodeConstants {
     ErrorCode BASE_ACCOUNT_IS_REPEAT = new ErrorCode(1003006005, "已经存在默认账户");
     ErrorCode BASE_ACCOUNT_IS_NULL = new ErrorCode(1003006006, "账户不存在");
     ErrorCode BASE_ACCOUNT_IS_ID = new ErrorCode(1003006007, "ID不能为空");
-    
-    
+
+
 }

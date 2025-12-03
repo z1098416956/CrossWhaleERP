@@ -87,4 +87,12 @@ public class ReceiptsInfoDetailsResVO implements Serializable {
      * 附件
      */
     private String receiptsAccessory;
+    /**
+     *单位ID
+     */
+    private Long unitId;
+    /**
+     *商品属性ID(关联goods_attribute_info.id，如有多属性则必填)
+     */
+    private Long goodsAttributeId;
 }

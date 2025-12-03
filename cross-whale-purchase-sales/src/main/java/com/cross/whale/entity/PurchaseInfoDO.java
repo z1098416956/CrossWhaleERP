@@ -1,5 +1,6 @@
 package com.cross.whale.entity;
 
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.cross.whale.mybatis.base.BaseDO;
 import lombok.Data;
 
@@ -7,6 +8,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+@TableName(value = "r_purchase_info")
 @Data
 public class PurchaseInfoDO extends BaseDO<PurchaseInfoDO> implements Serializable {
 
@@ -24,7 +26,18 @@ public class PurchaseInfoDO extends BaseDO<PurchaseInfoDO> implements Serializab
      * 供应商id
      */
     private Long supplierId;
-
+    /**
+     * 收货仓库ID
+     */
+    private Long warehouseId;
+    /**
+     * 收货仓库名称
+     */
+    private String warehouseName;
+    /**
+     * 要求到货日期
+     */
+    private LocalDateTime deliveryDate;
     /**
      * 商品数量
      */

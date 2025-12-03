@@ -3,5 +3,7 @@
 <mapper namespace="com.cross.whale.dao.PurchaseInfoDetailsDao">
 
 
-
+    <delete id="deleteByPurchaseInfoId">
+        delete from r_purchase_info_details where purchase_id = #{purchaseInfoId}
+    </delete>
 </mapper>
