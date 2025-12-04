@@ -1,9 +1,12 @@
 package com.cross.whale.service.impl;
 
 import com.alibaba.nacos.shaded.io.grpc.netty.shaded.io.netty.util.internal.StringUtil;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cross.whale.bean.NetonBeanUtils;
 import com.cross.whale.common.CommonResult;
+import com.cross.whale.common.PageUtil;
 import com.cross.whale.common.ServiceException;
 import com.cross.whale.common.SystemErrorCodeConstants;
 import com.cross.whale.dao.PurchaseInfoDao;
@@ -11,11 +14,9 @@ import com.cross.whale.entity.PurchaseInfoDO;
 import com.cross.whale.entity.PurchaseInfoDetailsDO;
 import com.cross.whale.entity.ReceiptsInfoDO;
 import com.cross.whale.entity.ReceiptsInfoDetailsDO;
+import com.cross.whale.feign.SupplierClient;
 import com.cross.whale.req.*;
-import com.cross.whale.res.PurchaseInfoDetailsResVO;
-import com.cross.whale.res.PurchaseInfoResVO;
-import com.cross.whale.res.ReceiptsInfoDetailsResVO;
-import com.cross.whale.res.ReceiptsInfoResVO;
+import com.cross.whale.res.*;
 import com.cross.whale.rocketmq.producer.RocketMQProducer;
 import com.cross.whale.service.PurchaseInfoDetailsService;
 import com.cross.whale.service.PurchaseInfoService;
@@ -50,6 +51,9 @@ public class PurchaseInfoServiceImpl extends ServiceImpl<PurchaseInfoDao, Purcha
 
     @Autowired
     private RocketMQProducer rocketMQProducer;
+
+    @Autowired
+    private SupplierClient supplierClient;
     /**
      * 创建采购单
      *
@@ -127,6 +131,14 @@ public class PurchaseInfoServiceImpl extends ServiceImpl<PurchaseInfoDao, Purcha
         // 设置基本信息
         purchaseInfoDO.setReceiptsId(createPurchaseInfoReqVO.getReceiptsId());
         purchaseInfoDO.setReceiptsNumber(createPurchaseInfoReqVO.getReceiptsNumber());
+        if (createPurchaseInfoReqVO.getSupplierId() != null) {
+            CommonResult<SupplierInfoDetailsResVO> supplierInfo = supplierClient.getSupplierInfo(createPurchaseInfoReqVO.getSupplierId());
+            if (supplierInfo.getCode() != 0){
+                throw new ServiceException(supplierInfo.getCode(),supplierInfo.getMessage());
+            }
+            SupplierInfoDetailsResVO data = supplierInfo.getData();
+            purchaseInfoDO.setSupplierName(data.getSupplierName());
+        }
         purchaseInfoDO.setSupplierId(createPurchaseInfoReqVO.getSupplierId());
         purchaseInfoDO.setWarehouseId(createPurchaseInfoReqVO.getWarehouseId());
         purchaseInfoDO.setDeliveryDate(createPurchaseInfoReqVO.getDeliveryDate());
@@ -356,6 +368,14 @@ public class PurchaseInfoServiceImpl extends ServiceImpl<PurchaseInfoDao, Purcha
         // 设置基本信息
         purchaseInfoDO.setReceiptsId(updatePurchaseInfoReqVO.getReceiptsId());
         purchaseInfoDO.setReceiptsNumber(updatePurchaseInfoReqVO.getReceiptsNumber());
+        if (updatePurchaseInfoReqVO.getSupplierId() != null) {
+            CommonResult<SupplierInfoDetailsResVO> supplierInfo = supplierClient.getSupplierInfo(updatePurchaseInfoReqVO.getSupplierId());
+            if (supplierInfo.getCode() != 0){
+                throw new ServiceException(supplierInfo.getCode(),supplierInfo.getMessage());
+            }
+            SupplierInfoDetailsResVO data = supplierInfo.getData();
+            purchaseInfoDO.setSupplierName(data.getSupplierName());
+        }
         purchaseInfoDO.setSupplierId(updatePurchaseInfoReqVO.getSupplierId());
         purchaseInfoDO.setWarehouseId(updatePurchaseInfoReqVO.getWarehouseId());
         purchaseInfoDO.setDeliveryDate(updatePurchaseInfoReqVO.getDeliveryDate());
@@ -522,5 +542,31 @@ public class PurchaseInfoServiceImpl extends ServiceImpl<PurchaseInfoDao, Purcha
         purchaseInfoDO.setUpdateBy(SecurityUtils.getUserId());
         updateById(purchaseInfoDO);
         return CommonResult.success();
+    }
+
+    /**
+     * 采购单分页
+     *
+     * @param queryPurchaseInfoPageReqVO
+     * @return
+     */
+    @Override
+    public CommonResult<PageUtil<PurchaseInfoPageResVO>> queryPurchaseInfoPage(QueryPurchaseInfoPageReqVO queryPurchaseInfoPageReqVO) {
+        IPage<PurchaseInfoPageResVO> page = new Page<>();
+        page.setCurrent(queryPurchaseInfoPageReqVO.getPage());
+        page.setSize(queryPurchaseInfoPageReqVO.getSize());
+        IPage<PurchaseInfoPageResVO> iPage = super.baseMapper.queryPurchaseInfoPage(page, queryPurchaseInfoPageReqVO);
+        if (iPage.getRecords() != null && !iPage.getRecords().isEmpty()) {
+            iPage.getRecords().forEach(purchaseInfoPageResVO -> {
+                if (StringUtils.isNotBlank(purchaseInfoPageResVO.getPurchaseNumber())) {
+                    String purchaseNumber = purchaseInfoPageResVO.getPurchaseNumber();
+                    purchaseInfoPageResVO.setPurchaseNumber(purchaseNumber+"[请]");
+                }
+            });
+        }
+        PageUtil<PurchaseInfoPageResVO> pageUtil = new PageUtil<>();
+        pageUtil.setPageList(iPage.getRecords());
+        pageUtil.setTotal(iPage.getTotal());
+        return CommonResult.success(pageUtil);
     }
 }

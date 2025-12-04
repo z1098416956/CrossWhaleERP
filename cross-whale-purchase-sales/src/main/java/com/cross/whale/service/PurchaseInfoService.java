@@ -2,10 +2,13 @@ package com.cross.whale.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.cross.whale.common.CommonResult;
+import com.cross.whale.common.PageUtil;
 import com.cross.whale.entity.PurchaseInfoDO;
 import com.cross.whale.req.CreatePurchaseInfoReqVO;
+import com.cross.whale.req.QueryPurchaseInfoPageReqVO;
 import com.cross.whale.req.UpdatePurchaseInfoReqVO;
 import com.cross.whale.req.UpdatePurchaseInfoStatusReqVO;
+import com.cross.whale.res.PurchaseInfoPageResVO;
 import com.cross.whale.res.PurchaseInfoResVO;
 
 public interface PurchaseInfoService extends IService<PurchaseInfoDO> {
@@ -44,4 +47,11 @@ public interface PurchaseInfoService extends IService<PurchaseInfoDO> {
      * @return
      */
     CommonResult<Void> updatePurchaseInfoStatus(UpdatePurchaseInfoStatusReqVO updatePurchaseInfoStatusReqVO);
+
+    /**
+     * 采购单分页
+     * @param queryPurchaseInfoPageReqVO
+     * @return
+     */
+    CommonResult<PageUtil<PurchaseInfoPageResVO>> queryPurchaseInfoPage(QueryPurchaseInfoPageReqVO queryPurchaseInfoPageReqVO);
 }

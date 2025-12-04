@@ -27,6 +27,10 @@ public class PurchaseInfoDO extends BaseDO<PurchaseInfoDO> implements Serializab
      */
     private Long supplierId;
     /**
+     * 供应商名称
+     */
+    private String supplierName;
+    /**
      * 收货仓库ID
      */
     private Long warehouseId;

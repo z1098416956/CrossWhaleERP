@@ -2,6 +2,43 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cross.whale.dao.PurchaseInfoDao">
 
-
+    <!-- 采购单分页查询 -->
+    <select id="queryPurchaseInfoPage" resultType="com.cross.whale.res.PurchaseInfoPageResVO">
+        SELECT
+            id,
+            goods_quantity,
+            goods_info,
+            receipts_time,
+            purchase_number,
+            discount_rate,
+            discounts_price,
+            deposit_amount,
+            total_amount,
+            tax_amount,
+            receipts_number,
+            remake,
+            purchase_status,
+            file_url as receiptsAccessory,
+            delivery_date,
+            receipts_number
+        FROM
+            r_purchase_info
+        WHERE
+            is_deleted = 0
+        <if test="params.purchaseNumber != null and params.purchaseNumber != ''">
+            AND purchase_number LIKE CONCAT('%', #{params.purchaseNumber}, '%')
+        </if>
+        <if test="params.goodsInfo != null and params.goodsInfo != ''">
+            AND goods_info LIKE CONCAT('%', #{params.goodsInfo}, '%')
+        </if>
+        <if test="params.startTime != null">
+            AND receipts_time &gt;= #{params.startTime}
+        </if>
+        <if test="params.endTime != null">
+            AND receipts_time &lt;= #{params.endTime}
+        </if>
+        ORDER BY
+            create_time DESC
+    </select>
 
 </mapper>
