@@ -12,28 +12,6 @@ import org.springframework.web.bind.annotation.*;
 @FeignClient(name = "cross-whale-base" ,configuration = FeignConfig.class,contextId = "base-supplier-service")
 public interface SupplierClient {
 
-    /**
-     * 创建供应商信息
-     * @param createSupplierInfoReqVO
-     * @return
-     */
-    @PostMapping("/v1/supplier/info/saveSupplierInfo")
-    public CommonResult<Void> saveSupplierInfo(@RequestBody CreateSupplierInfoReqVO createSupplierInfoReqVO);
-    /**
-     * 更新供应商信息
-     * @param updateSupplierInfoReqVO
-     * @return
-     */
-    @PostMapping("/v1/supplier/info/updateSupplierInfo")
-    public CommonResult<Void> updateSupplierInfo(@RequestBody UpdateSupplierInfoReqVO updateSupplierInfoReqVO);
-
-    /**
-     * 删除供应商
-     * @param id
-     * @return
-     */
-    @DeleteMapping("/v1/supplier/info/deleteSupplierInfo")
-    public CommonResult<Void> deleteSupplierInfo(@RequestParam Long id);
 
     /**
      * 获取供应商信息
